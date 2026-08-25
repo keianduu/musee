@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Map — Musee Prototype</title>
+<link rel="stylesheet" href="./shared.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+html,body{height:100%}
+body{display:flex;flex-direction:column}
+.map-head{padding:18px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.map-head strong{font-size:22px;letter-spacing:-.04em}
+#map{flex:1;min-height:620px}
+.leaflet-container{font-family:var(--sans);background:#f4f2ed}
+.museum-pin{width:28px;height:28px;border-radius:50%;background:var(--ink);border:2px solid #fff;box-shadow:0 5px 14px rgba(0,0,0,.18)}
+.museum-pin:after{content:"";display:block;width:5px;height:5px;border-radius:50%;background:#fff;margin:9px auto}
+@media(max-width:720px){#map{min-height:calc(100svh - 124px)}}
+</style>
+</head>
+<body>
+<div class="map-head"><a class="logo" href="./index.html">Musee</a><strong>Map</strong><span>東京</span></div>
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const museums=[
+ ["東京都美術館",35.71711,139.77318],
+ ["国立西洋美術館",35.71536,139.77585],
+ ["上野の森美術館",35.71285,139.77477],
+ ["すみだ北斎美術館",35.69675,139.80039],
+ ["刀剣博物館",35.69882,139.79371],
+ ["東京都現代美術館",35.68000,139.80806],
+ ["アーティゾン美術館",35.67875,139.77213],
+ ["三井記念美術館",35.68630,139.77314],
+ ["東京ステーションギャラリー",35.68243,139.76649]
+];
+const map=L.map("map",{scrollWheelZoom:true}).fitBounds([[35.662,139.752],[35.731,139.823]],{padding:[18,18],maxZoom:12.25});
+L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",{subdomains:"abcd",maxZoom:20,attribution:"&copy; OpenStreetMap contributors &copy; CARTO"}).addTo(map);
+museums.forEach(([name,lat,lng])=>{
+ const icon=L.divIcon({className:"",html:'<div class="museum-pin"></div>',iconSize:[28,28],iconAnchor:[14,14]});
+ L.marker([lat,lng],{icon}).addTo(map).bindPopup(`<b>${name}</b><br><small>Museeで開催展を見る</small>`);
+});
+</script>
+</body>
+</html>
