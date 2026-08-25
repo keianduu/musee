@@ -17,6 +17,20 @@
 
 <!DOCTYPE html>
 
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+
 <html lang="ja">
 <head>
 <meta charset="utf-8"/>
@@ -266,7 +280,7 @@ svg{display:block}
   border-radius:999px;padding:11px 15px;font-size:10px;font-weight:600
 }
 .wall{
-  height:350px;display:flex;gap:7px;align-items:flex-end;overflow:hidden;
+  height:350px;display:flex;gap:8px;align-items:flex-end;overflow:hidden;
   padding-left:2px
 }
 .wall img{
@@ -721,6 +735,254 @@ Once the sheet reaches the header line:
 @media(prefers-reduced-motion:reduce){
   .site-header{
     transition:none;
+  }
+}
+
+
+
+
+/* --- Musee Compact Glass Bottom Navigation / All Devices --- */
+
+body{
+  padding-bottom:80px;
+}
+
+.footer{
+  position:fixed;
+  left:8px;
+  right:8px;
+  bottom:calc(8px + env(safe-area-inset-bottom));
+  z-index:100;
+  margin:0;
+  width:auto;
+
+  border:1px solid rgba(255,255,255,.72);
+  border-radius:999px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.70) 0%,
+      rgba(238,235,229,.64) 100%
+    );
+
+  -webkit-backdrop-filter:blur(22px) saturate(135%);
+  backdrop-filter:blur(22px) saturate(135%);
+
+  box-shadow:
+    0 10px 30px rgba(39,36,31,.12),
+    inset 0 1px 0 rgba(255,255,255,.74);
+
+  overflow:hidden;
+}
+
+.footer-inner{
+  width:100%;
+  max-width:none;
+  height:56px;
+  padding:0 4px;
+  margin:0;
+}
+
+.footer-nav{
+  width:100%;
+  height:100%;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  align-items:center;
+  gap:0;
+}
+
+.nav-item{
+  position:relative;
+  min-width:0;
+  width:calc(100% - 8px);
+  height:48px;
+  margin:4px;
+  justify-self:center;
+  border-radius:999px;
+
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+
+  font-size:10px;
+  line-height:1;
+  color:rgba(38,37,34,.62);
+
+  transition:
+    color .18s ease,
+    background-color .18s ease,
+    transform .18s ease;
+}
+
+.nav-item svg{
+  width:20px;
+  height:20px;
+  stroke-width:1.7;
+}
+
+.nav-item.active{
+  color:var(--ink);
+  font-weight:650;
+  background:rgba(255,255,255,.52);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.48);
+}
+
+.nav-item.active:after{
+  display:none !important;
+  content:none !important;
+}
+
+.nav-item:active{
+  transform:scale(.97);
+}
+
+@media(max-width:720px){
+  body{
+    padding-bottom:80px;
+  }
+
+  .footer{
+    left:8px;
+    right:8px;
+    bottom:calc(8px + env(safe-area-inset-bottom));
+  }
+
+  .footer-inner{
+    height:56px;
+    padding:0 4px;
+  }
+
+  .nav-item{
+    height:48px;
+    flex-direction:column;
+    gap:4px;
+    font-size:7px;
+  }
+
+  .nav-item svg{
+    width:20px;
+    height:20px;
+  }
+}
+
+
+/* --- Musee Fixed Bottom Navigation Geometry --- */
+/*
+  Geometry is intentionally fixed:
+  outer height 56px
+  outer radius 28px
+  active inset 4px
+  active height 48px
+  active radius 24px
+*/
+
+.footer{
+  height:56px;
+  border-radius:28px;
+}
+
+.footer-inner{
+  width:100%;
+  height:56px;
+  max-width:none;
+  margin:0;
+  padding:0;
+}
+
+.footer-nav{
+  width:100%;
+  height:56px;
+  display:grid;
+  grid-template-columns:repeat(4, minmax(0, 1fr));
+  align-items:stretch;
+  gap:0;
+}
+
+.nav-item{
+  width:calc(100% - 8px);
+  height:48px;
+  margin:4px;
+  padding:0;
+  border-radius:24px;
+  justify-self:stretch;
+  align-self:stretch;
+}
+
+.nav-item.active{
+  border-radius:24px;
+}
+
+@media(max-width:720px){
+  .footer{
+    height:56px;
+    border-radius:28px;
+  }
+
+  .footer-inner{
+    height:56px;
+    padding:0;
+  }
+
+  .footer-nav{
+    height:56px;
+  }
+
+  .nav-item{
+    width:calc(100% - 8px);
+    height:48px;
+    margin:4px;
+    border-radius:24px;
+  }
+
+  .nav-item.active{
+    border-radius:24px;
+  }
+}
+
+
+
+
+/* --- Bottom Nav Visual Balance --- */
+/*
+  Visual rather than mathematical symmetry:
+  outer bar: 56px high
+  active pill: 44px high
+  top 5px / sides 6px / bottom 7px
+  This compensates for the outer 1px border, rounded corners,
+  and the visual weight of the active background.
+*/
+.nav-item{
+  width:calc(100% - 12px);
+  height:44px;
+  margin:5px 6px 7px;
+  padding:0;
+  border-radius:22px;
+  transform:none;
+}
+
+.nav-item.active{
+  border-radius:22px;
+}
+
+.nav-item:active{
+  transform:scale(.97);
+}
+
+@media(max-width:720px){
+  .nav-item{
+    width:calc(100% - 12px);
+    height:44px;
+    margin:5px 6px 7px;
+    border-radius:22px;
+  }
+
+  .nav-item.active{
+    border-radius:22px;
   }
 }
 </style>
