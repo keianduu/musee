@@ -17,6 +17,10 @@
 
 <!DOCTYPE html>
 
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+
 <html lang="ja">
 <head>
 <meta charset="utf-8"/>
@@ -266,14 +270,51 @@ svg{display:block}
   border-radius:999px;padding:11px 15px;font-size:10px;font-weight:600
 }
 .wall{
-  height:350px;display:flex;gap:7px;align-items:flex-end;overflow:hidden;
-  padding-left:2px
+  position:relative;
+  height:360px;
+  overflow:hidden;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
 }
-.wall img{
-  width:auto;height:var(--h);max-width:155px;object-fit:contain;background:#fff;
-  box-shadow:0 7px 20px rgba(38,37,34,.10)
+.wall-grid{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
 }
-.wall img:nth-child(even){transform:translateY(-13px)}
+.wall-item{
+  position:absolute;
+  overflow:hidden;
+  border-radius:14px;
+  background:#f5f2ec;
+  box-shadow:0 5px 16px rgba(38,37,34,.08);
+  transition:transform .24s ease, box-shadow .24s ease;
+}
+.wall-item img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.wall-item:hover{
+  transform:translateY(-2px);
+  box-shadow:0 9px 22px rgba(38,37,34,.12);
+}
+.wall-fade{
+  position:absolute;
+  z-index:10;
+  left:0;
+  right:0;
+  bottom:0;
+  height:96px;
+  pointer-events:none;
+  background:linear-gradient(
+    180deg,
+    rgba(238,234,227,0) 0%,
+    rgba(238,234,227,.78) 56%,
+    rgba(238,234,227,1) 100%
+  );
+}
 
 /* Footer nav */
 .footer{
@@ -381,8 +422,17 @@ svg{display:block}
   .stat strong{font-size:19px}
   .stat span{font-size:7px}
   .cta{font-size:8px;padding:9px 12px}
-  .wall{height:225px;gap:5px;margin-top:20px}
-  .wall img{max-width:96px}
+  .wall{
+    height:260px;
+    margin-top:20px;
+    border-radius:0;
+  }
+  .wall-item{
+    border-radius:10px;
+  }
+  .wall-fade{
+    height:76px;
+  }
   .footer{
     position:fixed;left:0;right:0;bottom:0;z-index:90;margin:0;
     background:rgba(255,255,255,.96);backdrop-filter:blur(14px);
@@ -723,6 +773,13 @@ Once the sheet reaches the header line:
     transition:none;
   }
 }
+
+
+/* ArtWall Masonry responsive tuning */
+@media(min-width:721px) and (max-width:980px){
+  .wall{height:330px}
+  .wall-fade{height:88px}
+}
 </style>
 <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/></head>
 <body>
@@ -791,7 +848,7 @@ Once the sheet reaches the header line:
 </div>
 <a class="cta" href="#">My Artを見る →</a>
 </div>
-<div class="wall" data-wall=""></div>
+<div class="wall" data-wall=""><div class="wall-grid" data-wall-grid=""></div><div aria-hidden="true" class="wall-fade"></div></div>
 </div>
 </div>
 </section></div>
@@ -835,17 +892,106 @@ document.querySelector('[data-posters]').innerHTML = EXHIBITIONS.map(x=>`
     <p class="date">${esc(x.date)}</p>
   </a>`).join('');
 
-const heightsDesktop=[280,320,260,335,292,310,272];
-const heightsMobile=[185,215,175,220,192,207,182];
-function renderWall(){
-  const mobile=window.matchMedia('(max-width:720px)').matches;
-  const heights=mobile?heightsMobile:heightsDesktop;
-  document.querySelector('[data-wall]').innerHTML=EXHIBITIONS.slice(0,7).map((x,i)=>`
-    <img src="${x.src}" alt="" style="--h:${heights[i]}px">`).join('');
+
+const wallImageMeta = new Map();
+
+function loadWallImageMeta(src){
+  if(wallImageMeta.has(src)) return Promise.resolve(wallImageMeta.get(src));
+  return new Promise(resolve=>{
+    const img=new Image();
+    img.onload=()=>{
+      const meta={
+        w:img.naturalWidth || 1,
+        h:img.naturalHeight || 1,
+        ratio:(img.naturalHeight || 1)/(img.naturalWidth || 1)
+      };
+      wallImageMeta.set(src,meta);
+      resolve(meta);
+    };
+    img.onerror=()=>{
+      const meta={w:1,h:1,ratio:1.25};
+      wallImageMeta.set(src,meta);
+      resolve(meta);
+    };
+    img.src=src;
+  });
 }
+
+let wallRenderToken=0;
+
+async function renderWall(){
+  const token=++wallRenderToken;
+  const wall=document.querySelector('[data-wall]');
+  const grid=document.querySelector('[data-wall-grid]');
+  if(!wall || !grid) return;
+
+  const items=EXHIBITIONS.map((x,i)=>({
+    ...x,
+    originalIndex:i
+  }));
+
+  const metas=await Promise.all(items.map(x=>loadWallImageMeta(x.src)));
+  if(token!==wallRenderToken) return;
+
+  const width=grid.clientWidth;
+  if(!width) return;
+
+  const mobile=window.matchMedia('(max-width:720px)').matches;
+  const tablet=window.matchMedia('(min-width:721px) and (max-width:980px)').matches;
+
+  // Stable, intentionally simple geometry.
+  const columns=mobile ? 3 : (tablet ? 3 : 4);
+  const gap=mobile ? 6 : 8;
+  const columnWidth=(width - gap*(columns-1))/columns;
+  const columnHeights=new Array(columns).fill(0);
+
+  grid.innerHTML='';
+
+  items.forEach((x,i)=>{
+    const meta=metas[i];
+    // Preserve the original visual ratio while avoiding extreme slivers.
+    const ratio=Math.max(.58,Math.min(1.85,meta.ratio));
+    const itemHeight=Math.round(columnWidth*ratio);
+
+    let column=0;
+    for(let c=1;c<columns;c++){
+      if(columnHeights[c]<columnHeights[column]) column=c;
+    }
+
+    const left=Math.round(column*(columnWidth+gap));
+    const top=Math.round(columnHeights[column]);
+    columnHeights[column]+=itemHeight+gap;
+
+    const card=document.createElement('a');
+    card.className='wall-item';
+    card.href=x.url || '#';
+    if(x.url){
+      card.target='_blank';
+      card.rel='noopener';
+    }
+    card.style.left=`${left}px`;
+    card.style.top=`${top}px`;
+    card.style.width=`${Math.round(columnWidth)}px`;
+    card.style.height=`${itemHeight}px`;
+    card.setAttribute('aria-label',x.title || 'Exhibition');
+
+    const img=document.createElement('img');
+    img.src=x.src;
+    img.alt=x.title || '';
+    img.loading='lazy';
+    card.appendChild(img);
+
+    grid.appendChild(card);
+  });
+}
+
 renderWall();
 let resizeTimer;
-window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(renderWall,120)});
+window.addEventListener('resize',()=>{
+  clearTimeout(resizeTimer);
+  resizeTimer=setTimeout(renderWall,120);
+});
+
 
 </script>
 <script>
