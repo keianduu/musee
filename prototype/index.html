@@ -11,6 +11,8 @@
 
 <!DOCTYPE html>
 
+<!DOCTYPE html>
+
 <html lang="ja">
 <head>
 <meta charset="utf-8"/>
@@ -589,6 +591,21 @@ svg{display:block}
   padding-top:2px;
   border-bottom:1px solid rgba(38,37,34,.18);
 }
+
+
+/* Musee OSM Light treatment
+   Keeps the public OSM raster tiles working without an API key,
+   while visually reducing map noise for the prototype. */
+.leaflet-tile-pane{
+  opacity:.90;
+  filter:grayscale(.72) saturate(.42) brightness(1.10) contrast(.82);
+}
+.leaflet-map{
+  background:#f5f3ee;
+}
+.leaflet-container{
+  background:#f5f3ee;
+}
 </style>
 <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/></head>
 <body>
@@ -733,11 +750,10 @@ window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setT
     attributionControl:true
   });
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    subdomains:'abcd',
-    maxZoom:20,
-    detectRetina:true,
-    attribution:'&copy; OpenStreetMap contributors &copy; CARTO'
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    subdomains:'abc',
+    maxZoom:19,
+    attribution:'&copy; OpenStreetMap contributors'
   }).addTo(map);
 
   const bounds = L.latLngBounds([]);
