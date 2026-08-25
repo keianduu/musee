@@ -21,6 +21,8 @@
 
 <!DOCTYPE html>
 
+<!DOCTYPE html>
+
 <html lang="ja">
 <head>
 <meta charset="utf-8"/>
@@ -285,7 +287,7 @@ svg{display:block}
 .wall-item{
   position:absolute;
   overflow:hidden;
-  border-radius:14px;
+  border-radius:0;
   background:#f5f2ec;
   box-shadow:0 5px 16px rgba(38,37,34,.08);
   transition:transform .24s ease, box-shadow .24s ease;
@@ -428,7 +430,7 @@ svg{display:block}
     border-radius:0;
   }
   .wall-item{
-    border-radius:10px;
+    border-radius:0;
   }
   .wall-fade{
     height:76px;
@@ -940,8 +942,8 @@ async function renderWall(){
   const tablet=window.matchMedia('(min-width:721px) and (max-width:980px)').matches;
 
   // Stable, intentionally simple geometry.
-  const columns=mobile ? 3 : (tablet ? 3 : 4);
-  const gap=mobile ? 6 : 8;
+  const columns=4;
+  const gap=mobile ? 4 : 8;
   const columnWidth=(width - gap*(columns-1))/columns;
   const columnHeights=new Array(columns).fill(0);
 
