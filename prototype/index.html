@@ -15,6 +15,8 @@
 
 <!DOCTYPE html>
 
+<!DOCTYPE html>
+
 <html lang="ja">
 <head>
 <meta charset="utf-8"/>
@@ -646,6 +648,81 @@ svg{display:block}
 .hero-copy{
   opacity:1 !important;
 }
+
+
+/* --- Musee Header Reveal over Rising Sheet --- */
+
+/*
+Initial state:
+- Header belongs visually to the Hero
+- Rising white sheet can cover it
+*/
+.site-header{
+  z-index:4;
+  transition:
+    background-color .26s ease,
+    color .26s ease,
+    box-shadow .26s ease,
+    border-color .26s ease;
+}
+
+/*
+Once the sheet reaches the header line:
+- bring header above the white sheet
+- convert it to the persistent white navigation state
+*/
+.site-header.is-over-sheet{
+  z-index:60;
+  background:rgba(255,255,255,.94);
+  color:var(--ink);
+  border-bottom:1px solid rgba(38,37,34,.07);
+  box-shadow:0 5px 18px rgba(38,37,34,.055);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  text-shadow:none;
+}
+
+.site-header.is-over-sheet .logo{
+  color:var(--ink);
+  text-shadow:none;
+}
+
+.site-header.is-over-sheet .icon-button{
+  color:var(--ink);
+  background:rgba(38,37,34,.045);
+  text-shadow:none;
+}
+
+.site-header.is-over-sheet .icon-button:hover{
+  background:rgba(38,37,34,.075);
+}
+
+.site-header.is-over-sheet .avatar{
+  background:var(--ink);
+  color:#fff;
+  box-shadow:none;
+}
+
+.site-header.is-over-sheet .notice-dot{
+  border-color:#fff;
+}
+
+/* Keep the sheet above Hero, but below the revealed Header. */
+.main-surface{
+  z-index:20;
+}
+
+@media(max-width:720px){
+  .site-header.is-over-sheet{
+    background:rgba(255,255,255,.96);
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .site-header{
+    transition:none;
+  }
+}
 </style>
 <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/></head>
 <body>
@@ -850,6 +927,50 @@ window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setT
   // Keep layout correct after responsive/hidden-state changes.
   setTimeout(() => map.invalidateSize(), 250);
   window.addEventListener('resize', () => map.invalidateSize());
+})();
+</script><script>
+(function(){
+  const header = document.querySelector('.site-header');
+  const sheet = document.querySelector('.main-surface');
+
+  if(!header || !sheet) return;
+
+  let ticking = false;
+  let active = false;
+
+  function updateHeaderLayer(){
+    ticking = false;
+
+    const headerHeight = header.offsetHeight;
+    const sheetTop = sheet.getBoundingClientRect().top;
+
+    /*
+      Switch exactly when the top edge of the white sheet
+      reaches the bottom edge of the persistent header zone.
+      A tiny hysteresis prevents flickering around the boundary.
+    */
+    const enterAt = headerHeight + 1;
+    const exitAt = headerHeight + 10;
+
+    if(!active && sheetTop <= enterAt){
+      active = true;
+      header.classList.add('is-over-sheet');
+    }else if(active && sheetTop > exitAt){
+      active = false;
+      header.classList.remove('is-over-sheet');
+    }
+  }
+
+  function requestUpdate(){
+    if(!ticking){
+      ticking = true;
+      requestAnimationFrame(updateHeaderLayer);
+    }
+  }
+
+  updateHeaderLayer();
+  window.addEventListener('scroll', requestUpdate, {passive:true});
+  window.addEventListener('resize', requestUpdate);
 })();
 </script></body>
 </html>
