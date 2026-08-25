@@ -13,6 +13,8 @@
 
 <!DOCTYPE html>
 
+<!DOCTYPE html>
+
 <html lang="ja">
 <head>
 <meta charset="utf-8"/>
@@ -606,6 +608,37 @@ svg{display:block}
 .leaflet-container{
   background:#f5f3ee;
 }
+
+
+/* --- Musee Hero Scroll Parallax --- */
+.hero{
+  --hero-scroll:0px;
+  --hero-copy-scroll:0px;
+}
+.hero-bg{
+  transform:translate3d(0,var(--hero-scroll),0);
+  will-change:transform;
+}
+.hero-bg img{
+  /* keep the existing initial zoom-out, then JS adds only parent translation */
+  transform-origin:center center;
+}
+.hero-copy{
+  transform:translate3d(0,var(--hero-copy-scroll),0);
+  will-change:transform;
+}
+.main-surface{
+  position:relative;
+  z-index:20;
+  /* sits above hero image/copy while scrolling */
+  box-shadow:0 -12px 36px rgba(28,26,23,.07);
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-bg,
+  .hero-copy{
+    transform:none !important;
+  }
+}
 </style>
 <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/></head>
 <body>
@@ -810,6 +843,62 @@ window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setT
   // Keep layout correct after responsive/hidden-state changes.
   setTimeout(() => map.invalidateSize(), 250);
   window.addEventListener('resize', () => map.invalidateSize());
+})();
+</script><script>
+(function(){
+  const hero = document.querySelector('.hero');
+  if(!hero) return;
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let ticking = false;
+
+  function updateHeroParallax(){
+    ticking = false;
+    if(reduceMotion.matches){
+      hero.style.setProperty('--hero-scroll','0px');
+      hero.style.setProperty('--hero-copy-scroll','0px');
+      return;
+    }
+
+    const rect = hero.getBoundingClientRect();
+    const heroHeight = hero.offsetHeight || 1;
+
+    // Positive only after hero starts moving above viewport.
+    const scrolled = Math.max(0, -rect.top);
+    const progress = Math.min(1, scrolled / heroHeight);
+
+    // Background moves slower than page content => parallax.
+    // Keep amount restrained so artwork remains calm.
+    const bgY = scrolled * 0.24;
+
+    // Copy moves slightly slower than the page too,
+    // allowing the bottom sheet to visually overtake it.
+    const copyY = scrolled * 0.10;
+
+    hero.style.setProperty('--hero-scroll', `${bgY.toFixed(2)}px`);
+    hero.style.setProperty('--hero-copy-scroll', `${copyY.toFixed(2)}px`);
+
+    // Optional subtle fade as the white sheet overtakes the copy.
+    const copy = hero.querySelector('.hero-copy');
+    if(copy){
+      const opacity = Math.max(0.28, 1 - progress * 0.78);
+      copy.style.opacity = opacity.toFixed(3);
+    }
+  }
+
+  function requestUpdate(){
+    if(!ticking){
+      ticking = true;
+      requestAnimationFrame(updateHeroParallax);
+    }
+  }
+
+  updateHeroParallax();
+  window.addEventListener('scroll', requestUpdate, {passive:true});
+  window.addEventListener('resize', requestUpdate);
+  if(reduceMotion.addEventListener){
+    reduceMotion.addEventListener('change', requestUpdate);
+  }
 })();
 </script></body>
 </html>
