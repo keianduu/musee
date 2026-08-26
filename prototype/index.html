@@ -1127,15 +1127,21 @@ document.querySelector('[data-artists]').innerHTML = ARTISTS.map(a=>`
     <strong>${esc(a.name)}</strong><span>Artist</span>
   </a>`).join('');
 
-document.querySelector('[data-posters]').innerHTML = EXHIBITIONS.map(x=>`
-  <a class="poster-card" href="${esc(x.url)}" target="_blank" rel="noopener"
+document.querySelector('[data-posters]').innerHTML = EXHIBITIONS.map(x=>{
+  const isShojima = x.title.includes('庄島歩音');
+  const href = isShojima ? './exhibition.html' : x.url;
+  const externalAttrs = isShojima ? '' : ' target="_blank" rel="noopener"';
+
+  return `
+  <a class="poster-card" href="${esc(href)}"${externalAttrs}
      style="--w:${x.w||'190px'};--mw:${x.mw||'150px'}">
     <div class="poster-stage"><img src="${x.src}" alt="${esc(x.title)}" loading="lazy"></div>
     <div class="poster-status"><i class="${x.status==='NOW'?'now':''}"></i>${esc(x.status_ja)}</div>
     <h3>${esc(x.title)}</h3>
     <p>${esc(x.venue)} · ${esc(x.city)}</p>
     <p class="date">${esc(x.date)}</p>
-  </a>`).join('');
+  </a>`;
+}).join('');
 
 
 const wallImageMeta = new Map();
