@@ -138,9 +138,9 @@
 
   const exhibitionsEl = document.querySelector("[data-current-exhibitions]");
   exhibitionsEl.innerHTML = EXHIBITIONS.map(item => `
-    <a class="artist-exhibition-card" href="./exhibition.html">
-      <div class="artist-exhibition-image"><img src="${esc(item.image)}" alt="" loading="lazy"></div>
-      <span class="artist-exhibition-status">${esc(item.date)}</span>
+    <a class="detail-related-card" href="./exhibition.html">
+      <div class="detail-related-image"><img src="${esc(item.image)}" alt="" loading="lazy"></div>
+      <span class="status">${esc(item.date)}</span>
       <h3>${esc(item.title)}</h3>
       <p>${esc(item.venue)}</p>
     </a>

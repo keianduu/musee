@@ -22,7 +22,7 @@
   position:relative;
   z-index:2;
   margin-top:-8px;
-  padding:32px 0 92px;
+  padding:32px 0 36px;
   background:#fff;
 }
 .artist-sheet-head{
@@ -221,46 +221,6 @@
   background:#fff;
   cursor:pointer;
 }
-.artist-exhibition-rail{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:18px;
-}
-.artist-exhibition-card{
-  min-width:0;
-  color:inherit;
-}
-.artist-exhibition-image{
-  aspect-ratio:4/3;
-  margin-bottom:14px;
-  overflow:hidden;
-  border-radius:20px;
-  background:var(--warm);
-}
-.artist-exhibition-image img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
-.artist-exhibition-status{
-  display:block;
-  margin-bottom:6px;
-  color:var(--muted2);
-  font-size:10px;
-}
-.artist-exhibition-card h3{
-  margin:0 0 5px;
-  font-size:15px;
-  line-height:1.45;
-  font-weight:650;
-}
-.artist-exhibition-card p{
-  margin:0;
-  color:var(--muted);
-  font-size:11px;
-  line-height:1.5;
-}
 .artist-empty-copy{
   padding:28px 0;
   border-top:1px solid var(--line);
@@ -305,7 +265,7 @@
   display:flex;
   gap:28px;
   overflow-x:auto;
-  padding-bottom:8px;
+  padding-bottom:0;
   scrollbar-width:none;
 }
 .related-artist-rail::-webkit-scrollbar{display:none}
@@ -336,7 +296,7 @@
   font-size:9px;
   line-height:1.4;
 }
-.artist-page .footer{position:relative;z-index:3}
+.artist-page .footer{position:relative;z-index:3;margin-top:0}
 
 @media(max-width:720px){
   .artist-hero{
@@ -346,7 +306,7 @@
   }
   .artist-detail-sheet{
     margin-top:-4px;
-    padding:24px 0 112px;
+    padding:24px 0 28px;
     border-radius:28px 28px 0 0;
   }
   .artist-sheet-head{
@@ -408,18 +368,7 @@
     font-size:10px;
   }
   .work-save{width:38px;height:38px}
-  .artist-exhibition-rail{
-    display:flex;
-    overflow-x:auto;
-    gap:12px;
-    padding-bottom:8px;
-    scrollbar-width:none;
-  }
-  .artist-exhibition-card{min-width:72vw}
-  .artist-exhibition-image{border-radius:18px}
-  .artist-exhibition-card h3{font-size:14px}
-  .artist-exhibition-card p{font-size:10px}
-  .museum-list{display:block}
+.museum-list{display:block}
   .museum-card,
   .museum-card:nth-child(odd),
   .museum-card:nth-child(even){
@@ -432,4 +381,13 @@
   .related-artist-rail{gap:18px}
   .related-artist{flex-basis:100px}
   .related-artist img{width:88px;height:88px}
+}
+
+/* Compact final section / footer handoff. */
+.artist-section:last-child{
+  padding-top:56px;
+  padding-bottom:0;
+}
+@media(max-width:720px){
+  .artist-section:last-child{padding-top:44px}
 }
