@@ -27,13 +27,25 @@
 }
 
 .poster-card{
-  flex:0 0 var(--w,190px);
-  width:var(--w,190px);
+  --poster-card-width:190px;
+  --poster-card-width-mobile:150px;
+  flex:0 0 var(--poster-card-width);
+  width:var(--poster-card-width);
   min-width:0;
   scroll-snap-align:start;
   display:block;
   color:inherit;
   text-align:left;
+}
+
+.poster-card.is-landscape{
+  --poster-card-width:280px;
+  --poster-card-width-mobile:200px;
+}
+
+.poster-card.is-portrait{
+  --poster-card-width:190px;
+  --poster-card-width-mobile:150px;
 }
 
 .poster-stage{
@@ -98,8 +110,8 @@
   }
 
   .poster-card{
-    width:var(--mw,150px);
-    flex-basis:var(--mw,150px);
+    width:var(--poster-card-width-mobile);
+    flex-basis:var(--poster-card-width-mobile);
   }
 
   .poster-stage{

@@ -25,8 +25,7 @@ document.querySelector('[data-posters]').innerHTML = EXHIBITIONS.map(x=>{
   const externalAttrs = isShojima ? '' : ' target="_blank" rel="noopener"';
 
   return `
-  <a class="poster-card" href="${esc(href)}"${externalAttrs}
-     style="--w:${x.w||'190px'};--mw:${x.mw||'150px'}">
+  <a class="poster-card" href="${esc(href)}"${externalAttrs}>
     <div class="poster-stage"><img src="${x.src}" alt="${esc(x.title)}" loading="lazy"></div>
     <div class="poster-status musee-pill musee-pill--status">${esc(x.status_ja)}</div>
     <h3>${esc(x.title)}</h3>

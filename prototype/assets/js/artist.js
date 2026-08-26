@@ -138,7 +138,7 @@
 
   const exhibitionsEl = document.querySelector("[data-current-exhibitions]");
   exhibitionsEl.innerHTML = EXHIBITIONS.map(item => `
-    <a class="poster-card" href="./exhibition.html" style="--w:190px;--mw:150px">
+    <a class="poster-card" href="./exhibition.html">
       <div class="poster-stage"><img src="${esc(item.image)}" alt="${esc(item.title)}" loading="lazy"></div>
       <h3>${esc(item.title)}</h3>
       <p>${esc(item.venue)}</p>
