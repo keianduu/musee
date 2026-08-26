@@ -307,6 +307,10 @@
   font-size:12px;
   font-weight:650;
 }
+.filter-group legend{
+  transform:translateY(14px);
+}
+
 .keyword-input-wrap{
   height:48px;
   display:flex;
