@@ -13,6 +13,10 @@
 
 <!DOCTYPE html>
 
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+
 <html lang="ja">
 <head>
 <meta charset="utf-8"/>
@@ -356,47 +360,6 @@ img{display:block;max-width:100%}
 }
 
 
-/* --- v5: image-ratio driven hero height --- */
-.exhibition-hero,
-.exhibition-hero.landscape{
-  height:var(--exhibition-hero-height, 70svh) !important;
-  min-height:0 !important;
-  max-height:none !important;
-  background:#fff !important;
-  display:flex;
-  align-items:flex-start;
-  justify-content:center;
-  overflow:hidden;
-}
-
-.exhibition-hero img,
-.exhibition-hero.landscape img{
-  position:relative !important;
-  inset:auto !important;
-  display:block;
-  width:var(--exhibition-image-width, auto) !important;
-  height:var(--exhibition-image-height, 70svh) !important;
-  max-width:none !important;
-  max-height:none !important;
-  object-fit:contain !important;
-  object-position:center center !important;
-  transform:none !important;
-  box-shadow:none !important;
-  filter:none !important;
-}
-
-/* Sheet follows the actual rendered bottom edge of the image. */
-.detail-sheet{
-  margin-top:-4px !important;
-}
-
-@media(max-width:720px){
-  .detail-sheet{
-    margin-top:-2px !important;
-  }
-}
-
-
 /* --- v6 readable typography: visual minimum ~14px --- */
 .exhibition-sheet-meta span,
 .exhibition-sheet-venue,
@@ -625,6 +588,53 @@ img{display:block;max-width:100%}
     font-size:22px;
   }
 }
+
+
+/* --- v9 stable exhibition hero ---
+   Do not recalculate image size from window.innerHeight while scrolling.
+   The browser keeps the image's intrinsic aspect ratio and caps it using
+   the stable small viewport unit (svh). */
+.exhibition-hero,
+.exhibition-hero.landscape{
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  background:#fff !important;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  overflow:hidden;
+}
+
+/* Width/height stay intrinsic.
+   max-width handles wide artwork, max-height handles tall artwork.
+   With both dimensions auto, the aspect ratio is preserved automatically. */
+.exhibition-hero img,
+.exhibition-hero.landscape img{
+  position:relative !important;
+  inset:auto !important;
+  display:block;
+  width:auto !important;
+  height:auto !important;
+  max-width:100vw !important;
+  max-height:70svh !important;
+  object-fit:contain !important;
+  object-position:center center !important;
+  transform:none !important;
+  box-shadow:none !important;
+  filter:none !important;
+}
+
+/* Keep the sheet visually attached to the actual rendered image edge. */
+.detail-sheet{
+  margin-top:-4px !important;
+}
+
+@media(max-width:720px){
+  .detail-sheet{
+    margin-top:-2px !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -731,56 +741,6 @@ img{display:block;max-width:100%}
   updateHeaderLayer();
   window.addEventListener('scroll',requestUpdate,{passive:true});
   window.addEventListener('resize',requestUpdate);
-})();
-
-
-/* v5: calculate the Hero from the real image aspect ratio. */
-(function(){
-  const hero = document.querySelector('.exhibition-hero');
-  const image = hero?.querySelector('img');
-  if(!hero || !image) return;
-
-  function fitExhibitionHero(){
-    if(!image.naturalWidth || !image.naturalHeight) return;
-
-    const viewportW = window.innerWidth;
-    const viewportH = window.innerHeight;
-    const maxH = Math.round(viewportH * 0.70);
-    const ratio = image.naturalWidth / image.naturalHeight;
-
-    /*
-      Portrait / square:
-      - cap height at 70% of viewport
-      - allow narrower image width, leaving white at the sides
-
-      Landscape:
-      - use available viewport width first
-      - Hero height becomes the real rendered image height
-      - therefore the sheet always starts at the image edge
-    */
-    let renderedW = Math.min(viewportW, maxH * ratio);
-    let renderedH = renderedW / ratio;
-
-    if(renderedH > maxH){
-      renderedH = maxH;
-      renderedW = renderedH * ratio;
-    }
-
-    hero.classList.toggle('landscape', ratio > 1);
-    hero.dataset.orientation = ratio > 1 ? 'landscape' : 'portrait';
-    hero.style.setProperty('--exhibition-hero-height', `${Math.round(renderedH)}px`);
-    hero.style.setProperty('--exhibition-image-width', `${Math.round(renderedW)}px`);
-    hero.style.setProperty('--exhibition-image-height', `${Math.round(renderedH)}px`);
-  }
-
-  if(image.complete) fitExhibitionHero();
-  else image.addEventListener('load', fitExhibitionHero, {once:true});
-
-  let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(fitExhibitionHero, 80);
-  });
 })();
 </script>
 </body>
