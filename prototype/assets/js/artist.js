@@ -67,7 +67,7 @@
   if(hero){
     hero.src = artist.image || artist.img || "";
     hero.alt = artist.name;
-    hero.style.objectPosition = artist.position || "center";
+    hero.style.setProperty("--artist-position", artist.position || "center");
   }
 
   document.title = `${artist.name} — Musee`;
@@ -138,11 +138,11 @@
 
   const exhibitionsEl = document.querySelector("[data-current-exhibitions]");
   exhibitionsEl.innerHTML = EXHIBITIONS.map(item => `
-    <a class="detail-related-card" href="./exhibition.html">
-      <div class="detail-related-image"><img src="${esc(item.image)}" alt="" loading="lazy"></div>
-      <span class="status">${esc(item.date)}</span>
+    <a class="poster-card" href="./exhibition.html" style="--w:190px;--mw:150px">
+      <div class="poster-stage"><img src="${esc(item.image)}" alt="${esc(item.title)}" loading="lazy"></div>
       <h3>${esc(item.title)}</h3>
       <p>${esc(item.venue)}</p>
+      <p class="date">${esc(item.date)}</p>
     </a>
   `).join("");
 
