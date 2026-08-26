@@ -32,16 +32,16 @@
 .map-copy h3{font-size:23px;line-height:1.25;letter-spacing:-.035em;margin:0 0 12px}
 .map-copy p{font-size:12px;line-height:1.9;color:var(--muted);margin:0 0 8px}
 .map-link{display:inline-flex;align-items:center;align-self:flex-start;margin-top:16px;padding:11px 16px;border-radius:999px;background:var(--ink);color:#fff;font-size:9px}
-.related-rail{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.related{display:block}
-.related-image{aspect-ratio:4/5;background:var(--warm);overflow:hidden;margin-bottom:14px}
-.related-image img{width:100%;height:100%;object-fit:cover}
-.related .status{font-size:8px;letter-spacing:.08em;color:var(--muted2);margin-bottom:7px}
-.related h3{font-size:13px;line-height:1.45;margin:0 0 6px}
-.related p{font-size:9px;color:var(--muted);margin:0;line-height:1.5}
+
+
+
+
+
+
+
 .exhibition-hero.landscape{height:min(82svh,68vw);min-height:520px}
 .exhibition-hero.landscape img{object-fit:cover;object-position:center}
-@media (max-width:720px){.exhibition-hero{height:82svh;min-height:620px}.exhibition-hero.landscape{height:min(72svh,82vw);min-height:460px}.exhibition-hero img{object-position:center 45%}.hero-content{bottom:64px}.hero-content h1{font-size:24px;line-height:1.14;max-width:92%;margin-bottom:12px}.hero-venue{font-size:11px}.hero-meta{font-size:8px;margin-bottom:10px}.detail-sheet{margin-top:-30px;border-radius:28px 28px 0 0;padding:36px 0 68px}.lead-grid{display:block}.lead{font-size:16px;line-height:1.85}.body-copy{font-size:11px;line-height:1.9;margin-top:18px}.info-card{margin-top:30px;border-radius:20px;padding:4px 18px}.info-row{grid-template-columns:72px 1fr;padding:15px 0;gap:12px}.info-row dt{font-size:7px}.info-row dd{font-size:10px}.section{padding-top:56px}.section-head{margin-bottom:18px}.section-title h2{font-size:24px}.map-card{display:block;min-height:0;border-radius:22px}.map-visual{height:250px}.map-copy{padding:24px}.map-copy h3{font-size:20px}.map-copy p{font-size:10px}.related-rail{display:flex;overflow-x:auto;gap:12px;padding-bottom:8px;scrollbar-width:none}.related{min-width:68vw}}
+@media (max-width:720px){.exhibition-hero{height:82svh;min-height:620px}.exhibition-hero.landscape{height:min(72svh,82vw);min-height:460px}.exhibition-hero img{object-position:center 45%}.hero-content{bottom:64px}.hero-content h1{font-size:24px;line-height:1.14;max-width:92%;margin-bottom:12px}.hero-venue{font-size:11px}.hero-meta{font-size:8px;margin-bottom:10px}.detail-sheet{margin-top:-30px;border-radius:28px 28px 0 0;padding:36px 0 68px}.lead-grid{display:block}.lead{font-size:16px;line-height:1.85}.body-copy{font-size:11px;line-height:1.9;margin-top:18px}.info-card{margin-top:30px;border-radius:20px;padding:4px 18px}.info-row{grid-template-columns:72px 1fr;padding:15px 0;gap:12px}.info-row dt{font-size:7px}.info-row dd{font-size:10px}.section{padding-top:56px}.section-head{margin-bottom:18px}.section-title h2{font-size:24px}.map-card{display:block;min-height:0;border-radius:22px}.map-visual{height:250px}.map-copy{padding:24px}.map-copy h3{font-size:20px}.map-copy p{font-size:10px}}
 .exhibition-hero, .exhibition-hero.landscape{
   height:70svh !important;
   min-height:0 !important;
@@ -142,17 +142,12 @@
   }.exhibition-sheet-venue{
     font-size:10px;
   }}
-.exhibition-sheet-venue, .kicker, .info-row dt, .section-title small, .more, .map-copy p, .map-link, .related .status, .related p{
-  font-size:14px;
-}
+.exhibition-sheet-venue, .kicker, .info-row dt, .section-title small, .more, .map-copy p, .map-link, .related .status,
 .body-copy, .info-row dd{
   font-size:16px;
   line-height:1.8;
 }
-.related h3{
-  font-size:16px;
-  line-height:1.5;
-}
+
 .exhibition-sheet-title{
   font-size:24px;
   line-height:1.2;
@@ -160,24 +155,16 @@
 .section-title h2{
   font-size:24px;
 }
-@media (max-width:720px){.exhibition-sheet-venue, .kicker, .info-row dt, .section-title small, .more, .map-copy p, .map-link, .related .status, .related p{
-    font-size:14px;
-  }.body-copy, .info-row dd{
+@media (max-width:720px){.exhibition-sheet-venue, .kicker, .info-row dt, .section-title small, .more, .map-copy p, .map-link, .related .status, .body-copy, .info-row dd{
     font-size:16px;
     line-height:1.8;
-  }.related h3{
-    font-size:16px;
   }.exhibition-sheet-title{
     font-size:24px;
   }.section-title h2{
     font-size:24px;
   }}
-.kicker, .info-row dt, .section-title small, .more, .map-link, .related .status, .related p{
-  font-size:12px;
-}
-.exhibition-sheet-venue, .body-copy, .info-row dd, .map-copy p, .related h3{
-  font-size:14px;
-}
+.kicker, .info-row dt, .section-title small, .more, .map-link, .related .status,
+.exhibition-sheet-venue, .body-copy, .info-row dd, .map-copy p,
 .exhibition-sheet-title{
   font-size:24px;
   line-height:1.2;
@@ -188,27 +175,15 @@
 .body-copy, .info-row dd{
   line-height:1.75;
 }
-.related h3{
-  line-height:1.5;
-}
-@media (max-width:720px){.kicker, .info-row dt, .section-title small, .more, .map-link, .related .status, .related p{
-    font-size:12px;
-  }.exhibition-sheet-venue, .body-copy, .info-row dd, .map-copy p, .related h3{
-    font-size:14px;
-  }.exhibition-sheet-title{
+
+@media (max-width:720px){.kicker, .info-row dt, .section-title small, .more, .map-link, .related .status, .exhibition-sheet-venue, .body-copy, .info-row dd, .map-copy p, .exhibition-sheet-title{
     font-size:24px;
   }.section-title h2{
     font-size:22px;
   }}
-.kicker, .section-title small, .related .status{
-  font-size:10px;
-}
-.exhibition-sheet-venue, .info-row dt, .more, .map-copy p, .map-link, .related p{
-  font-size:12px;
-}
-.body-copy, .info-row dd, .related h3{
-  font-size:14px;
-}
+.kicker, .section-title small,
+.exhibition-sheet-venue, .info-row dt, .more, .map-copy p, .map-link,
+.body-copy, .info-row dd,
 .body-copy, .info-row dd{
   line-height:1.75;
 }
@@ -219,13 +194,7 @@
 .section-title h2{
   font-size:24px;
 }
-@media (max-width:720px){.kicker, .section-title small, .related .status{
-    font-size:10px;
-  }.exhibition-sheet-venue, .info-row dt, .more, .map-copy p, .map-link, .related p{
-    font-size:12px;
-  }.body-copy, .info-row dd, .related h3{
-    font-size:14px;
-  }.exhibition-sheet-title{
+@media (max-width:720px){.kicker, .section-title small, .exhibition-sheet-venue, .info-row dt, .more, .map-copy p, .map-link, .body-copy, .info-row dd, .exhibition-sheet-title{
     font-size:24px;
   }.section-title h2{
     font-size:22px;
