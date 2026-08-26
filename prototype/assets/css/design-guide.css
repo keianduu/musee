@@ -379,7 +379,7 @@ main{padding:72px 0 120px}
 .demo-footer-nav{
   min-height:72px;
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(5,1fr);
 }
 .demo-nav-item{
   display:flex;
