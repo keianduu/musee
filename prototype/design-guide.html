@@ -7,7 +7,7 @@
 <meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
 <title>Musee — Global Design Guide</title>
 
-<link href="./assets/css/musee-global.css?v=20260826-01" rel="stylesheet"/><link href="./assets/css/design-guide.css?v=20260826-01" rel="stylesheet"/></head>
+<link href="./assets/css/musee-global.css?v=20260826-03" rel="stylesheet"/><link href="./assets/css/design-guide.css?v=20260826-03" rel="stylesheet"/></head>
 <body class="design-guide-page">
 <header class="guide-header">
 <div class="shell guide-header-inner">
@@ -193,7 +193,7 @@
 <section class="section" id="navigation">
 <div class="section-head">
 <div><small>Navigation</small><h2>Shared navigation states</h2></div>
-<p>Header / Bottom Navigationはページごとに作り直さず共通利用する。Heroの有無に応じてHeaderの状態だけ切り替える。</p>
+<p>Header / Bottom Navigationはページごとに作り直さず共通利用する。Headerのロゴ・右上アクション・アイコンは全ページで統一し、Heroの有無に応じて表示状態だけ切り替える。</p>
 </div>
 <div class="nav-demo-grid">
 <div class="nav-demo hero-state">
@@ -310,7 +310,7 @@
 <div class="global-rule"><strong>1. 4px Grid</strong><p>Spacing・高さ・Paddingは4px単位を優先。光学調整は例外として許容。</p></div>
 <div class="global-rule"><strong>2. Art first</strong><p>作品画像をUI装飾より優先。UIの色数を抑え、画像が色を担う。</p></div>
 <div class="global-rule"><strong>3. 14 / 12 / 10</strong><p>Primary 14px、Secondary 12px、英字・Label・Status等のTertiary 10px。</p></div>
-<div class="global-rule"><strong>4. Shared navigation</strong><p>Header / Bottom Navigationは共通Componentとして扱い、ページごとに別Versionを作らない。</p></div>
+<div class="global-rule"><strong>4. Shared navigation</strong><p>Header / Bottom Navigationは共通Componentとして扱い、ロゴ・右上アクション・アイコンを含めページごとに別Versionを作らない。</p></div>
 <div class="global-rule"><strong>5. Stable images</strong><p>実機Browser UIの出入りで画像サイズが変わらないこと。scroll/resizeによる動的画像Scaleは禁止。</p></div>
 <div class="global-rule"><strong>6. Quiet motion</strong><p>Motionは初期Hero・Navigation状態変化など、意味がある場所だけに限定。</p></div>
 <div class="global-rule"><strong>7. Natural ratios</strong><p>展示・作品画像は自然比率を維持。Coverは意図的なBrand Photoなどに限定。</p></div>
@@ -395,5 +395,5 @@ Breakpoints: 980px / 720px</pre></div>
   }
 }
 </script>
-<script src="./assets/js/musee-global.js?v=20260826-01"></script></body>
+<script src="./assets/js/musee-global.js?v=20260826-03"></script></body>
 </html>

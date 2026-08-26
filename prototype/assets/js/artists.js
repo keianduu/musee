@@ -2,26 +2,7 @@
 (() => {
   "use strict";
 
-  const ARTISTS = [
-    {name:"草間彌生",category:["現代美術"],origin:"日本人",country:"日本",eras:["20世紀後半","2000年代以降"],image:"./assets/images/exhibitions/exhibition-01.jpg"},
-    {name:"奈良美智",category:["現代美術"],origin:"日本人",country:"日本",eras:["20世紀後半","2000年代以降"],image:"./assets/images/exhibitions/exhibition-02.jpg"},
-    {name:"村上隆",category:["現代美術","ポップアート"],origin:"日本人",country:"日本",eras:["20世紀後半","2000年代以降"],image:"./assets/images/exhibitions/exhibition-03.jpg"},
-    {name:"杉本博司",category:["現代美術"],origin:"日本人",country:"日本",eras:["20世紀後半","2000年代以降"],image:"./assets/images/exhibitions/exhibition-04.jpg"},
-    {name:"塩田千春",category:["現代美術"],origin:"日本人",country:"日本",eras:["20世紀後半","2000年代以降"],image:"./assets/images/exhibitions/exhibition-05.jpg"},
-    {name:"横尾忠則",category:["現代美術","ポップアート"],origin:"日本人",country:"日本",eras:["20世紀後半","2000年代以降"],image:"./assets/images/exhibitions/exhibition-06.jpg"},
-    {name:"葛飾北斎",category:["日本美術"],origin:"日本人",country:"日本",eras:["19世紀以前","19世紀"],image:"./assets/images/exhibitions/exhibition-07.jpg"},
-    {name:"アンディ・ウォーホル",category:["ポップアート","現代美術"],origin:"外国人",country:"アメリカ",eras:["20世紀後半"],image:"./assets/images/exhibitions/exhibition-08.jpg"},
-    {name:"デイヴィッド・ホックニー",category:["現代美術","ポップアート"],origin:"外国人",country:"イギリス",eras:["20世紀後半","2000年代以降"],image:"./assets/images/exhibitions/exhibition-09.jpg"},
-    {name:"バンクシー",category:["現代美術"],origin:"外国人",country:"イギリス",eras:["20世紀後半","2000年代以降"],image:"./assets/images/exhibitions/exhibition-01.jpg"},
-    {name:"ゲルハルト・リヒター",category:["現代美術"],origin:"外国人",country:"ドイツ",eras:["20世紀後半","2000年代以降"],image:"./assets/images/exhibitions/exhibition-02.jpg"},
-    {name:"クロード・モネ",category:["印象派"],origin:"外国人",country:"フランス",eras:["19世紀","20世紀前半"],image:"./assets/images/exhibitions/exhibition-03.jpg"},
-    {name:"エドガー・ドガ",category:["印象派"],origin:"外国人",country:"フランス",eras:["19世紀","20世紀前半"],image:"./assets/images/exhibitions/exhibition-04.jpg"},
-    {name:"ピエール＝オーギュスト・ルノワール",category:["印象派"],origin:"外国人",country:"フランス",eras:["19世紀","20世紀前半"],image:"./assets/images/exhibitions/exhibition-05.jpg"},
-    {name:"フィンセント・ファン・ゴッホ",category:["ポスト印象派"],origin:"外国人",country:"オランダ",eras:["19世紀"],image:"./assets/images/exhibitions/exhibition-06.jpg"},
-    {name:"ポール・セザンヌ",category:["ポスト印象派"],origin:"外国人",country:"フランス",eras:["19世紀","20世紀前半"],image:"./assets/images/exhibitions/exhibition-07.jpg"},
-    {name:"パブロ・ピカソ",category:["近代美術"],origin:"外国人",country:"スペイン",eras:["20世紀前半","20世紀後半"],image:"./assets/images/exhibitions/exhibition-08.jpg"},
-    {name:"フリーダ・カーロ",category:["近代美術"],origin:"外国人",country:"メキシコ",eras:["20世紀前半"],image:"./assets/images/exhibitions/exhibition-09.jpg"}
-  ];
+  const ARTISTS = window.MuseeArtistCatalog || [];
 
   const grid = document.querySelector("[data-artist-grid]");
   const count = document.querySelector("[data-artist-count]");
@@ -83,7 +64,7 @@
     const artists = filteredArtists();
     grid.innerHTML = artists.map(artist => `
       <a class="artist-card" href="#" aria-label="${esc(artist.name)}">
-        <div class="artist-avatar"><img src="${esc(artist.image)}" alt="" loading="lazy"></div>
+        <div class="artist-avatar"><img src="${esc(artist.image)}" alt="" loading="lazy" style="object-position:${esc(artist.position || 'center')}"></div>
         <strong>${esc(artist.name)}</strong>
         <span>${esc(primaryMeta(artist))}</span>
       </a>

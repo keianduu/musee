@@ -15,17 +15,6 @@
   color:var(--ink);
   background:rgba(38,37,34,.045);
 }
-.artist-profile-placeholder{
-  display:grid;
-  place-items:center;
-  background:var(--ink)!important;
-  color:#fff;
-}
-.artist-profile-placeholder span{
-  font-size:10px;
-  font-weight:650;
-  line-height:1;
-}
 .artists-page main{padding-top:76px}
 .artists-intro{
   padding:68px 0 34px;
