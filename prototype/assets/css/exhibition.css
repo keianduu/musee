@@ -142,63 +142,66 @@
   }.exhibition-sheet-venue{
     font-size:10px;
   }}
-.exhibition-sheet-venue, .kicker, .info-row dt, .section-title small, .more, .map-copy p, .map-link, .related .status,
-.body-copy, .info-row dd{
-  font-size:16px;
-  line-height:1.8;
+
+/* exhibition-detail-typography:start */
+.kicker,
+.section-title small{
+  font-size:10px;
 }
 
-.exhibition-sheet-title{
-  font-size:24px;
-  line-height:1.2;
+.exhibition-sheet-venue,
+.info-row dt,
+.more,
+.map-copy p,
+.map-link{
+  font-size:12px;
 }
-.section-title h2{
-  font-size:24px;
-}
-@media (max-width:720px){.exhibition-sheet-venue, .kicker, .info-row dt, .section-title small, .more, .map-copy p, .map-link, .related .status, .body-copy, .info-row dd{
-    font-size:16px;
-    line-height:1.8;
-  }.exhibition-sheet-title{
-    font-size:24px;
-  }.section-title h2{
-    font-size:24px;
-  }}
-.kicker, .info-row dt, .section-title small, .more, .map-link, .related .status,
-.exhibition-sheet-venue, .body-copy, .info-row dd, .map-copy p,
-.exhibition-sheet-title{
-  font-size:24px;
-  line-height:1.2;
-}
-.section-title h2{
-  font-size:24px;
-}
-.body-copy, .info-row dd{
+
+.body-copy,
+.info-row dd{
+  font-size:14px;
   line-height:1.75;
 }
 
-@media (max-width:720px){.kicker, .info-row dt, .section-title small, .more, .map-link, .related .status, .exhibition-sheet-venue, .body-copy, .info-row dd, .map-copy p, .exhibition-sheet-title{
-    font-size:24px;
-  }.section-title h2{
-    font-size:22px;
-  }}
-.kicker, .section-title small,
-.exhibition-sheet-venue, .info-row dt, .more, .map-copy p, .map-link,
-.body-copy, .info-row dd,
-.body-copy, .info-row dd{
-  line-height:1.75;
-}
 .exhibition-sheet-title{
   font-size:24px;
   line-height:1.2;
 }
+
 .section-title h2{
   font-size:24px;
 }
-@media (max-width:720px){.kicker, .section-title small, .exhibition-sheet-venue, .info-row dt, .more, .map-copy p, .map-link, .body-copy, .info-row dd, .exhibition-sheet-title{
+
+@media(max-width:720px){
+  .kicker,
+  .section-title small{
+    font-size:10px;
+  }
+
+  .exhibition-sheet-venue,
+  .info-row dt,
+  .more,
+  .map-copy p,
+  .map-link{
+    font-size:12px;
+  }
+
+  .body-copy,
+  .info-row dd{
+    font-size:14px;
+    line-height:1.75;
+  }
+
+  .exhibition-sheet-title{
     font-size:24px;
-  }.section-title h2{
+  }
+
+  .section-title h2{
     font-size:22px;
-  }}
+  }
+}
+/* exhibition-detail-typography:end */
+
 .exhibition-hero, .exhibition-hero.landscape{
   height:auto !important;
   min-height:0 !important;
