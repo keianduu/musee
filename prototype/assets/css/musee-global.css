@@ -1,0 +1,295 @@
+/*
+  Musee Global CSS
+  Shared by all prototype pages.
+  Page-specific CSS should be loaded after this file.
+*/
+
+:root{
+  --ink:#262522;
+  --muted:#77736d;
+  --muted2:#99948c;
+  --line:#e8e4dd;
+  --warm:#f7f5f1;
+  --greige:#eeeae3;
+  --stone:#d8cec0;
+  --sage:#a8b1a0;
+  --terra:#b96f55;
+  --blue:#99a9b4;
+  --white:#fff;
+
+  --radius-sm:12px;
+  --radius-md:18px;
+  --radius-lg:28px;
+  --shadow:0 12px 34px rgba(38,37,34,.08);
+
+  --sans:"Helvetica Neue",Helvetica,Arial,"Hiragino Sans","Yu Gothic",sans-serif;
+  --fs-primary:14px;
+  --fs-secondary:12px;
+  --fs-tertiary:10px;
+
+  --max:1240px;
+  --motion-fast:180ms;
+  --motion-ui:260ms;
+  --motion-hero:10s;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:#fff;
+  color:var(--ink);
+  font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+img{display:block;max-width:100%}
+svg{display:block}
+.shell{width:min(var(--max),calc(100% - 64px));margin:auto}
+
+/* ---------- Shared Header ---------- */
+.site-header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:4;
+  height:76px;
+  background:transparent;
+  border-bottom:0;
+  color:#fff;
+  text-shadow:0 1px 8px rgba(0,0,0,.22);
+  transition:
+    background-color var(--motion-ui) ease,
+    color var(--motion-ui) ease,
+    box-shadow var(--motion-ui) ease,
+    border-color var(--motion-ui) ease;
+}
+.header-inner{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.logo{
+  font-size:26px;
+  font-weight:700;
+  letter-spacing:-.06em;
+  color:#fff;
+}
+.header-actions{display:flex;align-items:center;gap:8px}
+.icon-button{
+  width:40px;
+  height:40px;
+  border:0;
+  background:rgba(255,255,255,.10);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  position:relative;
+  cursor:pointer;
+  color:#fff;
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+}
+.icon-button:hover{background:rgba(255,255,255,.18)}
+.icon-button svg,
+.nav-item svg{
+  width:21px;
+  height:21px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.65;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.notice-dot{
+  position:absolute;
+  right:6px;
+  top:5px;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--terra);
+  border:1px solid rgba(255,255,255,.9);
+}
+.site-header .avatar{
+  width:38px;
+  height:38px;
+  border-radius:999px;
+  overflow:hidden;
+  padding:0;
+  border:none;
+  box-shadow:none;
+  background:transparent;
+}
+.site-header .avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center 40%;
+}
+
+/* White header revealed when the content sheet reaches the header zone. */
+.site-header.is-over-sheet{
+  z-index:60;
+  background:rgba(255,255,255,.94);
+  color:var(--ink);
+  border-bottom:1px solid rgba(38,37,34,.07);
+  box-shadow:0 5px 18px rgba(38,37,34,.055);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  text-shadow:none;
+}
+.site-header.is-over-sheet .logo{
+  color:var(--ink);
+  text-shadow:none;
+}
+.site-header.is-over-sheet .icon-button{
+  color:var(--ink);
+  background:rgba(38,37,34,.045);
+  text-shadow:none;
+}
+.site-header.is-over-sheet .icon-button:hover{
+  background:rgba(38,37,34,.075);
+}
+.site-header.is-over-sheet .avatar{
+  background:transparent;
+  border:none;
+  box-shadow:none;
+}
+.site-header.is-over-sheet .notice-dot{border-color:#fff}
+
+/* ---------- Shared Bottom Navigation ---------- */
+.footer{
+  margin-top:94px;
+  border-top:1px solid var(--line);
+  background:#fff;
+}
+.footer-inner{
+  height:92px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.footer-nav{
+  display:grid;
+  grid-template-columns:repeat(4,auto);
+  gap:62px;
+}
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-size:var(--fs-tertiary);
+  color:var(--muted);
+}
+.nav-item.active{
+  color:var(--ink);
+  font-weight:650;
+}
+
+/* ---------- Shared Pills ---------- */
+.musee-pill{
+  width:max-content;
+  min-height:28px;
+  padding:6px 10px;
+  border-radius:999px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:var(--fs-tertiary);
+  line-height:1;
+  letter-spacing:.06em;
+  white-space:nowrap;
+}
+.musee-pill--neutral{
+  background:var(--warm);
+  color:var(--muted);
+}
+.musee-pill--status{
+  background:rgba(185,111,85,.11);
+  color:var(--terra);
+}
+
+/* ---------- Shared Masonry primitives ---------- */
+.musee-masonry-grid{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+}
+.musee-masonry-item{
+  position:absolute;
+  overflow:hidden;
+  border-radius:0;
+  background:#f5f2ec;
+}
+.musee-masonry-item img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* ---------- Shared Motion ---------- */
+@keyframes museeHeroZoomOut{
+  0%{transform:scale(1.08)}
+  100%{transform:scale(1)}
+}
+
+@media(max-width:980px){
+  .shell{width:min(100% - 40px,820px)}
+}
+
+@media(max-width:720px){
+  body.musee-app{padding-bottom:72px}
+  .shell{width:calc(100% - 36px)}
+  .site-header{height:62px}
+  .logo{font-size:21px}
+  .icon-button{
+    width:34px;
+    height:34px;
+    background:rgba(255,255,255,.09);
+  }
+  .site-header .avatar{
+    width:32px;
+    height:32px;
+  }
+  .site-header.is-over-sheet{
+    background:rgba(255,255,255,.96);
+  }
+
+  .footer{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:90;
+    margin:0;
+    background:rgba(255,255,255,.96);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .footer-inner{
+    height:72px;
+    width:100%;
+  }
+  .footer-nav{
+    width:100%;
+    grid-template-columns:repeat(4,1fr);
+    gap:0;
+  }
+  .nav-item{
+    flex-direction:column;
+    gap:4px;
+    justify-content:center;
+    font-size:var(--fs-tertiary);
+  }
+  .nav-item svg{width:21px;height:21px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .site-header{transition:none}
+}
