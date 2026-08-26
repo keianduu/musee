@@ -7,6 +7,12 @@
 
 <!DOCTYPE html>
 
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+
 <html lang="ja">
 <head>
 <meta charset="utf-8"/>
@@ -387,6 +393,236 @@ img{display:block;max-width:100%}
 @media(max-width:720px){
   .detail-sheet{
     margin-top:-2px !important;
+  }
+}
+
+
+/* --- v6 readable typography: visual minimum ~14px --- */
+.exhibition-sheet-meta span,
+.exhibition-sheet-venue,
+.kicker,
+.info-row dt,
+.section-title small,
+.more,
+.map-copy p,
+.map-link,
+.related .status,
+.related p,
+.nav-item{
+  font-size:14px;
+}
+
+.body-copy,
+.info-row dd{
+  font-size:16px;
+  line-height:1.8;
+}
+
+.related h3{
+  font-size:16px;
+  line-height:1.5;
+}
+
+.exhibition-sheet-title{
+  font-size:24px;
+  line-height:1.2;
+}
+
+.section-title h2{
+  font-size:24px;
+}
+
+@media(max-width:720px){
+  .exhibition-sheet-meta span,
+  .exhibition-sheet-venue,
+  .kicker,
+  .info-row dt,
+  .section-title small,
+  .more,
+  .map-copy p,
+  .map-link,
+  .related .status,
+  .related p,
+  .nav-item{
+    font-size:14px;
+  }
+
+  .body-copy,
+  .info-row dd{
+    font-size:16px;
+    line-height:1.8;
+  }
+
+  .related h3{
+    font-size:16px;
+  }
+
+  .exhibition-sheet-title{
+    font-size:24px;
+  }
+
+  .section-title h2{
+    font-size:24px;
+  }
+}
+
+
+/* --- v7 balanced typography: 14px primary / 12px supporting --- */
+
+/* Supporting labels / English / metadata */
+.exhibition-sheet-meta span,
+.kicker,
+.info-row dt,
+.section-title small,
+.more,
+.map-link,
+.related .status,
+.related p,
+.nav-item{
+  font-size:12px;
+}
+
+/* Primary information */
+.exhibition-sheet-venue,
+.body-copy,
+.info-row dd,
+.map-copy p,
+.related h3{
+  font-size:14px;
+}
+
+/* Main titles */
+.exhibition-sheet-title{
+  font-size:24px;
+  line-height:1.2;
+}
+
+.section-title h2{
+  font-size:24px;
+}
+
+/* Reading rhythm */
+.body-copy,
+.info-row dd{
+  line-height:1.75;
+}
+
+.related h3{
+  line-height:1.5;
+}
+
+@media(max-width:720px){
+  .exhibition-sheet-meta span,
+  .kicker,
+  .info-row dt,
+  .section-title small,
+  .more,
+  .map-link,
+  .related .status,
+  .related p,
+  .nav-item{
+    font-size:12px;
+  }
+
+  .exhibition-sheet-venue,
+  .body-copy,
+  .info-row dd,
+  .map-copy p,
+  .related h3{
+    font-size:14px;
+  }
+
+  .exhibition-sheet-title{
+    font-size:24px;
+  }
+
+  .section-title h2{
+    font-size:22px;
+  }
+}
+
+
+/* --- v8 refined typography: 14 primary / 12 secondary / 10 tertiary --- */
+
+/* 10px: English/label/status metadata */
+.exhibition-sheet-meta span,
+.kicker,
+.section-title small,
+.related .status,
+.nav-item{
+  font-size:10px;
+}
+
+/* 12px: secondary information */
+.exhibition-sheet-venue,
+.info-row dt,
+.more,
+.map-copy p,
+.map-link,
+.related p{
+  font-size:12px;
+}
+
+/* 14px: primary reading information */
+.body-copy,
+.info-row dd,
+.related h3{
+  font-size:14px;
+}
+
+.body-copy,
+.info-row dd{
+  line-height:1.75;
+}
+
+.exhibition-sheet-title{
+  font-size:24px;
+  line-height:1.2;
+}
+
+.section-title h2{
+  font-size:24px;
+}
+
+/* Status pill is the canonical Musee treatment. */
+.exhibition-sheet-meta span{
+  min-height:28px;
+  padding:6px 10px;
+  border-radius:999px;
+  line-height:1;
+  letter-spacing:.06em;
+}
+
+@media(max-width:720px){
+  .exhibition-sheet-meta span,
+  .kicker,
+  .section-title small,
+  .related .status,
+  .nav-item{
+    font-size:10px;
+  }
+
+  .exhibition-sheet-venue,
+  .info-row dt,
+  .more,
+  .map-copy p,
+  .map-link,
+  .related p{
+    font-size:12px;
+  }
+
+  .body-copy,
+  .info-row dd,
+  .related h3{
+    font-size:14px;
+  }
+
+  .exhibition-sheet-title{
+    font-size:24px;
+  }
+
+  .section-title h2{
+    font-size:22px;
   }
 }
 </style>

@@ -35,6 +35,12 @@
 
 <!DOCTYPE html>
 
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+
 <html lang="ja">
 <head>
 <meta charset="utf-8"/>
@@ -1026,6 +1032,304 @@ Once the sheet reaches the header line:
     width:48px !important;
     height:48px !important;
     flex-basis:48px;
+  }
+}
+
+
+/* --- v35 readable typography: visual minimum ~14px --- */
+.hero .eyebrow,
+.section-title-wrap small,
+.more,
+.artist span,
+.poster-status,
+.poster-card p,
+.poster-card .date,
+.map-label,
+.pin,
+.museum-card p,
+.artwall-copy p,
+.stat span,
+.cta,
+.nav-item,
+.musee-popup-kicker,
+.musee-popup-meta,
+.musee-popup-link{
+  font-size:14px;
+}
+
+.hero p{
+  font-size:16px;
+}
+
+.artist strong,
+.poster-card h3,
+.museum-card strong,
+.musee-popup-title{
+  font-size:16px;
+}
+
+.section-head h2{
+  font-size:32px;
+}
+
+.artwall-owner-label{
+  font-size:14px;
+}
+
+.artwall-owner-title{
+  font-size:32px;
+}
+
+.musee-map-marker{
+  font-size:14px;
+}
+
+@media(max-width:720px){
+  .hero .eyebrow,
+  .section-title-wrap small,
+  .more,
+  .artist span,
+  .poster-status,
+  .poster-card p,
+  .poster-card .date,
+  .map-label,
+  .pin,
+  .museum-card p,
+  .artwall-copy p,
+  .stat span,
+  .cta,
+  .nav-item,
+  .musee-popup-kicker,
+  .musee-popup-meta,
+  .musee-popup-link{
+    font-size:14px;
+  }
+
+  .hero p{
+    font-size:14px;
+    line-height:1.65;
+    max-width:340px;
+  }
+
+  .artist strong,
+  .poster-card h3,
+  .museum-card strong,
+  .musee-popup-title{
+    font-size:16px;
+  }
+
+  .section-head h2{
+    font-size:24px;
+  }
+
+  .artwall-owner-label{
+    font-size:14px;
+  }
+
+  .artwall-owner-title{
+    font-size:24px;
+  }
+}
+
+
+/* --- v36 balanced typography: 14px primary / 12px supporting --- */
+
+/* Supporting / English / metadata */
+.hero .eyebrow,
+.section-title-wrap small,
+.more,
+.artist span,
+.poster-status,
+.poster-card .date,
+.map-label,
+.pin,
+.museum-card p,
+.stat span,
+.artwall-owner-label,
+.musee-popup-kicker,
+.musee-popup-meta,
+.musee-popup-link,
+.cta,
+.nav-item{
+  font-size:12px;
+}
+
+/* Primary reading text */
+.hero p,
+.artist strong,
+.poster-card h3,
+.poster-card p,
+.museum-card strong,
+.artwall-copy p,
+.musee-popup-title{
+  font-size:14px;
+}
+
+/* Headings */
+.section-head h2{
+  font-size:28px;
+}
+
+.artwall-owner-title{
+  font-size:28px;
+}
+
+.musee-map-marker{
+  font-size:12px;
+}
+
+@media(max-width:720px){
+  .hero .eyebrow,
+  .section-title-wrap small,
+  .more,
+  .artist span,
+  .poster-status,
+  .poster-card .date,
+  .map-label,
+  .pin,
+  .museum-card p,
+  .stat span,
+  .artwall-owner-label,
+  .musee-popup-kicker,
+  .musee-popup-meta,
+  .musee-popup-link,
+  .cta,
+  .nav-item{
+    font-size:12px;
+  }
+
+  .hero p,
+  .artist strong,
+  .poster-card h3,
+  .poster-card p,
+  .museum-card strong,
+  .artwall-copy p,
+  .musee-popup-title{
+    font-size:14px;
+  }
+
+  .section-head h2{
+    font-size:22px;
+  }
+
+  .artwall-owner-title{
+    font-size:24px;
+  }
+}
+
+
+/* --- v37 refined typography: 14 primary / 12 secondary / 10 tertiary --- */
+
+/* 10px: English eyebrows, statuses, dates, tiny UI metadata */
+.hero .eyebrow,
+.section-title-wrap small,
+.artist span,
+.poster-status,
+.poster-card .date,
+.map-label,
+.pin,
+.stat span,
+.artwall-owner-label,
+.musee-popup-kicker,
+.musee-popup-meta,
+.musee-popup-link,
+.nav-item{
+  font-size:10px;
+}
+
+/* 12px: secondary information / actions */
+.more,
+.poster-card p,
+.museum-card p,
+.artwall-copy p,
+.cta{
+  font-size:12px;
+}
+
+/* 14px: primary reading information */
+.hero p,
+.artist strong,
+.poster-card h3,
+.museum-card strong,
+.musee-popup-title{
+  font-size:14px;
+}
+
+/* Section hierarchy */
+.section-head h2{
+  font-size:28px;
+}
+.artwall-owner-title{
+  font-size:28px;
+}
+
+/* Match exhibition-detail status pill */
+.poster-status{
+  width:max-content;
+  min-height:28px;
+  padding:6px 10px;
+  margin-bottom:8px;
+  border-radius:999px;
+  background:var(--warm);
+  color:var(--muted);
+  display:inline-flex;
+  align-items:center;
+  gap:0;
+  line-height:1;
+  letter-spacing:.06em;
+  text-transform:none;
+}
+.poster-status i{
+  display:none;
+}
+.poster-status:has(i.now){
+  background:rgba(185,111,85,.11);
+  color:var(--terra);
+}
+
+.musee-map-marker{
+  font-size:10px;
+}
+
+@media(max-width:720px){
+  .hero .eyebrow,
+  .section-title-wrap small,
+  .artist span,
+  .poster-status,
+  .poster-card .date,
+  .map-label,
+  .pin,
+  .stat span,
+  .artwall-owner-label,
+  .musee-popup-kicker,
+  .musee-popup-meta,
+  .musee-popup-link,
+  .nav-item{
+    font-size:10px;
+  }
+
+  .more,
+  .poster-card p,
+  .museum-card p,
+  .artwall-copy p,
+  .cta{
+    font-size:12px;
+  }
+
+  .hero p,
+  .artist strong,
+  .poster-card h3,
+  .museum-card strong,
+  .musee-popup-title{
+    font-size:14px;
+  }
+
+  .section-head h2{
+    font-size:22px;
+  }
+
+  .artwall-owner-title{
+    font-size:24px;
   }
 }
 </style>
