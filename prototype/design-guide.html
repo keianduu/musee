@@ -1,0 +1,965 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Musee — Global Design Guide</title>
+<style>
+:root{
+  /* Brand / surface */
+  --ink:#262522;
+  --muted:#77736d;
+  --muted-2:#99948c;
+  --line:#e8e4dd;
+  --warm:#f7f5f1;
+  --greige:#eeeae3;
+  --stone:#d8cec0;
+  --terra:#b96f55;
+  --blue:#99a9b4;
+  --white:#fff;
+
+  /* Typography */
+  --sans:"Helvetica Neue",Helvetica,Arial,"Hiragino Sans","Yu Gothic",sans-serif;
+  --fs-primary:14px;
+  --fs-secondary:12px;
+  --fs-tertiary:10px;
+
+  /* Geometry */
+  --radius-sm:12px;
+  --radius-md:18px;
+  --radius-lg:28px;
+  --max:1240px;
+
+  /* Motion */
+  --motion-fast:180ms;
+  --motion-ui:260ms;
+  --motion-hero:10s;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--warm);
+  color:var(--ink);
+  font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+img{max-width:100%;display:block}
+svg{display:block}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+.shell{width:min(var(--max),calc(100% - 64px));margin:auto}
+
+/* Guide header */
+.guide-header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(255,255,255,.92);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(14px);
+}
+.guide-header-inner{
+  min-height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+}
+.brand{font-size:26px;font-weight:700;letter-spacing:-.06em}
+.guide-meta{font-size:var(--fs-tertiary);letter-spacing:.10em;text-transform:uppercase;color:var(--muted)}
+.guide-nav{display:flex;gap:20px;flex-wrap:wrap}
+.guide-nav a{font-size:var(--fs-secondary);color:var(--muted)}
+.guide-nav a:hover{color:var(--ink)}
+
+main{padding:72px 0 120px}
+.intro{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(280px,.55fr);
+  gap:48px;
+  align-items:end;
+  padding:24px 0 64px;
+}
+.eyebrow{
+  font-size:var(--fs-tertiary);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:12px;
+}
+.intro h1{
+  margin:0;
+  max-width:820px;
+  font-size:54px;
+  line-height:.96;
+  letter-spacing:-.065em;
+  font-weight:650;
+}
+.intro p{
+  margin:0;
+  font-size:14px;
+  line-height:1.8;
+  color:var(--muted);
+}
+.rule-pills{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:24px;
+}
+.rule-pill{
+  font-size:10px;
+  min-height:28px;
+  padding:7px 10px;
+  display:inline-flex;
+  align-items:center;
+  border-radius:999px;
+  background:#fff;
+  border:1px solid var(--line);
+  color:var(--muted);
+}
+
+.section{
+  margin-top:28px;
+  padding:48px;
+  background:#fff;
+  border-radius:28px;
+  border:1px solid rgba(38,37,34,.045);
+}
+.section-head{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:32px;
+  margin-bottom:36px;
+}
+.section-head small{
+  display:block;
+  margin-bottom:8px;
+  color:var(--muted);
+  font-size:10px;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+.section-head h2{
+  margin:0;
+  font-size:28px;
+  line-height:1.05;
+  letter-spacing:-.045em;
+  font-weight:650;
+}
+.section-head p{
+  margin:0;
+  max-width:520px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.75;
+}
+
+/* Foundation */
+.swatches{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:12px;
+}
+.swatch{
+  min-height:132px;
+  border-radius:18px;
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  border:1px solid rgba(38,37,34,.06);
+}
+.swatch strong{font-size:12px}
+.swatch span{font-size:10px;margin-top:3px;opacity:.7}
+.swatch.ink{background:var(--ink);color:#fff}
+.swatch.warm{background:var(--warm)}
+.swatch.greige{background:var(--greige)}
+.swatch.terra{background:var(--terra);color:#fff}
+.swatch.white{background:#fff}
+
+.foundation-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+  margin-top:28px;
+}
+.rule-card{
+  padding:24px;
+  border-radius:18px;
+  background:var(--warm);
+}
+.rule-card h3{font-size:14px;margin:0 0 12px}
+.rule-card p{font-size:12px;line-height:1.75;color:var(--muted);margin:0}
+.token-row{
+  display:grid;
+  grid-template-columns:96px 1fr;
+  gap:16px;
+  align-items:baseline;
+  padding:11px 0;
+  border-bottom:1px solid var(--line);
+}
+.token-row:last-child{border-bottom:0}
+.token-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.token-value{font-size:12px}
+
+/* Type */
+.type-stack{display:grid;gap:0}
+.type-sample{
+  display:grid;
+  grid-template-columns:150px 1fr 110px;
+  gap:24px;
+  align-items:center;
+  padding:20px 0;
+  border-bottom:1px solid var(--line);
+}
+.type-sample:last-child{border-bottom:0}
+.type-name{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.type-value{text-align:right;font-size:10px;color:var(--muted)}
+.type-display{font-size:54px;line-height:.95;letter-spacing:-.065em;font-weight:650}
+.type-section{font-size:28px;line-height:1.05;letter-spacing:-.045em;font-weight:650}
+.type-page{font-size:24px;line-height:1.2;letter-spacing:-.035em;font-weight:650}
+.type-primary{font-size:14px;line-height:1.65;font-weight:600}
+.type-secondary{font-size:12px;line-height:1.7;color:var(--muted)}
+.type-tertiary{font-size:10px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+/* Images */
+.image-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+}
+.image-demo{
+  min-height:360px;
+  padding:24px;
+  border-radius:22px;
+  background:#fff;
+  border:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+.image-stage{
+  flex:1;
+  min-height:250px;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.demo-art{
+  background:
+    radial-gradient(circle at 26% 34%,rgba(185,111,85,.82) 0 11%,transparent 11.5%),
+    linear-gradient(135deg,#d8cec0 0 32%,#f7f5f1 32% 58%,#99a9b4 58% 73%,#262522 73%);
+}
+.demo-art.portrait{width:175px;height:250px}
+.demo-art.landscape{width:100%;height:210px}
+.image-demo strong{font-size:14px}
+.image-demo p{font-size:12px;color:var(--muted);line-height:1.7;margin:0}
+
+.image-rules{
+  margin-top:24px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+.image-rule{
+  padding:18px;
+  background:var(--warm);
+  border-radius:16px;
+}
+.image-rule small{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.image-rule strong{display:block;font-size:14px;margin:8px 0}
+.image-rule p{font-size:12px;line-height:1.65;color:var(--muted);margin:0}
+
+/* Motion */
+.motion-demo{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+.motion-card{
+  position:relative;
+  overflow:hidden;
+  min-height:240px;
+  border-radius:22px;
+  background:var(--ink);
+}
+.motion-visual{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(120deg,rgba(255,255,255,.12),transparent 38%),
+    radial-gradient(circle at 64% 38%,#b96f55 0 9%,transparent 10%),
+    linear-gradient(145deg,#262522,#77736d 46%,#eeeae3);
+  animation:museeHeroZoomOut 10s cubic-bezier(.22,.61,.36,1) forwards;
+}
+@keyframes museeHeroZoomOut{
+  0%{transform:scale(1.08)}
+  100%{transform:scale(1)}
+}
+.motion-caption{
+  position:absolute;
+  left:20px;
+  right:20px;
+  bottom:20px;
+  color:#fff;
+}
+.motion-caption strong{display:block;font-size:14px;margin-bottom:4px}
+.motion-caption span{font-size:10px;opacity:.78}
+.motion-rules{display:grid;gap:12px}
+.do-dont{
+  padding:18px;
+  border-radius:16px;
+  background:var(--warm);
+}
+.do-dont strong{font-size:12px}
+.do-dont p{font-size:12px;line-height:1.7;color:var(--muted);margin:8px 0 0}
+
+/* Header states */
+.nav-demo-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+.nav-demo{
+  min-height:230px;
+  border-radius:22px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  position:relative;
+}
+.nav-demo.hero-state{
+  background:linear-gradient(140deg,#77736d,#262522 64%,#b96f55);
+}
+.nav-demo.sheet-state{background:var(--warm)}
+.demo-site-header{
+  height:64px;
+  padding:0 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.hero-state .demo-site-header{color:#fff}
+.sheet-state .demo-site-header{
+  background:rgba(255,255,255,.94);
+  border-bottom:1px solid rgba(38,37,34,.07);
+  box-shadow:0 5px 18px rgba(38,37,34,.055);
+}
+.demo-logo{font-size:22px;font-weight:700;letter-spacing:-.06em}
+.demo-actions{display:flex;align-items:center;gap:8px}
+.demo-icon,.demo-avatar{
+  width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+}
+.hero-state .demo-icon{background:rgba(255,255,255,.10)}
+.sheet-state .demo-icon{background:rgba(38,37,34,.045)}
+.demo-avatar{
+  background:linear-gradient(135deg,#d8cec0,#77736d);
+  border:0;
+}
+.nav-state-label{
+  position:absolute;
+  left:18px;
+  bottom:18px;
+  font-size:12px;
+  color:var(--muted);
+}
+.hero-state .nav-state-label{color:rgba(255,255,255,.74)}
+
+.bottom-nav-demo{
+  margin-top:22px;
+  padding:42px 22px 22px;
+  border-radius:22px;
+  background:var(--warm);
+}
+.demo-footer{
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);
+}
+.demo-footer-nav{
+  min-height:72px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+.demo-nav-item{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:4px;
+  font-size:10px;
+  color:var(--muted);
+}
+.demo-nav-item.active{color:var(--ink);font-weight:650}
+.demo-nav-item svg{
+  width:21px;height:21px;
+  fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round;
+}
+
+/* Sheet */
+.sheet-demo{
+  height:370px;
+  border-radius:22px;
+  overflow:hidden;
+  position:relative;
+  background:#ddd;
+}
+.sheet-hero{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,#d8cec0,#77736d 48%,#262522);
+}
+.sheet-surface{
+  position:absolute;
+  left:0;right:0;bottom:0;
+  height:46%;
+  border-radius:28px 28px 0 0;
+  background:#fff;
+  padding:26px;
+}
+.sheet-surface small{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.sheet-surface h3{font-size:24px;line-height:1.2;letter-spacing:-.035em;margin:8px 0}
+.sheet-surface p{font-size:12px;color:var(--muted);margin:0}
+
+/* Status */
+.status-row{display:flex;gap:10px;flex-wrap:wrap}
+.status{
+  width:max-content;
+  min-height:28px;
+  padding:6px 10px;
+  border-radius:999px;
+  display:inline-flex;
+  align-items:center;
+  font-size:10px;
+  line-height:1;
+  letter-spacing:.06em;
+  background:var(--warm);
+  color:var(--muted);
+}
+.status.now{
+  background:rgba(185,111,85,.11);
+  color:var(--terra);
+}
+
+/* Masonry */
+.masonry-wrap{
+  padding:28px;
+  background:var(--greige);
+  border-radius:22px;
+}
+.masonry-copy{margin-bottom:20px}
+.masonry-copy small{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.masonry-copy h3{font-size:24px;margin:6px 0 0}
+.masonry{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  align-items:start;
+}
+.m-col{display:grid;gap:8px}
+.m-item{
+  border-radius:0;
+  background:#fff;
+  overflow:hidden;
+}
+.m-item.a{height:150px;background:linear-gradient(145deg,#262522,#b96f55)}
+.m-item.b{height:220px;background:linear-gradient(160deg,#d8cec0,#77736d)}
+.m-item.c{height:110px;background:linear-gradient(120deg,#99a9b4,#eeeae3)}
+.m-item.d{height:185px;background:linear-gradient(150deg,#b96f55,#f7f5f1)}
+.m-item.e{height:130px;background:linear-gradient(160deg,#77736d,#d8cec0)}
+.m-item.f{height:245px;background:linear-gradient(145deg,#eeeae3,#262522)}
+.masonry-note{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+}
+.masonry-note span{
+  font-size:10px;
+  color:var(--muted);
+  padding:10px 12px;
+  border-radius:999px;
+  background:#fff;
+  text-align:center;
+}
+
+/* Reusable rules */
+.global-list{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0 40px;
+}
+.global-rule{
+  padding:18px 0;
+  border-bottom:1px solid var(--line);
+}
+.global-rule strong{font-size:14px}
+.global-rule p{font-size:12px;color:var(--muted);line-height:1.7;margin:7px 0 0}
+
+.code-block{
+  margin-top:28px;
+  background:#211f1c;
+  color:#f5f2ec;
+  padding:24px;
+  border-radius:18px;
+  overflow:auto;
+  font-size:11px;
+  line-height:1.7;
+}
+.footer-note{
+  padding:48px 0 0;
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.7;
+}
+
+@media(max-width:980px){
+  .shell{width:min(100% - 40px,820px)}
+  .intro{grid-template-columns:1fr}
+  .swatches{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:720px){
+  .shell{width:calc(100% - 36px)}
+  .guide-header-inner{min-height:62px}
+  .guide-nav{display:none}
+  main{padding-top:40px}
+  .intro{padding-bottom:32px;gap:24px}
+  .intro h1{font-size:44px}
+  .section{padding:28px 20px;border-radius:22px}
+  .section-head{display:block;margin-bottom:26px}
+  .section-head h2{font-size:22px}
+  .section-head p{margin-top:12px}
+  .swatches{grid-template-columns:1fr 1fr}
+  .foundation-grid,.image-grid,.motion-demo,.nav-demo-grid,.global-list{grid-template-columns:1fr}
+  .image-rules{grid-template-columns:1fr}
+  .type-sample{grid-template-columns:92px 1fr;gap:14px}
+  .type-value{display:none}
+  .type-display{font-size:42px}
+  .type-section{font-size:22px}
+  .masonry{gap:4px}
+  .m-col{gap:4px}
+  .masonry-note{grid-template-columns:1fr 1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .motion-visual{animation:none;transform:none}
+}
+</style>
+</head>
+<body>
+<header class="guide-header">
+  <div class="shell guide-header-inner">
+    <div>
+      <div class="brand">Musee</div>
+      <div class="guide-meta">Global Design Guide · v1</div>
+    </div>
+    <nav class="guide-nav" aria-label="Guide navigation">
+      <a href="#foundation">Foundation</a>
+      <a href="#type">Typography</a>
+      <a href="#images">Images</a>
+      <a href="#motion">Motion</a>
+      <a href="#navigation">Navigation</a>
+      <a href="#masonry">Masonry</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="shell">
+  <section class="intro">
+    <div>
+      <div class="eyebrow">Global visual language</div>
+      <h1>Art first.<br>UI stays quiet.</h1>
+      <div class="rule-pills">
+        <span class="rule-pill">4px Grid</span>
+        <span class="rule-pill">White / Greige Surface</span>
+        <span class="rule-pill">Artwork provides color</span>
+        <span class="rule-pill">14 / 12 / 10 Type</span>
+        <span class="rule-pill">No scroll-linked image scaling</span>
+      </div>
+    </div>
+    <p>
+      Museeのページ展開で共通利用するデザインルール。ページ固有のUIより先にこのガイドを参照し、
+      色・文字・画像・Motion・Navigation・Masonryの挙動を揃える。
+      明示的な仕様変更がない限り、Global Ruleはページごとに独自解釈しない。
+    </p>
+  </section>
+
+  <section class="section" id="foundation">
+    <div class="section-head">
+      <div><small>Foundation</small><h2>Brand / Surface</h2></div>
+      <p>UI自体の色は抑え、作品・展示画像がページの主な色になる。背景は白を基本に、セクション差をWarm / Greigeでつける。</p>
+    </div>
+
+    <div class="swatches">
+      <div class="swatch ink"><strong>Ink</strong><span>#262522</span></div>
+      <div class="swatch warm"><strong>Warm</strong><span>#F7F5F1</span></div>
+      <div class="swatch greige"><strong>Greige</strong><span>#EEEAE3</span></div>
+      <div class="swatch terra"><strong>Terracotta</strong><span>#B96F55</span></div>
+      <div class="swatch white"><strong>White</strong><span>#FFFFFF</span></div>
+    </div>
+
+    <div class="foundation-grid">
+      <div class="rule-card">
+        <h3>Spacing</h3>
+        <p>基本は4px Grid。8 / 12 / 16 / 24 / 28 / 32 / 40 / 48…を優先する。光学的に不自然な場合のみ微調整する。</p>
+      </div>
+      <div class="rule-card">
+        <h3>Shape</h3>
+        <p>UI Surfaceは12〜28pxの角丸を用途に応じて使う。作品画像そのものには装飾的な角丸を付けすぎない。</p>
+      </div>
+      <div class="rule-card">
+        <h3>Shadow</h3>
+        <p>ShadowはNavigationや浮いたSurfaceの階層表現に限定。作品画像・展示メイン画像には原則Shadowを付けない。</p>
+      </div>
+      <div class="rule-card">
+        <h3>Responsive</h3>
+        <p>主な境界は720px / 980px。DesktopのShellは最大1240px、画面端余白はDesktop 32px / Tablet 20px / Mobile 18pxを基本とする。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="type">
+    <div class="section-head">
+      <div><small>Typography</small><h2>One sans-serif system</h2></div>
+      <p>日本語・英字ともゴシック系で統一。視認性を担保しつつ、補足情報まで大きくしすぎず情報密度を保つ。</p>
+    </div>
+
+    <div class="token-row">
+      <div class="token-label">Font stack</div>
+      <div class="token-value">"Helvetica Neue", Helvetica, Arial, "Hiragino Sans", "Yu Gothic", sans-serif</div>
+    </div>
+
+    <div class="type-stack">
+      <div class="type-sample">
+        <div class="type-name">Hero display</div>
+        <div class="type-display">Discover art.</div>
+        <div class="type-value">54px · page-specific</div>
+      </div>
+      <div class="type-sample">
+        <div class="type-name">Section</div>
+        <div class="type-section">おすすめ展示会</div>
+        <div class="type-value">28px / 22px</div>
+      </div>
+      <div class="type-sample">
+        <div class="type-name">Page title</div>
+        <div class="type-page">庄島歩音 個展「Storytelling」</div>
+        <div class="type-value">24px</div>
+      </div>
+      <div class="type-sample">
+        <div class="type-name">Primary</div>
+        <div class="type-primary">重要なタイトル・本文・主要情報</div>
+        <div class="type-value">14px</div>
+      </div>
+      <div class="type-sample">
+        <div class="type-name">Secondary</div>
+        <div class="type-secondary">会場・補足・CTA・説明メタ情報</div>
+        <div class="type-value">12px</div>
+      </div>
+      <div class="type-sample">
+        <div class="type-name">Tertiary</div>
+        <div class="type-tertiary">Exhibition · Status · Date</div>
+        <div class="type-value">10px</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="images">
+    <div class="section-head">
+      <div><small>Images</small><h2>Preserve the artwork</h2></div>
+      <p>作品・展示画像はUIに合わせて無理にトリミングしない。画像の縦横比を尊重し、画像そのものをコンテンツとして扱う。</p>
+    </div>
+
+    <div class="image-grid">
+      <article class="image-demo">
+        <div class="image-stage"><div class="demo-art portrait"></div></div>
+        <div><strong>Portrait / Poster</strong><p>自然比率を維持。縦長画像は高さを基準に収め、必要なら左右に白余白を許容する。</p></div>
+      </article>
+      <article class="image-demo">
+        <div class="image-stage"><div class="demo-art landscape"></div></div>
+        <div><strong>Landscape / Exhibition Hero</strong><p>横長画像も全体を表示。画像の表示高さにContent Sheetの開始位置を自然に合わせる。</p></div>
+      </article>
+    </div>
+
+    <div class="image-rules">
+      <div class="image-rule">
+        <small>Default</small>
+        <strong>Natural ratio first</strong>
+        <p><code>width:auto; height:auto;</code> を基本にし、作品の比率を崩さない。</p>
+      </div>
+      <div class="image-rule">
+        <small>Exhibition hero</small>
+        <strong>max-height: 70svh</strong>
+        <p>白背景、<code>max-width:100vw</code>、<code>object-fit:contain</code>、Shadowなし。</p>
+      </div>
+      <div class="image-rule">
+        <small>Exception</small>
+        <strong>Cover only by intent</strong>
+        <p>Brand Heroなど「トリミングを前提とした写真」だけ<code>cover</code>を使う。</p>
+      </div>
+    </div>
+
+    <div class="code-block"><pre>/* Important: mobile browser UI must not resize artwork while scrolling */
+.exhibition-hero img {
+  width: auto;
+  height: auto;
+  max-width: 100vw;
+  max-height: 70svh;
+  object-fit: contain;
+}
+
+/* Do NOT recalculate artwork size from window.innerHeight on scroll/resize. */</pre></div>
+  </section>
+
+  <section class="section" id="motion">
+    <div class="section-head">
+      <div><small>Motion</small><h2>Quiet, slow, intentional</h2></div>
+      <p>Motionはコンテンツ理解を邪魔しない。常時動く演出やスクロール連動の拡大縮小より、初期表示とUI状態変化に限定する。</p>
+    </div>
+
+    <div class="motion-demo">
+      <div class="motion-card">
+        <div class="motion-visual"></div>
+        <div class="motion-caption">
+          <strong>Brand Hero only</strong>
+          <span>Initial zoom 1.08 → 1.00 / about 10s</span>
+        </div>
+      </div>
+      <div class="motion-rules">
+        <div class="do-dont">
+          <strong>Header state transition</strong>
+          <p>Sheet到達時の背景・文字・Shadow切替は約260ms。短く、目立たせすぎない。</p>
+        </div>
+        <div class="do-dont">
+          <strong>No scroll-linked artwork zoom</strong>
+          <p>スクロール量、<code>innerHeight</code>、ブラウザBottom Barの出入りで画像サイズを変更しない。</p>
+        </div>
+        <div class="do-dont">
+          <strong>Reduced motion</strong>
+          <p><code>prefers-reduced-motion: reduce</code> ではHero Animationと不要なTransitionを停止する。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="navigation">
+    <div class="section-head">
+      <div><small>Navigation</small><h2>Shared navigation states</h2></div>
+      <p>Header / Bottom Navigationはページごとに作り直さず共通利用する。Heroの有無に応じてHeaderの状態だけ切り替える。</p>
+    </div>
+
+    <div class="nav-demo-grid">
+      <div class="nav-demo hero-state">
+        <div class="demo-site-header">
+          <span class="demo-logo">Musee</span>
+          <div class="demo-actions"><span class="demo-icon">○</span><span class="demo-avatar"></span></div>
+        </div>
+        <div class="nav-state-label">On Hero — transparent / white icons</div>
+      </div>
+      <div class="nav-demo sheet-state">
+        <div class="demo-site-header">
+          <span class="demo-logo">Musee</span>
+          <div class="demo-actions"><span class="demo-icon">○</span><span class="demo-avatar"></span></div>
+        </div>
+        <div class="nav-state-label">Over Sheet — white / ink / subtle blur</div>
+      </div>
+    </div>
+
+    <div class="bottom-nav-demo">
+      <div class="demo-footer">
+        <nav class="demo-footer-nav" aria-label="Bottom navigation example">
+          <span class="demo-nav-item active">
+            <svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9H7v-6h10v6"/></svg><span>ホーム</span>
+          </span>
+          <span class="demo-nav-item">
+            <svg viewBox="0 0 24 24"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z"/><path d="M9 3v15M15 6v15"/></svg><span>マップ</span>
+          </span>
+          <span class="demo-nav-item">
+            <svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4Z"/></svg><span>保存</span>
+          </span>
+          <span class="demo-nav-item">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c.7-4 3.4-6 8-6s7.3 2 8 6"/></svg><span>マイアート</span>
+          </span>
+        </nav>
+      </div>
+    </div>
+
+    <div class="foundation-grid">
+      <div class="rule-card">
+        <h3>Header Reveal</h3>
+        <p>Hero上では透明。白いContent SheetがHeader領域まで到達したら、Headerを前面へ出して白背景 / Inkへ切り替える。</p>
+      </div>
+      <div class="rule-card">
+        <h3>Bottom Navigation</h3>
+        <p>4項目を共通利用：ホーム / マップ / 保存 / マイアート。Mobileでは画面下部に固定し、Safe Areaを考慮する。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div><small>Content surface</small><h2>Hero + Rising Sheet</h2></div>
+      <p>Heroを持つページでは、画像と本文を別レイヤーとして扱い、白いContent Sheetが下からHeroを覆う構造を共通パターンとする。</p>
+    </div>
+    <div class="sheet-demo">
+      <div class="sheet-hero"></div>
+      <div class="sheet-surface">
+        <small>Exhibition</small>
+        <h3>Content begins on the sheet.</h3>
+        <p>タイトル、会場、本文などの情報は画像上に重ねすぎず、Sheet側に集約する。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div><small>Status</small><h2>Compact metadata</h2></div>
+      <p>ステータスは小さなPillで統一。展示一覧と展示詳細で同じ見た目を使用する。</p>
+    </div>
+    <div class="status-row">
+      <span class="status">開催前</span>
+      <span class="status now">開催中</span>
+    </div>
+  </section>
+
+  <section class="section" id="masonry">
+    <div class="section-head">
+      <div><small>Masonry</small><h2>Natural ratio collection</h2></div>
+      <p>ArtWall等のMasonryは作品画像の自然比率を活かす。装飾的なカード化を避け、作品の集合そのものをVisual Profileとして見せる。</p>
+    </div>
+
+    <div class="masonry-wrap">
+      <div class="masonry-copy">
+        <small>Ashelry's ArtWall</small>
+        <h3>Natural ratio · 4 columns</h3>
+      </div>
+      <div class="masonry">
+        <div class="m-col"><div class="m-item a"></div><div class="m-item c"></div></div>
+        <div class="m-col"><div class="m-item b"></div><div class="m-item e"></div></div>
+        <div class="m-col"><div class="m-item d"></div><div class="m-item c"></div></div>
+        <div class="m-col"><div class="m-item f"></div><div class="m-item a"></div></div>
+      </div>
+      <div class="masonry-note">
+        <span>4 columns</span>
+        <span>4px mobile gap</span>
+        <span>8px desktop gap</span>
+        <span>No image radius</span>
+      </div>
+    </div>
+
+    <div class="foundation-grid">
+      <div class="rule-card">
+        <h3>Layout algorithm</h3>
+        <p>各画像のnaturalWidth / naturalHeightを読み、最も高さの低いColumnへ順に配置するTrue Masonryを基本とする。</p>
+      </div>
+      <div class="rule-card">
+        <h3>Preview behavior</h3>
+        <p>Home等のPreviewでは高さを固定してOverflowを隠し、下端Fadeは必ず親Sectionと同じ背景色へ溶かす。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div><small>Global rules</small><h2>Rules for every page</h2></div>
+      <p>新規ページを作る際、まずここを継承する。ページ固有のデザインはこのGlobal Ruleを壊さない範囲で追加する。</p>
+    </div>
+
+    <div class="global-list">
+      <div class="global-rule"><strong>1. 4px Grid</strong><p>Spacing・高さ・Paddingは4px単位を優先。光学調整は例外として許容。</p></div>
+      <div class="global-rule"><strong>2. Art first</strong><p>作品画像をUI装飾より優先。UIの色数を抑え、画像が色を担う。</p></div>
+      <div class="global-rule"><strong>3. 14 / 12 / 10</strong><p>Primary 14px、Secondary 12px、英字・Label・Status等のTertiary 10px。</p></div>
+      <div class="global-rule"><strong>4. Shared navigation</strong><p>Header / Bottom Navigationは共通Componentとして扱い、ページごとに別Versionを作らない。</p></div>
+      <div class="global-rule"><strong>5. Stable images</strong><p>実機Browser UIの出入りで画像サイズが変わらないこと。scroll/resizeによる動的画像Scaleは禁止。</p></div>
+      <div class="global-rule"><strong>6. Quiet motion</strong><p>Motionは初期Hero・Navigation状態変化など、意味がある場所だけに限定。</p></div>
+      <div class="global-rule"><strong>7. Natural ratios</strong><p>展示・作品画像は自然比率を維持。Coverは意図的なBrand Photoなどに限定。</p></div>
+      <div class="global-rule"><strong>8. Surface hierarchy</strong><p>White → Warm → Greigeの面差で階層を作り、Shadowは必要最低限。</p></div>
+    </div>
+
+    <div class="code-block"><pre>:root {
+  --ink:#262522;
+  --muted:#77736d;
+  --line:#e8e4dd;
+  --warm:#f7f5f1;
+  --greige:#eeeae3;
+  --terra:#b96f55;
+  --sans:"Helvetica Neue",Helvetica,Arial,"Hiragino Sans","Yu Gothic",sans-serif;
+  --fs-primary:14px;
+  --fs-secondary:12px;
+  --fs-tertiary:10px;
+  --max:1240px;
+}
+
+/* Responsive baseline */
+Desktop shell: max 1240px / 32px side
+Tablet: 20px side
+Mobile: 18px side
+Breakpoints: 980px / 720px</pre></div>
+  </section>
+
+  <p class="footer-note">
+    This document is the global visual reference for Musee prototype pages.
+    Page-specific UX can be added, but changes to these global rules should be treated as an explicit design-system decision.
+  </p>
+</div>
+</main>
+
+<script type="application/json" id="musee-design-tokens">
+{
+  "name":"Musee Global Design Guide",
+  "version":"1",
+  "grid":4,
+  "breakpoints":{"mobile":720,"tablet":980},
+  "container":{"max":1240,"desktopSide":32,"tabletSide":20,"mobileSide":18},
+  "colors":{
+    "ink":"#262522",
+    "muted":"#77736d",
+    "line":"#e8e4dd",
+    "warm":"#f7f5f1",
+    "greige":"#eeeae3",
+    "terra":"#b96f55",
+    "white":"#ffffff"
+  },
+  "typography":{
+    "fontStack":"Helvetica Neue, Helvetica, Arial, Hiragino Sans, Yu Gothic, sans-serif",
+    "primary":14,
+    "secondary":12,
+    "tertiary":10,
+    "pageTitle":24,
+    "sectionDesktop":28,
+    "sectionMobile":22
+  },
+  "images":{
+    "artworkNaturalRatio":true,
+    "exhibitionHeroMaxHeight":"70svh",
+    "exhibitionHeroFit":"contain",
+    "exhibitionHeroBackground":"#ffffff",
+    "exhibitionHeroShadow":false,
+    "forbidScrollLinkedResize":true
+  },
+  "motion":{
+    "brandHeroZoom":"1.08 to 1 over 10s",
+    "headerTransition":"260ms",
+    "respectReducedMotion":true
+  },
+  "navigation":{
+    "items":["ホーム","マップ","保存","マイアート"],
+    "headerReveal":true,
+    "mobileBottomFixed":true
+  },
+  "masonry":{
+    "columns":4,
+    "gapDesktop":8,
+    "gapMobile":4,
+    "imageRadius":0,
+    "naturalRatio":true,
+    "shortestColumnPlacement":true
+  }
+}
+</script>
+</body>
+</html>
