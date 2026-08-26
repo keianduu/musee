@@ -1,0 +1,435 @@
+/* Musee Artist Detail — page specific. Exhibition detail visual language, artist content. */
+.artist-page{background:#fff}
+.artist-hero{
+  position:sticky;
+  top:0;
+  z-index:1;
+  height:70svh;
+  min-height:0;
+  max-height:70svh;
+  overflow:hidden;
+  background:#181816;
+}
+.artist-hero img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center;
+  display:block;
+  filter:none;
+}
+.artist-detail-sheet{
+  position:relative;
+  z-index:2;
+  margin-top:-8px;
+  padding:32px 0 92px;
+  background:#fff;
+}
+.artist-sheet-head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:24px;
+  padding-bottom:32px;
+  margin-bottom:36px;
+  border-bottom:1px solid var(--line);
+}
+.artist-sheet-copy{min-width:0}
+.artist-sheet-meta{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:12px;
+}
+.artist-tag{
+  min-height:28px;
+  padding:0 10px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  display:inline-flex;
+  align-items:center;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1;
+}
+.artist-sheet-title{
+  margin:0 0 10px;
+  max-width:760px;
+  font-size:32px;
+  line-height:1.14;
+  letter-spacing:-.045em;
+  font-weight:650;
+}
+.artist-sheet-sub{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.5;
+}
+.artist-save-button{
+  flex:0 0 auto;
+  min-width:88px;
+  height:44px;
+  padding:0 16px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  background:#fff;
+  color:var(--ink);
+  font-size:12px;
+  font-weight:650;
+  cursor:pointer;
+}
+.artist-save-button svg,
+.work-save svg{
+  width:17px;
+  height:17px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.5;
+  stroke-linejoin:round;
+}
+.artist-save-button.is-saved,
+.work-save.is-saved{
+  border-color:var(--ink);
+  background:var(--ink);
+  color:#fff;
+}
+.artist-save-button.is-saved svg,
+.work-save.is-saved svg{fill:currentColor}
+.artist-overview{
+  display:grid;
+  grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);
+  gap:72px;
+  align-items:start;
+}
+.kicker{
+  margin-bottom:16px;
+  color:var(--muted2);
+  font-size:12px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.artist-lead{
+  margin:0;
+  max-width:720px;
+  color:var(--ink);
+  font-size:18px;
+  line-height:1.9;
+}
+.artist-info-card{
+  margin:0;
+  padding:8px 24px;
+  border:1px solid var(--line);
+  border-radius:24px;
+  background:#fff;
+}
+.artist-info-row{
+  display:grid;
+  grid-template-columns:88px 1fr;
+  gap:18px;
+  padding:18px 0;
+  border-bottom:1px solid var(--line);
+}
+.artist-info-row:last-child{border-bottom:0}
+.artist-info-row dt{
+  color:var(--muted2);
+  font-size:10px;
+  letter-spacing:.06em;
+}
+.artist-info-row dd{
+  margin:0;
+  font-size:14px;
+  line-height:1.7;
+}
+.artist-section{padding-top:76px}
+.artist-section-head{
+  margin-bottom:24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:20px;
+}
+.artist-section-title small{
+  display:block;
+  margin-bottom:7px;
+  color:var(--muted2);
+  font-size:10px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.artist-section-title h2{
+  margin:0;
+  font-size:28px;
+  line-height:1.2;
+  letter-spacing:-.04em;
+  font-weight:650;
+}
+.artist-section .more{
+  color:var(--muted);
+  font-size:12px;
+  white-space:nowrap;
+}
+.work-list{
+  border-top:1px solid var(--line);
+}
+.work-item{
+  min-height:78px;
+  padding:18px 0;
+  border-bottom:1px solid var(--line);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  gap:20px;
+}
+.work-copy{
+  min-width:0;
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+}
+.work-number{
+  width:22px;
+  flex:0 0 22px;
+  color:var(--muted2);
+  font-size:10px;
+}
+.work-name{
+  margin:0;
+  font-size:16px;
+  line-height:1.45;
+  font-weight:600;
+}
+.work-year{
+  margin-left:auto;
+  color:var(--muted);
+  font-size:11px;
+  white-space:nowrap;
+}
+.work-save{
+  width:40px;
+  height:40px;
+  padding:0;
+  border:1px solid var(--line);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#fff;
+  cursor:pointer;
+}
+.artist-exhibition-rail{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+}
+.artist-exhibition-card{
+  min-width:0;
+  color:inherit;
+}
+.artist-exhibition-image{
+  aspect-ratio:4/3;
+  margin-bottom:14px;
+  overflow:hidden;
+  border-radius:20px;
+  background:var(--warm);
+}
+.artist-exhibition-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.artist-exhibition-status{
+  display:block;
+  margin-bottom:6px;
+  color:var(--muted2);
+  font-size:10px;
+}
+.artist-exhibition-card h3{
+  margin:0 0 5px;
+  font-size:15px;
+  line-height:1.45;
+  font-weight:650;
+}
+.artist-exhibition-card p{
+  margin:0;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.5;
+}
+.artist-empty-copy{
+  padding:28px 0;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  color:var(--muted);
+  font-size:13px;
+}
+.museum-list{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  border-top:1px solid var(--line);
+}
+.museum-card{
+  min-height:126px;
+  padding:22px 24px 22px 0;
+  border-bottom:1px solid var(--line);
+}
+.museum-card:nth-child(odd){
+  padding-right:32px;
+  border-right:1px solid var(--line);
+}
+.museum-card:nth-child(even){padding-left:32px}
+.museum-card small{
+  display:block;
+  margin-bottom:8px;
+  color:var(--muted2);
+  font-size:10px;
+}
+.museum-card h3{
+  margin:0 0 7px;
+  font-size:16px;
+  line-height:1.45;
+  font-weight:650;
+}
+.museum-card p{
+  margin:0;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.6;
+}
+.related-artist-rail{
+  display:flex;
+  gap:28px;
+  overflow-x:auto;
+  padding-bottom:8px;
+  scrollbar-width:none;
+}
+.related-artist-rail::-webkit-scrollbar{display:none}
+.related-artist{
+  flex:0 0 112px;
+  text-align:center;
+  color:inherit;
+}
+.related-artist img{
+  width:96px;
+  height:96px;
+  margin:0 auto 10px;
+  border-radius:50%;
+  object-fit:cover;
+  display:block;
+  background:var(--warm);
+}
+.related-artist strong{
+  display:block;
+  font-size:12px;
+  line-height:1.4;
+  font-weight:650;
+}
+.related-artist span{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:9px;
+  line-height:1.4;
+}
+.artist-page .footer{position:relative;z-index:3}
+
+@media(max-width:720px){
+  .artist-hero{
+    height:58svh;
+    min-height:420px;
+    max-height:58svh;
+  }
+  .artist-detail-sheet{
+    margin-top:-4px;
+    padding:24px 0 112px;
+    border-radius:28px 28px 0 0;
+  }
+  .artist-sheet-head{
+    display:block;
+    padding-bottom:24px;
+    margin-bottom:28px;
+  }
+  .artist-sheet-meta{margin-bottom:10px;gap:6px}
+  .artist-tag{min-height:26px;font-size:9px}
+  .artist-sheet-title{
+    font-size:26px;
+    line-height:1.16;
+    margin-bottom:8px;
+  }
+  .artist-sheet-sub{font-size:11px}
+  .artist-save-button{
+    margin-top:18px;
+    width:100%;
+  }
+  .artist-overview{
+    display:block;
+  }
+  .kicker{font-size:10px}
+  .artist-lead{
+    font-size:15px;
+    line-height:1.85;
+  }
+  .artist-info-card{
+    margin-top:30px;
+    padding:4px 18px;
+    border-radius:20px;
+  }
+  .artist-info-row{
+    grid-template-columns:72px 1fr;
+    padding:15px 0;
+    gap:12px;
+  }
+  .artist-info-row dt{font-size:9px}
+  .artist-info-row dd{font-size:12px}
+  .artist-section{padding-top:58px}
+  .artist-section-head{margin-bottom:18px}
+  .artist-section-title h2{font-size:24px}
+  .artist-section .more{font-size:10px}
+  .work-item{
+    min-height:70px;
+    padding:15px 0;
+    gap:12px;
+  }
+  .work-copy{
+    display:grid;
+    grid-template-columns:20px minmax(0,1fr);
+    gap:8px;
+  }
+  .work-number{width:20px}
+  .work-name{font-size:14px}
+  .work-year{
+    grid-column:2;
+    margin-left:0;
+    font-size:10px;
+  }
+  .work-save{width:38px;height:38px}
+  .artist-exhibition-rail{
+    display:flex;
+    overflow-x:auto;
+    gap:12px;
+    padding-bottom:8px;
+    scrollbar-width:none;
+  }
+  .artist-exhibition-card{min-width:72vw}
+  .artist-exhibition-image{border-radius:18px}
+  .artist-exhibition-card h3{font-size:14px}
+  .artist-exhibition-card p{font-size:10px}
+  .museum-list{display:block}
+  .museum-card,
+  .museum-card:nth-child(odd),
+  .museum-card:nth-child(even){
+    min-height:0;
+    padding:18px 0;
+    border-right:0;
+  }
+  .museum-card h3{font-size:14px}
+  .museum-card p{font-size:10px}
+  .related-artist-rail{gap:18px}
+  .related-artist{flex-basis:100px}
+  .related-artist img{width:88px;height:88px}
+}

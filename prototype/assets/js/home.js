@@ -14,7 +14,7 @@ const artistMeta = artist => {
   return [category,artist.country].filter(Boolean).join(" · ");
 };
 document.querySelector('[data-artists]').innerHTML = ARTISTS.map(a=>`
-  <a class="artist" href="./artists.html" aria-label="${esc(a.name)}">
+  <a class="artist" href="./artist.html?name=${encodeURIComponent(a.name)}" aria-label="${esc(a.name)}">
     <img src="${a.image || a.img}" alt="${esc(a.name)}" loading="lazy" style="object-position:${a.position || 'center'}">
     <strong>${esc(a.name)}</strong><span>${esc(artistMeta(a))}</span>
   </a>`).join('');
