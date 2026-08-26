@@ -26,7 +26,7 @@
 <title>庄島歩音 個展『Storytelling』 | Musee</title>
 <meta content="Musee 展覧会詳細ページ Prototype" name="description"/>
 
-<link href="./assets/css/musee-global.css?v=20260826-09" rel="stylesheet"/><link href="./assets/css/exhibition.css?v=20260826-09" rel="stylesheet"/>
+<link href="./assets/css/musee-global.css?v=20260826-09" rel="stylesheet"/><link href="./assets/css/exhibition.css?v=20260826-10" rel="stylesheet"/>
 <link rel="stylesheet" href="./assets/css/musee-exhibition-card.css?v=20260826-09"><link rel="stylesheet" href="./assets/css/musee-detail.css?v=20260826-09">
 </head>
 <body class="musee-app exhibition-page">
@@ -60,6 +60,13 @@
 <div class="info-row"><dt>休館日</dt><dd>月曜日<br/><span style="color:var(--muted2)">※Prototype用サンプル情報</span></dd></div>
 </dl>
 </div>
+<section class="section exhibition-artists-section">
+  <div class="section-head">
+    <div class="section-title"><small>Artists</small><h2>アーティスト</h2></div>
+  </div>
+  <div class="exhibition-artist-list" data-exhibition-artists></div>
+  <button class="exhibition-artists-toggle" type="button" data-exhibition-artists-toggle aria-expanded="false" hidden></button>
+</section>
 <section class="section">
 <div class="section-head"><div class="section-title"><small>Venue &amp; access</small><h2>会場・アクセス</h2></div></div>
 <div class="map-card">
@@ -105,5 +112,7 @@
 </div>
 </footer>
 
-<script src="./assets/js/musee-global.js?v=20260826-09"></script></body>
+<script src="./assets/js/musee-global.js?v=20260826-09"></script><script src="./assets/js/artist-data.js?v=20260826-10"></script>
+<script src="./assets/js/exhibition-artists.js?v=20260826-10"></script>
+</body>
 </html>
