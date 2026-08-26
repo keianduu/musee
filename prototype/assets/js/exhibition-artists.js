@@ -27,6 +27,12 @@
     .map(name => catalog.find(artist => artist.name === name))
     .filter(Boolean);
 
+  const hasCollapsedArtists = artists.length >= COLLAPSE_FROM;
+
+  if(toggle && !hasCollapsedArtists){
+    toggle.remove();
+  }
+
   const storageKey = "musee:saved-artists";
 
   const getSaved = () => {
@@ -81,16 +87,13 @@
       `;
     }).join("");
 
-    if(toggle){
-      const hasCollapsed = artists.length >= COLLAPSE_FROM;
-      toggle.hidden = !hasCollapsed;
+    if(toggle && hasCollapsedArtists){
+      toggle.hidden = false;
       toggle.setAttribute("aria-expanded",String(Boolean(expanded)));
-      if(hasCollapsed){
-        const hiddenCount = Math.max(artists.length - VISIBLE_WHEN_COLLAPSED,0);
-        toggle.innerHTML = expanded
-          ? `<span>閉じる</span><svg viewBox="0 0 24 24"><path d="m7 15 5-5 5 5"></path></svg>`
-          : `<span>もっと見る（${hiddenCount}名）</span><svg viewBox="0 0 24 24"><path d="m7 9 5 5 5-5"></path></svg>`;
-      }
+      const hiddenCount = Math.max(artists.length - VISIBLE_WHEN_COLLAPSED,0);
+      toggle.innerHTML = expanded
+        ? `<span>閉じる</span><svg viewBox="0 0 24 24"><path d="m7 15 5-5 5 5"></path></svg>`
+        : `<span>もっと見る（${hiddenCount}名）</span><svg viewBox="0 0 24 24"><path d="m7 9 5 5 5-5"></path></svg>`;
     }
   };
 
