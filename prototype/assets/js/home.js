@@ -107,7 +107,6 @@ window.addEventListener('resize',()=>{
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
     subdomains:'abcd',
     maxZoom:20,
-    detectRetina:true,
     attribution:'&copy; OpenStreetMap contributors &copy; CARTO'
   }).addTo(map);
 
@@ -162,7 +161,23 @@ window.addEventListener('resize',()=>{
     maxZoom:12.25
   });
 
-  // Keep layout correct after responsive/hidden-state changes.
-  setTimeout(() => map.invalidateSize(), 250);
-  window.addEventListener('resize', () => map.invalidateSize());
+  // Keep Leaflet geometry in sync with the rendered container.
+  const syncMapSize = () => {
+    requestAnimationFrame(() => map.invalidateSize({pan:false}));
+  };
+
+  syncMapSize();
+  setTimeout(syncMapSize, 120);
+  setTimeout(syncMapSize, 420);
+
+  if('ResizeObserver' in window){
+    const mapResizeObserver = new ResizeObserver(syncMapSize);
+    mapResizeObserver.observe(mapEl);
+  }else{
+    window.addEventListener('resize', syncMapSize);
+  }
+
+  window.addEventListener('orientationchange', () => {
+    setTimeout(syncMapSize, 180);
+  });
 })();

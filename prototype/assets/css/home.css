@@ -322,10 +322,6 @@
   max-width:none !important;
   max-height:none !important;
 }
-.leaflet-tile{
-  width:256px !important;
-  height:256px !important;
-}
 .leaflet-pane, .leaflet-map-pane, .leaflet-tile-pane{
   position:absolute;
   left:0;
@@ -717,3 +713,15 @@
   }
 }
 /* musee-artist-size-sync:end */
+
+/* leaflet-render-stability:start */
+.leaflet-map{
+  contain:layout paint;
+}
+.leaflet-container .leaflet-tile-pane{
+  will-change:transform;
+}
+.leaflet-container .leaflet-tile{
+  image-rendering:auto;
+}
+/* leaflet-render-stability:end */
