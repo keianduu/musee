@@ -92,7 +92,7 @@ window.addEventListener('resize',()=>{
   if(!mapEl) return;
 
   if(typeof L === 'undefined'){
-    mapEl.innerHTML = '<div style="padding:24px;font:12px/1.6 Helvetica,Arial,sans-serif;color:#777">Map could not load. Internet access is required for Leaflet / OpenStreetMap tiles.</div>';
+    mapEl.innerHTML = '<div style="padding:24px;font:12px/1.6 Helvetica,Arial,sans-serif;color:#777">Map could not load. Internet access is required for Leaflet and external map tiles.</div>';
     return;
   }
 
@@ -104,10 +104,11 @@ window.addEventListener('resize',()=>{
     attributionControl:true
   });
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    subdomains:'abc',
-    maxZoom:19,
-    attribution:'&copy; OpenStreetMap contributors'
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    subdomains:'abcd',
+    maxZoom:20,
+    detectRetina:true,
+    attribution:'&copy; OpenStreetMap contributors &copy; CARTO'
   }).addTo(map);
 
   const bounds = L.latLngBounds([]);
