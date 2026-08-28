@@ -54,15 +54,6 @@
   outline-offset:2px;
 }
 
-/* Circle-image Artist cards: keep the control visually attached to the avatar. */
-.artist-card.muuzee-save-host .muuzee-card-save,
-.artist.muuzee-save-host .muuzee-card-save,
-.related-artist.muuzee-save-host .muuzee-card-save,
-.museum-artist.muuzee-save-host .muuzee-card-save{
-  top:2px;
-  right:8px;
-}
-
 /* Text-only related museum cards. */
 .museum-card.muuzee-save-host{
   padding-right:44px;
@@ -100,14 +91,6 @@
     width:14px;
     height:14px;
   }
-
-  .artist-card.muuzee-save-host .muuzee-card-save,
-  .artist.muuzee-save-host .muuzee-card-save,
-  .related-artist.muuzee-save-host .muuzee-card-save,
-  .museum-artist.muuzee-save-host .muuzee-card-save{
-    top:0;
-    right:2px;
-  }
 }
 
 /* shared-saved-state:start */
@@ -137,7 +120,11 @@
 }
 
 /* All save controls use the same visual motion language. */
-.muuzee-card-save,
+.muuzee-card-save{
+  overflow:visible;
+  transform-origin:center;
+}
+
 .work-save,
 .artist-save-button,
 .museum-save-button,
@@ -234,19 +221,27 @@
 
 /* save-over-image:start */
 
-/* Shared Save Controls belong to the visual, not to the whole card. */
+/* Save belongs to the item's visual.
+   The visual owns the positioning context; the control is always absolute. */
 .muuzee-save-visual-host{
   position:relative !important;
 }
 
-/* Default: photo/card visual top-right. */
 .muuzee-save-visual-host > .muuzee-card-save{
+  position:absolute !important;
   top:8px !important;
   right:8px !important;
+  left:auto !important;
+  bottom:auto !important;
+  z-index:12 !important;
 }
 
-/* Keep the bookmark optically and mathematically centered in the circle. */
+/* One visual language everywhere. */
 .muuzee-card-save{
+  position:absolute !important;
+  width:34px;
+  height:34px;
+  padding:0 !important;
   display:grid !important;
   place-items:center !important;
   line-height:0 !important;
@@ -254,23 +249,28 @@
 
 .muuzee-card-save svg{
   display:block !important;
+  width:16px;
+  height:16px;
+  margin:0 !important;
   align-self:center !important;
   justify-self:center !important;
-  margin:0 !important;
-  flex:none !important;
+  transform-origin:center;
 }
 
-/* TOP Featured Artists have a direct <img>, so JS creates this circular visual wrapper. */
+/* TOP Featured Artists have a direct <img>.
+   JS wraps only that image, matching the actual current TOP portrait size. */
 .artist-rail .muuzee-save-artist-visual{
-  position:relative;
-  width:90px;
-  height:90px;
-  margin:0 auto 11px;
+  position:relative !important;
+  display:block;
+  width:132px;
+  height:132px;
+  margin:0 auto 14px;
   overflow:hidden;
   border-radius:50%;
 }
 
 .artist-rail .muuzee-save-artist-visual > img{
+  display:block;
   width:100% !important;
   height:100% !important;
   margin:0 !important;
@@ -278,59 +278,59 @@
   object-fit:cover;
 }
 
-/* Artist images use a smaller, quieter save badge fully inside the portrait. */
+/* Artist list / related Artist / museum Artist:
+   same button shape and size as every other card, inside the image top-right. */
 .artist-avatar.muuzee-save-visual-host > .muuzee-card-save,
 .muuzee-save-artist-visual > .muuzee-card-save,
 .related-artist-image.muuzee-save-visual-host > .muuzee-card-save,
 .museum-artist-image.muuzee-save-visual-host > .muuzee-card-save{
-  top:6px !important;
-  right:6px !important;
-  width:28px;
-  height:28px;
+  position:absolute !important;
+  top:8px !important;
+  right:8px !important;
+  width:34px;
+  height:34px;
 }
 
-.artist-avatar.muuzee-save-visual-host > .muuzee-card-save svg,
-.muuzee-save-artist-visual > .muuzee-card-save svg,
-.related-artist-image.muuzee-save-visual-host > .muuzee-card-save svg,
-.museum-artist-image.muuzee-save-visual-host > .muuzee-card-save svg{
-  width:13px;
-  height:13px;
-}
-
-/* Existing visual containers already own radius/cropping. */
+/* Image containers may clip their content, therefore the control must stay
+   fully inside the image rather than relying on an outside overlap. */
 .artist-avatar.muuzee-save-visual-host,
+.muuzee-save-artist-visual,
+.museum-list-image.muuzee-save-visual-host,
+.popular-museum-image.muuzee-save-visual-host,
+.exhibition-card-image.muuzee-save-visual-host,
+.poster-stage.muuzee-save-visual-host,
+.museum-work-image.muuzee-save-visual-host,
 .museum-artist-image.muuzee-save-visual-host{
   overflow:hidden;
 }
 
 @media(max-width:720px){
-  .muuzee-save-visual-host > .muuzee-card-save{
-    top:6px !important;
-    right:6px !important;
-  }
-
-  .artist-rail .muuzee-save-artist-visual{
-    width:66px;
-    height:66px;
-    margin-bottom:8px;
-  }
-
+  .muuzee-save-visual-host > .muuzee-card-save,
   .artist-avatar.muuzee-save-visual-host > .muuzee-card-save,
   .muuzee-save-artist-visual > .muuzee-card-save,
   .related-artist-image.muuzee-save-visual-host > .muuzee-card-save,
   .museum-artist-image.muuzee-save-visual-host > .muuzee-card-save{
-    top:4px !important;
-    right:4px !important;
-    width:24px;
-    height:24px;
+    position:absolute !important;
+    top:6px !important;
+    right:6px !important;
+    width:30px;
+    height:30px;
   }
 
-  .artist-avatar.muuzee-save-visual-host > .muuzee-card-save svg,
-  .muuzee-save-artist-visual > .muuzee-card-save svg,
-  .related-artist-image.muuzee-save-visual-host > .muuzee-card-save svg,
-  .museum-artist-image.muuzee-save-visual-host > .muuzee-card-save svg{
-    width:11px;
-    height:11px;
+  .muuzee-card-save{
+    width:30px;
+    height:30px;
+  }
+
+  .muuzee-card-save svg{
+    width:14px;
+    height:14px;
+  }
+
+  .artist-rail .muuzee-save-artist-visual{
+    width:96px;
+    height:96px;
+    margin-bottom:10px;
   }
 }
 
