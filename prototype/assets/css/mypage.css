@@ -302,69 +302,25 @@
   stroke-linejoin:round;
 }
 
-.mypage-artwall-summary{
-  margin-bottom:18px;
-  display:flex;
-  align-items:center;
-  gap:24px;
-}
 
-.mypage-artwall-summary p{
-  max-width:520px;
-  margin:0;
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.7;
-}
 
-.mypage-artwall-stats{
-  margin-left:auto;
-  display:flex;
-  gap:22px;
-}
 
-.mypage-artwall-stat{
-  text-align:right;
-}
 
-.mypage-artwall-stat strong{
-  display:block;
-  margin-bottom:2px;
-  font-size:16px;
-  font-weight:620;
-}
 
-.mypage-artwall-stat span{
-  color:var(--muted2);
-  font-size:9px;
-}
 
-.mypage-wall{
-  position:relative;
-  height:420px;
-  overflow:hidden;
-  background:var(--warm);
-}
 
-.mypage-wall .muuzee-masonry-grid{
-  position:absolute;
-  inset:0;
-}
 
-.mypage-wall-item{
-  display:block;
-}
 
-.mypage-wall-fade{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  height:72px;
-  z-index:2;
-  pointer-events:none;
-  background:linear-gradient(to bottom,rgba(247,245,241,0),var(--warm));
-}
+
+
+
+
+
+
+
+
+
+
 
 .mypage-rail{
   width:100%;
@@ -618,29 +574,15 @@
     font-size:9px;
   }
 
-  .mypage-artwall-summary{
-    display:block;
-  }
+  
 
-  .mypage-artwall-summary p{
-    margin-bottom:14px;
-  }
+  
 
-  .mypage-artwall-stats{
-    margin-left:0;
-    justify-content:flex-start;
-    gap:24px;
-  }
+  
 
-  .mypage-artwall-stat{
-    text-align:left;
-  }
+  
 
-  .mypage-wall{
-    width:100%;
-    max-width:100%;
-    height:320px;
-  }
+  
 
   .mypage-rail{
     width:100%;
@@ -679,3 +621,83 @@
     padding:28px 22px;
   }
 }
+
+/* mypage-artwall-shared:start */
+.mypage-artwall-section{
+  padding-bottom:56px;
+  border-bottom:1px solid var(--line);
+}
+
+.mypage-artwall-head{
+  margin-bottom:22px;
+}
+
+.mypage-artwall-head .mypage-artwall-actions{
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+
+.mypage-artwall-action{
+  min-height:36px;
+  padding:0 12px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  background:#fff;
+  color:var(--muted);
+  font-size:10px;
+  cursor:pointer;
+}
+
+.mypage-artwall-action:last-child{
+  border-color:var(--ink);
+  background:var(--ink);
+  color:#fff;
+}
+
+.mypage-artwall-action svg{
+  width:15px;
+  height:15px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.55;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.mypage-page .artwall{
+  width:100%;
+  max-width:100%;
+}
+
+.mypage-page .wall,
+.mypage-page .wall-grid{
+  min-width:0;
+  max-width:100%;
+}
+
+@media(max-width:720px){
+  .mypage-artwall-section{
+    padding-bottom:42px;
+  }
+
+  .mypage-artwall-head{
+    margin-bottom:17px;
+  }
+
+  .mypage-artwall-action{
+    min-height:32px;
+    padding:0 9px;
+    font-size:9px;
+  }
+
+  .mypage-artwall-action svg{
+    width:14px;
+    height:14px;
+  }
+}
+/* mypage-artwall-shared:end */

@@ -43,7 +43,7 @@
         if(token !== renderToken) return null;
 
         const link = document.createElement("a");
-        link.className = "mypage-wall-item";
+        link.className = "wall-item";
         link.href = item.href || "./exhibitions.html";
         link.setAttribute("aria-label",item.title || "ArtWall item");
 
