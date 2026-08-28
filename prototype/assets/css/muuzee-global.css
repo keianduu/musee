@@ -175,7 +175,7 @@ svg{display:block}
 }
 .footer-nav{
   display:grid;
-  grid-template-columns:repeat(5,auto);
+  grid-template-columns:repeat(6,auto);
   gap:62px;
 }
 .nav-item{
@@ -277,7 +277,7 @@ svg{display:block}
   }
   .footer-nav{
     width:100%;
-    grid-template-columns:repeat(5,1fr);
+    grid-template-columns:repeat(6,1fr);
     gap:0;
   }
   .nav-item{

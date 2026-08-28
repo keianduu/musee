@@ -156,7 +156,7 @@ main{padding:72px 0 120px}
 /* Foundation */
 .swatches{
   display:grid;
-  grid-template-columns:repeat(5,1fr);
+  grid-template-columns:repeat(6,1fr);
   gap:12px;
 }
 .swatch{
@@ -379,7 +379,7 @@ main{padding:72px 0 120px}
 .demo-footer-nav{
   min-height:72px;
   display:grid;
-  grid-template-columns:repeat(5,1fr);
+  grid-template-columns:repeat(6,1fr);
 }
 .demo-nav-item{
   display:flex;
