@@ -658,3 +658,43 @@ body.map-page{
 }
 
 /* popup-save-hit-area:end */
+
+/* map-mode-toggle-width:start */
+
+/* Keep Exhibition / Museum labels on one line and give the toggle
+   a little more horizontal breathing room. */
+.map-mode-bar{
+  width:276px;
+  min-width:276px;
+}
+
+.map-mode-button{
+  flex:1 1 0;
+  min-width:0;
+  justify-content:center;
+  white-space:nowrap;
+}
+
+.map-mode-button span{
+  display:block;
+  white-space:nowrap;
+  word-break:keep-all;
+}
+
+@media(max-width:720px){
+  .map-mode-bar{
+    width:min(264px,calc(100vw - 84px));
+    min-width:0;
+  }
+
+  .map-mode-button{
+    padding:0 10px;
+  }
+
+  .map-mode-button span{
+    white-space:nowrap;
+    word-break:keep-all;
+  }
+}
+
+/* map-mode-toggle-width:end */
