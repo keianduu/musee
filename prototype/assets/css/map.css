@@ -628,3 +628,16 @@ body.map-page{
 }
 
 /* popup-save-icon:end */
+
+/* popup-center-motion:start */
+
+.muuzee-map-popup{
+  transition:opacity 160ms ease;
+}
+
+.muuzee-map-popup.is-positioning{
+  opacity:0 !important;
+  pointer-events:none !important;
+}
+
+/* popup-center-motion:end */

@@ -38,6 +38,7 @@
   let markerLayer = L.layerGroup();
   let currentLocationMarker = null;
   let markerFocusToken = 0;
+  let popupCenterToken = 0;
 
   const map = L.map(mapEl,{
     scrollWheelZoom:true,
@@ -188,64 +189,164 @@
       </article>`;
   }
 
-  /* marker-focus-popup:start */
-  function focusMarkerThenOpenPopup(marker,popup){
-    const token = ++markerFocusToken;
-    const target = marker.getLatLng();
+
+
+  
+  /* popup-center-focus:start */
+  function centerPopupThenReveal(marker,popup){
+    const token = ++popupCenterToken;
 
     map.stop();
     map.closePopup();
 
-    let completed = false;
-    let fallbackTimer = null;
+    const markerLatLng = marker.getLatLng();
 
-    const openPopup = () => {
-      if(completed) return;
-      completed = true;
+    /*
+      Open invisibly first so we can measure the actual tooltip size.
+      This avoids hard-coded offsets for PC/SP or different card content.
+    */
+    popup
+      .setLatLng(markerLatLng)
+      .openOn(map);
 
-      if(fallbackTimer){
-        window.clearTimeout(fallbackTimer);
-      }
-
-      if(token !== markerFocusToken) return;
+    const measureAndPan = () => {
+      if(token !== popupCenterToken) return;
       if(!markerLayer.hasLayer(marker)) return;
 
-      popup.setLatLng(target).openOn(map);
+      const popupEl = popup.getElement?.()
+        || mapEl.querySelector(".leaflet-popup.is-positioning");
+
+      if(!popupEl){
+        window.requestAnimationFrame(measureAndPan);
+        return;
+      }
+
+      const mapRect = mapEl.getBoundingClientRect();
+      const popupRect = popupEl.getBoundingClientRect();
+
+      const popupCenterPoint = L.point(
+        popupRect.left - mapRect.left + popupRect.width / 2,
+        popupRect.top - mapRect.top + popupRect.height / 2
+      );
+
+      const visibleMapCenterPoint = L.point(
+        mapRect.width / 2,
+        mapRect.height / 2
+      );
+
+      const reveal = () => {
+        if(token !== popupCenterToken) return;
+
+        const currentPopupEl = popup.getElement?.()
+          || mapEl.querySelector(".leaflet-popup.is-positioning");
+
+        currentPopupEl?.classList.remove("is-positioning");
+      };
+
+      /*
+        If the tooltip is already centered, just reveal it.
+      */
+      if(popupCenterPoint.distanceTo(visibleMapCenterPoint) <= 2){
+        reveal();
+        return;
+      }
+
+      /*
+        The geographic point currently underneath the tooltip center becomes
+        the new map center. Since the tooltip moves with its marker, this
+        brings the tooltip's own center to the visible map center.
+      */
+      const targetMapCenter = map.containerPointToLatLng(popupCenterPoint);
+
+      let finished = false;
+      let fallbackTimer = null;
+
+      const finish = () => {
+        if(finished) return;
+        finished = true;
+
+        if(fallbackTimer){
+          window.clearTimeout(fallbackTimer);
+        }
+
+        reveal();
+      };
+
+      map.once("moveend",finish);
+
+      fallbackTimer = window.setTimeout(finish,750);
+
+      map.panTo(targetMapCenter,{
+        animate:true,
+        duration:0.36,
+        easeLinearity:0.22
+      });
     };
 
-    const centerPoint = map.latLngToContainerPoint(map.getCenter());
-    const targetPoint = map.latLngToContainerPoint(target);
-    const distance = centerPoint.distanceTo(targetPoint);
-
-    /* If the pin is already effectively centered, avoid a fake pan. */
-    if(distance <= 2){
-      window.setTimeout(openPopup,80);
-      return;
-    }
-
-    const onMoveEnd = () => {
-      map.off("moveend",onMoveEnd);
-      openPopup();
-    };
-
-    map.once("moveend",onMoveEnd);
-
-    /* Safety fallback for browsers where an interrupted animated pan
-       does not dispatch moveend as expected. */
-    fallbackTimer = window.setTimeout(() => {
-      map.off("moveend",onMoveEnd);
-      openPopup();
-    },700);
-
-    map.panTo(target,{
-      animate:true,
-      duration:0.34,
-      easeLinearity:0.22
+    /*
+      Two frames ensure Leaflet has laid out the tooltip before measurement.
+    */
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(measureAndPan);
     });
   }
-  /* marker-focus-popup:end */
+  /* popup-center-focus:end */
 
   function renderMarkers({fit=false} = {}){
+    markerLayer.clearLayers();
+    map.closePopup();
+
+    const items = currentItems();
+
+    items.forEach(item => {
+      if(!Number.isFinite(item.lat) || !Number.isFinite(item.lng)) return;
+
+      const type = state.mode;
+
+      const marker = L.marker(
+        [item.lat,item.lng],
+        {icon:createIcon(type,isSaved(type,item.id))}
+      );
+
+      const popup = L.popup({
+        className:"muuzee-map-popup is-positioning",
+        maxWidth:420,
+        minWidth:300,
+        closeButton:false,
+
+        /* Keep Muuzee in full control of map movement. */
+        autoPan:false,
+        keepInView:false,
+
+        /* Preserve the current visual relationship between Pin and Tooltip. */
+        offset:[0,-17]
+      }).setContent(popupHTML(item,type));
+
+      marker.on("click",() => {
+        centerPopupThenReveal(marker,popup);
+      });
+
+      marker.addTo(markerLayer);
+    });
+
+    if(resultCount) resultCount.textContent = items.length;
+    if(resultLabel) resultLabel.textContent = state.mode === "museum" ? "museums" : "exhibitions";
+
+    renderModeButtons();
+    renderSummary();
+
+    if(fit && items.length){
+      const bounds = L.latLngBounds(
+        items
+          .filter(item => Number.isFinite(item.lat) && Number.isFinite(item.lng))
+          .map(item => [item.lat,item.lng])
+      );
+
+      if(bounds.isValid()){
+        map.fitBounds(bounds,{padding:[70,70],maxZoom:13});
+      }
+    }
+  } = {}){
     markerLayer.clearLayers();
 
     const items = currentItems();
