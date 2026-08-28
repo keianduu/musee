@@ -560,3 +560,71 @@ body.map-page{
   }
 }
 /* map-overlay-layer-fix:end */
+
+/* popup-save-icon:start */
+
+/* Tooltip save uses the same Bookmark visual language as the rest of Muuzee. */
+.map-popup-topline{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.map-popup-save{
+  position:relative;
+  flex:0 0 30px;
+  width:30px;
+  height:30px;
+  min-width:30px;
+  min-height:30px;
+  padding:0;
+  border:1px solid rgba(38,37,34,.10);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#fff;
+  color:var(--ink);
+  box-shadow:0 4px 12px rgba(38,37,34,.08);
+  line-height:0;
+  cursor:pointer;
+}
+
+.map-popup-save svg{
+  display:block;
+  width:14px;
+  height:14px;
+  margin:0;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.6;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.map-popup-save.is-saved{
+  border-color:rgba(185,111,85,.24);
+  background:#fff;
+  color:var(--terra);
+}
+
+.map-popup-save.is-saved svg{
+  fill:currentColor;
+  stroke:currentColor;
+}
+
+/* Old duplicated saved label is no longer used. */
+.map-popup-saved{
+  display:none !important;
+}
+
+/* Bottom row contains Detail only. */
+.map-popup-actions{
+  justify-content:flex-end;
+}
+
+.map-popup-actions > .map-popup-save{
+  display:none !important;
+}
+
+/* popup-save-icon:end */

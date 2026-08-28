@@ -167,17 +167,20 @@
         <div class="map-popup-body">
           <div class="map-popup-topline">
             <span class="map-popup-meta">${esc(meta)}</span>
-            ${saved ? '<span class="map-popup-saved">保存済</span>' : ""}
+            <button class="map-popup-save${saved ? " is-saved" : ""}" type="button"
+              data-popup-save
+              data-popup-type="${type}"
+              data-popup-id="${esc(item.id)}"
+              aria-label="${saved ? "保存済み" : "保存"}"
+              aria-pressed="${String(saved)}">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 3h12v18l-6-4-6 4Z"></path>
+              </svg>
+            </button>
           </div>
           <h3 class="map-popup-title">${esc(item.name || item.title)}</h3>
           <p class="map-popup-sub">${esc(sub)}</p>
           <div class="map-popup-actions">
-            <button class="map-popup-save${saved ? " is-saved" : ""}" type="button"
-              data-popup-save
-              data-popup-type="${type}"
-              data-popup-id="${esc(item.id)}">
-              ${saved ? "保存済" : "保存"}
-            </button>
             <a class="map-popup-detail" href="${esc(href)}">詳細を見る →</a>
           </div>
         </div>
