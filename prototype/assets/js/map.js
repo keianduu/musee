@@ -37,6 +37,7 @@
   let draftFilters = JSON.parse(JSON.stringify(state.filters));
   let markerLayer = L.layerGroup();
   let currentLocationMarker = null;
+  let markerFocusToken = 0;
 
   const map = L.map(mapEl,{
     scrollWheelZoom:true,
@@ -187,6 +188,63 @@
       </article>`;
   }
 
+  /* marker-focus-popup:start */
+  function focusMarkerThenOpenPopup(marker,popup){
+    const token = ++markerFocusToken;
+    const target = marker.getLatLng();
+
+    map.stop();
+    map.closePopup();
+
+    let completed = false;
+    let fallbackTimer = null;
+
+    const openPopup = () => {
+      if(completed) return;
+      completed = true;
+
+      if(fallbackTimer){
+        window.clearTimeout(fallbackTimer);
+      }
+
+      if(token !== markerFocusToken) return;
+      if(!markerLayer.hasLayer(marker)) return;
+
+      popup.setLatLng(target).openOn(map);
+    };
+
+    const centerPoint = map.latLngToContainerPoint(map.getCenter());
+    const targetPoint = map.latLngToContainerPoint(target);
+    const distance = centerPoint.distanceTo(targetPoint);
+
+    /* If the pin is already effectively centered, avoid a fake pan. */
+    if(distance <= 2){
+      window.setTimeout(openPopup,80);
+      return;
+    }
+
+    const onMoveEnd = () => {
+      map.off("moveend",onMoveEnd);
+      openPopup();
+    };
+
+    map.once("moveend",onMoveEnd);
+
+    /* Safety fallback for browsers where an interrupted animated pan
+       does not dispatch moveend as expected. */
+    fallbackTimer = window.setTimeout(() => {
+      map.off("moveend",onMoveEnd);
+      openPopup();
+    },700);
+
+    map.panTo(target,{
+      animate:true,
+      duration:0.34,
+      easeLinearity:0.22
+    });
+  }
+  /* marker-focus-popup:end */
+
   function renderMarkers({fit=false} = {}){
     markerLayer.clearLayers();
 
@@ -201,16 +259,23 @@
         {icon:createIcon(type,isSaved(type,item.id))}
       );
 
-      marker.bindPopup(
-        popupHTML(item,type),
-        {
-          className:"muuzee-map-popup",
-          maxWidth:420,
-          minWidth:300,
-          closeButton:false,
-          offset:[0,-2]
-        }
-      );
+      const popup = L.popup({
+        className:"muuzee-map-popup",
+        maxWidth:420,
+        minWidth:300,
+        closeButton:false,
+
+        /* Marker icon popupAnchor [0,-15] + previous offset [0,-2]. */
+        offset:[0,-17],
+
+        /* Keep the selected pin centered after the tooltip opens. */
+        autoPan:false,
+        keepInView:false
+      }).setContent(popupHTML(item,type));
+
+      marker.on("click",() => {
+        focusMarkerThenOpenPopup(marker,popup);
+      });
 
       marker.addTo(markerLayer);
     });
