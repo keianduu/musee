@@ -45,12 +45,6 @@
   pointer-events:none;
 }
 
-.muuzee-card-save.is-saved{
-  border-color:var(--ink);
-  background:var(--ink);
-  color:#fff;
-}
-
 .muuzee-card-save.is-saved svg{
   fill:currentColor;
 }
@@ -115,3 +109,125 @@
     right:2px;
   }
 }
+
+/* shared-saved-state:start */
+
+/* Saved state follows the Saved page:
+   white surface + terracotta filled bookmark. */
+.muuzee-card-save.is-saved,
+.work-save.is-saved,
+.artist-save-button.is-saved,
+.museum-save-button.is-saved,
+.exhibition-artist-save.is-saved{
+  border-color:rgba(185,111,85,.24) !important;
+  background:rgba(255,255,255,.96) !important;
+  color:var(--terra) !important;
+  box-shadow:
+    0 5px 16px rgba(38,37,34,.08),
+    0 0 0 1px rgba(185,111,85,.04);
+}
+
+.muuzee-card-save.is-saved svg,
+.work-save.is-saved svg,
+.artist-save-button.is-saved svg,
+.museum-save-button.is-saved svg,
+.exhibition-artist-save.is-saved svg{
+  fill:currentColor !important;
+  stroke:currentColor !important;
+}
+
+/* All save controls use the same visual motion language. */
+.muuzee-card-save,
+.work-save,
+.artist-save-button,
+.museum-save-button,
+.exhibition-artist-save{
+  position:relative;
+  overflow:visible;
+  transform-origin:center;
+}
+
+.muuzee-card-save.is-just-saved,
+.work-save.is-just-saved,
+.artist-save-button.is-just-saved,
+.museum-save-button.is-just-saved,
+.exhibition-artist-save.is-just-saved{
+  animation:muuzee-save-pop 520ms cubic-bezier(.22,1.35,.36,1) both;
+}
+
+.muuzee-card-save.is-just-saved::after,
+.work-save.is-just-saved::after,
+.artist-save-button.is-just-saved::after,
+.museum-save-button.is-just-saved::after,
+.exhibition-artist-save.is-just-saved::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:100%;
+  height:100%;
+  border:2px solid rgba(185,111,85,.42);
+  border-radius:999px;
+  pointer-events:none;
+  transform:translate(-50%,-50%) scale(.72);
+  opacity:0;
+  animation:muuzee-save-ring 620ms cubic-bezier(.2,.8,.2,1) both;
+}
+
+.muuzee-card-save.is-just-saved svg,
+.work-save.is-just-saved svg,
+.artist-save-button.is-just-saved svg,
+.museum-save-button.is-just-saved svg,
+.exhibition-artist-save.is-just-saved svg{
+  animation:muuzee-bookmark-bounce 520ms cubic-bezier(.22,1.35,.36,1) both;
+}
+
+@keyframes muuzee-save-pop{
+  0%{transform:scale(1)}
+  34%{transform:scale(.88)}
+  68%{transform:scale(1.14)}
+  100%{transform:scale(1)}
+}
+
+@keyframes muuzee-save-ring{
+  0%{
+    opacity:0;
+    transform:translate(-50%,-50%) scale(.72);
+  }
+  26%{
+    opacity:.72;
+  }
+  100%{
+    opacity:0;
+    transform:translate(-50%,-50%) scale(1.72);
+  }
+}
+
+@keyframes muuzee-bookmark-bounce{
+  0%{transform:translateY(0) scale(1)}
+  36%{transform:translateY(1px) scale(.82)}
+  72%{transform:translateY(-1px) scale(1.18)}
+  100%{transform:translateY(0) scale(1)}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .muuzee-card-save.is-just-saved,
+  .work-save.is-just-saved,
+  .artist-save-button.is-just-saved,
+  .museum-save-button.is-just-saved,
+  .exhibition-artist-save.is-just-saved,
+  .muuzee-card-save.is-just-saved svg,
+  .work-save.is-just-saved svg,
+  .artist-save-button.is-just-saved svg,
+  .museum-save-button.is-just-saved svg,
+  .exhibition-artist-save.is-just-saved svg,
+  .muuzee-card-save.is-just-saved::after,
+  .work-save.is-just-saved::after,
+  .artist-save-button.is-just-saved::after,
+  .museum-save-button.is-just-saved::after,
+  .exhibition-artist-save.is-just-saved::after{
+    animation:none !important;
+  }
+}
+
+/* shared-saved-state:end */

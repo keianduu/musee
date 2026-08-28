@@ -43,6 +43,48 @@
     return next.includes(value);
   };
 
+  function celebrateSave(control){
+    if(!control) return;
+
+    control.classList.remove("is-just-saved");
+    void control.offsetWidth;
+    control.classList.add("is-just-saved");
+
+    window.setTimeout(() => {
+      control.classList.remove("is-just-saved");
+    },700);
+  }
+
+  function savedState(control){
+    if(!control) return false;
+    return control.classList.contains("is-saved")
+      || control.getAttribute("aria-pressed") === "true";
+  }
+
+  function findReplacementControl(original){
+    if(original?.isConnected) return original;
+
+    if(original?.dataset?.workSave){
+      return [...document.querySelectorAll("[data-work-save]")]
+        .find(item => item.dataset.workSave === original.dataset.workSave) || null;
+    }
+
+    if(original?.dataset?.saveArtist){
+      return [...document.querySelectorAll("[data-save-artist]")]
+        .find(item => item.dataset.saveArtist === original.dataset.saveArtist) || null;
+    }
+
+    if(original?.matches?.("[data-artist-save]")){
+      return document.querySelector("[data-artist-save]");
+    }
+
+    if(original?.matches?.("[data-museum-save]")){
+      return document.querySelector("[data-museum-save]");
+    }
+
+    return null;
+  }
+
   const getHref = host => {
     if(host.matches("a[href]")) return host.getAttribute("href") || "";
     return host.querySelector("a[href]")?.getAttribute("href") || "";
@@ -209,8 +251,12 @@
       event.preventDefault();
       event.stopPropagation();
 
-      togglePrimitive(descriptor.storageKey,descriptor.id);
+      const nowSaved = togglePrimitive(descriptor.storageKey,descriptor.id);
       refreshAll();
+
+      if(nowSaved){
+        celebrateSave(control);
+      }
     };
 
     control.addEventListener("click",toggle);
@@ -297,15 +343,28 @@
       subtree:true
     });
 
-    /* Sync when an existing page-specific save button changes the same storage. */
+    /* Sync and animate existing page-specific save controls too. */
     document.addEventListener("click",event => {
-      if(
-        event.target.closest(
-          "[data-work-save],[data-save-artist],[data-artist-save],[data-museum-save]"
-        )
-      ){
-        setTimeout(refreshAll,0);
-      }
+      const dedicated = event.target.closest(
+        "[data-work-save],[data-save-artist],[data-artist-save],[data-museum-save]"
+      );
+
+      if(!dedicated) return;
+
+      const wasSaved = savedState(dedicated);
+
+      window.setTimeout(() => {
+        const current = findReplacementControl(dedicated);
+        if(!current) return;
+
+        const nowSaved = savedState(current);
+
+        if(!wasSaved && nowSaved){
+          celebrateSave(current);
+        }
+
+        refreshAll();
+      },0);
     });
 
     window.addEventListener("storage",refreshAll);
