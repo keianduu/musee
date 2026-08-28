@@ -8,6 +8,9 @@
   const mapEl = document.getElementById("discoveryMap");
   if(!mapEl || typeof L === "undefined") return;
 
+  const mapUI = window.MuuzeeMapUI;
+  if(!mapUI) return;
+
   const modeButtons = [...document.querySelectorAll("[data-map-mode]")];
   const filterModeButtons = [...document.querySelectorAll("[data-filter-mode]")];
   const exhibitionGroups = document.querySelector("[data-exhibition-filter-groups]");
@@ -37,9 +40,7 @@
   let draftFilters = JSON.parse(JSON.stringify(state.filters));
   let markerLayer = L.layerGroup();
   let currentLocationMarker = null;
-  let popupCenterToken = 0;
-
-  const map = L.map(mapEl,{
+const map = L.map(mapEl,{
     scrollWheelZoom:true,
     zoomControl:true,
     attributionControl:true
@@ -59,62 +60,6 @@
   const esc = value => String(value ?? "").replace(/[&<>"']/g,char => ({
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
   }[char]));
-
-  function storageKey(type){
-    return type === "museum" ? "muuzee:saved-museums" : "muuzee:saved-exhibitions";
-  }
-
-  function savedIds(type){
-    try{
-      const value = JSON.parse(localStorage.getItem(storageKey(type)) || "[]");
-      return Array.isArray(value) ? value : [];
-    }catch{
-      return [];
-    }
-  }
-
-  function isSaved(type,id){
-    return savedIds(type).includes(id);
-  }
-
-  function toggleSaved(type,id){
-    const current = savedIds(type);
-    const next = current.includes(id)
-      ? current.filter(item => item !== id)
-      : [...current,id];
-
-    localStorage.setItem(storageKey(type),JSON.stringify(next));
-  }
-
-  function exhibitionIcon(saved){
-    return `
-      <div class="muuzee-map-pin muuzee-map-pin--exhibition${saved ? " is-saved" : ""}">
-        <svg viewBox="0 0 24 24">
-          <rect x="5" y="4" width="14" height="16" rx="1.5"></rect>
-          <circle cx="10" cy="9" r="1.3"></circle>
-          <path d="m7 17 4-4 2.5 2.5 2-2 1.5 2"></path>
-        </svg>
-      </div>`;
-  }
-
-  function museumIcon(saved){
-    return `
-      <div class="muuzee-map-pin muuzee-map-pin--museum${saved ? " is-saved" : ""}">
-        <svg viewBox="0 0 24 24">
-          <path d="M4 9h16M6 9v9M10 9v9M14 9v9M18 9v9M4 18h16M5 8l7-4 7 4"></path>
-        </svg>
-      </div>`;
-  }
-
-  function createIcon(type,saved){
-    return L.divIcon({
-      className:"",
-      html:type === "museum" ? museumIcon(saved) : exhibitionIcon(saved),
-      iconSize:[34,34],
-      iconAnchor:[17,17],
-      popupAnchor:[0,-15]
-    });
-  }
 
   function exhibitionMatches(item){
     const f = state.filters.exhibition;
@@ -144,158 +89,6 @@
       : exhibitions.filter(exhibitionMatches);
   }
 
-  function popupHTML(item,type){
-    const saved = isSaved(type,item.id);
-    const isMuseum = type === "museum";
-
-    const meta = isMuseum
-      ? [item.prefecture || item.country,item.city || item.location].filter(Boolean).join(" · ")
-      : [item.statusLabel,item.expressionCategory].filter(Boolean).join(" · ");
-
-    const sub = isMuseum
-      ? item.category
-      : `${item.venue} · ${item.date}`;
-
-    const href = isMuseum
-      ? `./museum.html?id=${encodeURIComponent(item.id)}`
-      : (item.href || `./exhibition.html?id=${encodeURIComponent(item.id)}`);
-
-    return `
-      <article class="map-popup-card ${isMuseum ? "is-museum" : "is-exhibition"}">
-        <div class="map-popup-image">
-          <img src="${esc(isMuseum ? item.image : item.src)}" alt="${esc(item.name || item.title)}">
-        </div>
-        <div class="map-popup-body">
-          <div class="map-popup-topline">
-            <span class="map-popup-meta">${esc(meta)}</span>
-            <button class="map-popup-save${saved ? " is-saved" : ""}" type="button"
-              data-popup-save
-              data-popup-type="${type}"
-              data-popup-id="${esc(item.id)}"
-              aria-label="${saved ? "保存済み" : "保存"}"
-              aria-pressed="${String(saved)}">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M6 3h12v18l-6-4-6 4Z"></path>
-              </svg>
-            </button>
-          </div>
-          <h3 class="map-popup-title">${esc(item.name || item.title)}</h3>
-          <p class="map-popup-sub">${esc(sub)}</p>
-          <div class="map-popup-actions">
-            <a class="map-popup-detail" href="${esc(href)}">詳細を見る →</a>
-          </div>
-        </div>
-      </article>`;
-  }
-
-  /* safe-popup-centering:start */
-  function centerOpenedPopup(popup){
-    const token = ++popupCenterToken;
-
-    const measure = () => {
-      if(token !== popupCenterToken) return;
-
-      const popupEl = popup.getElement?.();
-      if(!popupEl){
-        window.requestAnimationFrame(measure);
-        return;
-      }
-
-      const visual =
-        popupEl.querySelector(".leaflet-popup-content-wrapper")
-        || popupEl;
-
-      const mapRect = mapEl.getBoundingClientRect();
-      const popupRect = visual.getBoundingClientRect();
-
-      const dx =
-        popupRect.left + popupRect.width / 2
-        - (mapRect.left + mapRect.width / 2);
-
-      const dy =
-        popupRect.top + popupRect.height / 2
-        - (mapRect.top + mapRect.height / 2);
-
-      const reveal = () => {
-        if(token !== popupCenterToken) return;
-        popup.getElement?.()?.classList.remove("is-positioning");
-      };
-
-      if(Math.hypot(dx,dy) <= 2){
-        reveal();
-        return;
-      }
-
-      let done = false;
-      let fallbackTimer = null;
-
-      const finish = () => {
-        if(done) return;
-        done = true;
-
-        if(fallbackTimer){
-          window.clearTimeout(fallbackTimer);
-        }
-
-        map.off("moveend",finish);
-        reveal();
-      };
-
-      map.once("moveend",finish);
-
-      fallbackTimer = window.setTimeout(finish,700);
-
-      /*
-        Keep Leaflet's normal marker/popup implementation.
-        Only pan the map by the measured tooltip-center delta.
-      */
-      map.panBy([dx,dy],{
-        animate:true,
-        duration:0.34,
-        easeLinearity:0.22
-      });
-    };
-
-    window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(measure);
-    });
-  }
-  /* safe-popup-centering:end */
-
-  /* popup-save-in-place:start */
-  function refreshVisibleMarkerSavedState(type,id){
-    const saved = isSaved(type,id);
-
-    markerLayer.eachLayer(layer => {
-      if(
-        layer?._muuzeeSaveType !== type
-        || layer?._muuzeeSaveId !== id
-      ) return;
-
-      const pin = layer.getElement?.()?.querySelector(".muuzee-map-pin");
-      pin?.classList.toggle("is-saved",saved);
-    });
-  }
-
-  function syncPopupSaveButton(button){
-    const type = button.dataset.popupType;
-    const id = button.dataset.popupId;
-    const saved = isSaved(type,id);
-
-    button.classList.toggle("is-saved",saved);
-    button.setAttribute("aria-pressed",String(saved));
-    button.setAttribute("aria-label",saved ? "保存済み" : "保存");
-
-    /*
-      Supports both the current Bookmark UI and an older text-button
-      baseline without forcing either markup shape.
-    */
-    if(!button.querySelector("svg")){
-      button.textContent = saved ? "保存済" : "保存";
-    }
-  }
-  /* popup-save-in-place:end */
-
   function renderMarkers({fit=false} = {}){
     markerLayer.clearLayers();
 
@@ -304,37 +97,20 @@
     items.forEach(item => {
       if(!Number.isFinite(item.lat) || !Number.isFinite(item.lng)) return;
 
-      const type = state.mode;
-      const marker = L.marker(
-        [item.lat,item.lng],
-        {icon:createIcon(type,isSaved(type,item.id))}
-      );
-
-      marker._muuzeeSaveType = type;
-      marker._muuzeeSaveId = item.id;
-
-      marker.bindPopup(
-        popupHTML(item,type),
-        {
-          className:"muuzee-map-popup is-positioning",
-          maxWidth:420,
-          minWidth:300,
-          closeButton:false,
-          autoPan:false,
-          keepInView:false,
-          offset:[0,-2]
-        }
-      );
-
-      marker.on("popupopen",event => {
-        centerOpenedPopup(event.popup);
+      mapUI.addItemMarker({
+        map,
+        mapEl,
+        markerLayer,
+        item,
+        type:state.mode
       });
-
-      marker.addTo(markerLayer);
     });
 
     if(resultCount) resultCount.textContent = items.length;
-    if(resultLabel) resultLabel.textContent = state.mode === "museum" ? "museums" : "exhibitions";
+    if(resultLabel){
+      resultLabel.textContent =
+        state.mode === "museum" ? "museums" : "exhibitions";
+    }
 
     renderModeButtons();
     renderSummary();
@@ -351,7 +127,6 @@
       }
     }
   }
-
   function renderModeButtons(){
     modeButtons.forEach(button => {
       const active = button.dataset.mapMode === state.mode;
@@ -533,34 +308,6 @@
       museum:{scope:"jp",area:[]}
     };
     renderFilterUI();
-  });
-
-  map.on("popupopen",event => {
-    const popupEl = event.popup.getElement?.();
-    if(!popupEl) return;
-
-    /*
-      Popup interactions must not be interpreted as Map clicks.
-      This prevents Leaflet's close-on-map-click behavior as well.
-    */
-    L.DomEvent.disableClickPropagation(popupEl);
-
-    const button = popupEl.querySelector("[data-popup-save]");
-    if(!button || button.dataset.muuzeeBound === "true") return;
-
-    button.dataset.muuzeeBound = "true";
-
-    button.addEventListener("click",clickEvent => {
-      clickEvent.preventDefault();
-      clickEvent.stopPropagation();
-
-      const type = button.dataset.popupType;
-      const id = button.dataset.popupId;
-
-      toggleSaved(type,id);
-      syncPopupSaveButton(button);
-      refreshVisibleMarkerSavedState(type,id);
-    });
   });
 
   locateButton?.addEventListener("click",() => {

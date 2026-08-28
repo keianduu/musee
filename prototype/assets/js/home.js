@@ -86,17 +86,27 @@ window.addEventListener('resize',()=>{
 
 
 
-(function(){
-  const MUUZEE_MUSEUMS = [{"name": "東京都美術館", "area": "上野", "lat": 35.71711, "lng": 139.77318, "type": "Art Museum"}, {"name": "国立西洋美術館", "area": "上野", "lat": 35.71536, "lng": 139.77585, "type": "Western Art"}, {"name": "上野の森美術館", "area": "上野", "lat": 35.71285, "lng": 139.77477, "type": "Art Museum"}, {"name": "すみだ北斎美術館", "area": "両国", "lat": 35.69675, "lng": 139.80039, "type": "Hokusai"}, {"name": "刀剣博物館", "area": "両国", "lat": 35.69882, "lng": 139.79371, "type": "Japanese Swords"}, {"name": "東京都現代美術館", "area": "清澄白河", "lat": 35.68, "lng": 139.80806, "type": "Contemporary Art"}, {"name": "アーティゾン美術館", "area": "京橋", "lat": 35.67875, "lng": 139.77213, "type": "Modern & Contemporary"}, {"name": "三井記念美術館", "area": "日本橋", "lat": 35.6863, "lng": 139.77314, "type": "Japanese & Asian Art"}, {"name": "東京ステーションギャラリー", "area": "丸の内", "lat": 35.68243, "lng": 139.76649, "type": "Art Museum"}];
-  const mapEl = document.getElementById('muuzeeLeafletMap');
+/* home-shared-exhibition-map:start */
+(() => {
+  "use strict";
+
+  const mapEl = document.getElementById("muuzeeLeafletMap");
   if(!mapEl) return;
 
-  if(typeof L === 'undefined'){
-    mapEl.innerHTML = '<div style="padding:24px;font:12px/1.6 Helvetica,Arial,sans-serif;color:#777">Map could not load. Internet access is required for Leaflet and external map tiles.</div>';
+  const mapUI = window.MuuzeeMapUI;
+  const exhibitions = (window.MuuzeeExhibitionCatalog || [])
+    .filter(item =>
+      Number.isFinite(item.lat)
+      && Number.isFinite(item.lng)
+    );
+
+  if(typeof L === "undefined" || !mapUI){
+    mapEl.innerHTML =
+      '<div style="padding:24px;font:12px/1.6 Helvetica,Arial,sans-serif;color:#777">Map could not load.</div>';
     return;
   }
 
-  const map = L.map(mapEl, {
+  const map = L.map(mapEl,{
     zoomControl:true,
     scrollWheelZoom:false,
     zoomSnap:0.25,
@@ -104,83 +114,62 @@ window.addEventListener('resize',()=>{
     attributionControl:true
   });
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    subdomains:'abcd',
-    maxZoom:20,
-    attribution:'&copy; OpenStreetMap contributors &copy; CARTO'
-  }).addTo(map);
+  L.tileLayer(
+    "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+    {
+      subdomains:"abcd",
+      maxZoom:20,
+      attribution:"&copy; OpenStreetMap contributors &copy; CARTO"
+    }
+  ).addTo(map);
 
-  const bounds = L.latLngBounds([]);
+  const markerLayer = L.layerGroup().addTo(map);
 
-  let muuzeeActiveMarker = null;
-
-  MUUZEE_MUSEUMS.forEach((m, idx) => {
-    const icon = L.divIcon({
-      className:'',
-      html:'<div class="muuzee-map-marker"></div>',
-      iconSize:[28,28],
-      iconAnchor:[14,14],
-      popupAnchor:[0,-12]
+  exhibitions.forEach(item => {
+    mapUI.addItemMarker({
+      map,
+      mapEl,
+      markerLayer,
+      item,
+      type:"exhibition"
     });
-
-    const marker = L.marker([m.lat,m.lng], {icon}).addTo(map);
-    marker.bindTooltip(m.name, {
-      direction:'top',
-      offset:[0,-11],
-      opacity:1,
-      className:'muuzee-tooltip'
-    });
-
-    marker.on('click', () => {
-      if(muuzeeActiveMarker){
-        const prev = muuzeeActiveMarker.getElement()?.querySelector('.muuzee-map-marker');
-        if(prev) prev.classList.remove('is-active');
-      }
-      const current = marker.getElement()?.querySelector('.muuzee-map-marker');
-      if(current) current.classList.add('is-active');
-      muuzeeActiveMarker = marker;
-    });
-
-    marker.bindPopup(`
-      <div class="muuzee-popup-kicker">${m.area} · ${m.type}</div>
-      <div class="muuzee-popup-title">${m.name}</div>
-      <div class="muuzee-popup-meta">Muuzeeで開催展・スケジュールを見る</div>
-      <a class="muuzee-popup-link" href="#">詳細を見る →</a>
-    `);
-
-    bounds.extend([m.lat,m.lng]);
   });
 
-  // Tokyo east-side framing: Marunouchi / Nihonbashi → Ueno → Ryogoku → Kiyosumi-Shirakawa
-  const eastTokyoBounds = L.latLngBounds(
-    [35.662,139.752],
-    [35.731,139.823]
-  );
-  map.fitBounds(eastTokyoBounds, {
-    padding:[18,18],
-    maxZoom:12.25
-  });
+  if(exhibitions.length){
+    const bounds = L.latLngBounds(
+      exhibitions.map(item => [item.lat,item.lng])
+    );
 
-  // Keep Leaflet geometry in sync with the rendered container.
+    if(bounds.isValid()){
+      map.fitBounds(bounds,{
+        padding:[28,28],
+        maxZoom:12.5
+      });
+    }
+  }
+
   const syncMapSize = () => {
-    requestAnimationFrame(() => map.invalidateSize({pan:false}));
+    window.requestAnimationFrame(() => {
+      map.invalidateSize({pan:false});
+    });
   };
 
   syncMapSize();
-  setTimeout(syncMapSize, 120);
-  setTimeout(syncMapSize, 420);
+  window.setTimeout(syncMapSize,120);
+  window.setTimeout(syncMapSize,420);
 
-  if('ResizeObserver' in window){
-    const mapResizeObserver = new ResizeObserver(syncMapSize);
-    mapResizeObserver.observe(mapEl);
+  if("ResizeObserver" in window){
+    const observer = new ResizeObserver(syncMapSize);
+    observer.observe(mapEl);
   }else{
-    window.addEventListener('resize', syncMapSize);
+    window.addEventListener("resize",syncMapSize);
   }
 
-  window.addEventListener('orientationchange', () => {
-    setTimeout(syncMapSize, 180);
+  window.addEventListener("orientationchange",() => {
+    window.setTimeout(syncMapSize,180);
   });
 })();
+/* home-shared-exhibition-map:end */
 
 /* popular-museums:start */
 (() => {
