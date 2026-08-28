@@ -725,3 +725,120 @@
   image-rendering:auto;
 }
 /* leaflet-render-stability:end */
+
+/* popular-museums-and-map:start */
+.popular-museums-section{
+  background:#fff;
+}
+
+.popular-museum-rail{
+  display:flex;
+  gap:18px;
+  overflow-x:auto;
+  padding:2px 40px 12px 0;
+  scrollbar-width:none;
+  scroll-snap-type:x proximity;
+}
+
+.popular-museum-rail::-webkit-scrollbar{
+  display:none;
+}
+
+.popular-museum-card{
+  flex:0 0 286px;
+  width:286px;
+  min-width:0;
+  scroll-snap-align:start;
+}
+
+.popular-museum-image{
+  width:100%;
+  aspect-ratio:4 / 3;
+  margin-bottom:14px;
+  overflow:hidden;
+  border-radius:18px;
+  background:var(--greige);
+}
+
+.popular-museum-image img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.popular-museum-card small{
+  display:block;
+  margin-bottom:7px;
+  color:var(--muted2);
+  font-size:10px;
+  line-height:1.4;
+  letter-spacing:.04em;
+}
+
+.popular-museum-card h3{
+  margin:0 0 6px;
+  color:var(--ink);
+  font-size:14px;
+  line-height:1.45;
+  letter-spacing:-.02em;
+  font-weight:650;
+}
+
+.popular-museum-card p{
+  margin:0;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+}
+
+.map-section{
+  background:var(--warm);
+}
+
+.map-section .map-only-grid{
+  display:block;
+}
+
+.map-section .leaflet-map{
+  width:100%;
+  background:var(--greige);
+}
+
+@media(max-width:720px){
+  .popular-museum-rail{
+    gap:12px;
+    margin-right:-18px;
+    padding:2px 24px 8px 0;
+  }
+
+  .popular-museum-card{
+    flex-basis:min(74vw,260px);
+    width:min(74vw,260px);
+  }
+
+  .popular-museum-image{
+    margin-bottom:11px;
+    border-radius:16px;
+  }
+
+  .popular-museum-card small{
+    margin-bottom:5px;
+    font-size:10px;
+  }
+
+  .popular-museum-card h3{
+    margin-bottom:5px;
+    font-size:14px;
+  }
+
+  .popular-museum-card p{
+    font-size:12px;
+  }
+
+  .map-section .leaflet-map{
+    min-height:360px;
+    height:360px;
+  }
+}
+/* popular-museums-and-map:end */
