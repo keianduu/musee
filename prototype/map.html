@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Map — Muuzee Prototype</title>
+<link rel="stylesheet" href="./assets/css/muuzee-global.css?v=20260828-06">
 <link rel="stylesheet" href="./shared.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
@@ -13,12 +14,13 @@ body{display:flex;flex-direction:column}
 .map-head strong{font-size:22px;letter-spacing:-.04em}
 #map{flex:1;min-height:620px}
 .leaflet-container{font-family:var(--sans);background:#f4f2ed}
+.map-page .footer{margin-top:0}
 .museum-pin{width:28px;height:28px;border-radius:50%;background:var(--ink);border:2px solid #fff;box-shadow:0 5px 14px rgba(0,0,0,.18)}
 .museum-pin:after{content:"";display:block;width:5px;height:5px;border-radius:50%;background:#fff;margin:9px auto}
 @media(max-width:720px){#map{min-height:calc(100svh - 124px)}}
 </style>
 </head>
-<body>
+<body class="muuzee-app map-page">
 <div class="map-head"><a class="logo" href="./index.html">Muuzee</a><strong>Map</strong><span>東京</span></div>
 <div id="map"></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -41,5 +43,35 @@ museums.forEach(([name,lat,lng])=>{
  L.marker([lat,lng],{icon}).addTo(map).bindPopup(`<b>${name}</b><br><small>Muuzeeで開催展を見る</small>`);
 });
 </script>
+  <footer class="footer">
+    <div class="shell footer-inner">
+      <nav aria-label="Primary navigation" class="footer-nav">
+        <a class="nav-item" href="./index.html">
+          <svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9H7v-6h10v6"></path></svg>
+          <span>ホーム</span>
+        </a>
+        <a class="nav-item" href="./exhibitions.html">
+          <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1.5"></rect><circle cx="9" cy="9" r="1.5"></circle><path d="m6.5 17 4-4 3 3 2-2 2 3"></path></svg>
+          <span>展示会</span>
+        </a>
+        <a class="nav-item" href="./artists.html">
+          <svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5"></rect><circle cx="12" cy="9" r="2.4"></circle><path d="M8.5 17c.5-2.3 1.8-3.5 3.5-3.5s3 1.2 3.5 3.5"></path></svg>
+          <span>アーティスト</span>
+        </a>
+        <a class="nav-item" href="./museums.html">
+          <svg viewBox="0 0 24 24"><path d="M3 9h18M5 9v10M9 9v10M15 9v10M19 9v10M3 19h18M4 8l8-5 8 5"></path></svg>
+          <span>美術館</span>
+        </a>
+        <a class="nav-item active" href="./map.html">
+          <svg viewBox="0 0 24 24"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z"></path><path d="M9 3v15M15 6v15"></path></svg>
+          <span>マップ</span>
+        </a>
+        <a class="nav-item" href="./saved.html">
+          <svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4Z"></path></svg>
+          <span>保存</span>
+        </a>
+      </nav>
+    </div>
+  </footer>
 </body>
 </html>
