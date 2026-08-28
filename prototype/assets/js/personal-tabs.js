@@ -19,10 +19,12 @@
   const museums = window.MuuzeeMuseumCatalog || [];
   const exhibitions = window.MuuzeeExhibitionCatalog || [];
 
-  const allowed = ["exhibition","museum","artist","work"];
+  const allowed = kind === "favorites"
+      ? ["museum","artist"]
+      : ["exhibition","museum","artist","work"];
 
-  let activeType = location.hash.replace("#","") || allowed[0];
-  if(!allowed.includes(activeType)) activeType = allowed[0];
+  let activeType = location.hash.replace("#","") || (kind === "favorites" ? "museum" : "exhibition");
+  if(!allowed.includes(activeType)) activeType = kind === "favorites" ? "museum" : "exhibition";
 
   const source = () => kind === "favorites" ? data.favorites() : data.seen();
 

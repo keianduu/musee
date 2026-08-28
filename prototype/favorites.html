@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="./assets/css/exhibitions.css?v=20260828-15">
   <link rel="stylesheet" href="./assets/css/museums.css?v=20260828-15">
   <link rel="stylesheet" href="./assets/css/artist.css?v=20260828-15">
-  <link rel="stylesheet" href="./assets/css/personal-collection.css?v=20260828-37">
+  <link rel="stylesheet" href="./assets/css/personal-collection.css?v=20260828-39">
   <link rel="stylesheet" href="./assets/css/muuzee-save-control.css?v=20260828-37">
 </head>
 <body class="muuzee-app mypage-page personal-collection-page" data-personal-kind="favorites">
@@ -38,21 +38,15 @@
     </section>
     <div class="shell mypage-content-shell">
       <div class="collection-tabs" role="tablist" aria-label="カテゴリ">
-        <button class="collection-tab is-active" type="button" role="tab" aria-selected="true" data-collection-tab="exhibition">
-          <span>展覧会</span><em>0</em>
-        </button>
-        <button class="collection-tab" type="button" role="tab" aria-selected="false" data-collection-tab="museum">
+        <button class="collection-tab is-active" type="button" role="tab" aria-selected="true" data-collection-tab="museum">
           <span>美術館</span><em>0</em>
         </button>
         <button class="collection-tab" type="button" role="tab" aria-selected="false" data-collection-tab="artist">
           <span>アーティスト</span><em>0</em>
         </button>
-        <button class="collection-tab" type="button" role="tab" aria-selected="false" data-collection-tab="work">
-          <span>作品</span><em>0</em>
-        </button>
       </div>
 
-      <div class="collection-list exhibition-grid" data-collection-list></div>
+      <div class="collection-list museum-grid" data-collection-list></div>
 
       <div class="collection-empty" data-collection-empty hidden>
         <h3 data-empty-title></h3>
@@ -80,6 +74,6 @@
   <script src="./assets/js/personal-data.js?v=20260828-15"></script>
   <script src="./assets/js/mypage-nav.js?v=20260828-37"></script>
   <script src="./assets/js/collection-renderers.js?v=20260828-15"></script>
-  <script src="./assets/js/personal-tabs.js?v=20260828-37"></script>
+  <script src="./assets/js/personal-tabs.js?v=20260828-39"></script>
 </body>
 </html>
