@@ -19,9 +19,7 @@
   const museums = window.MuuzeeMuseumCatalog || [];
   const exhibitions = window.MuuzeeExhibitionCatalog || [];
 
-  const allowed = kind === "favorites"
-    ? ["artist","museum"]
-    : ["artist","work","museum","exhibition"];
+  const allowed = ["exhibition","museum","artist","work"];
 
   let activeType = location.hash.replace("#","") || allowed[0];
   if(!allowed.includes(activeType)) activeType = allowed[0];
@@ -61,14 +59,14 @@
 
   function renderCard(item,index){
     if(activeType === "artist") return renderers.artistCard(item);
-    if(activeType === "work") return renderers.workRow(item,index,{seen:true});
+    if(activeType === "work") return renderers.workRow(item,index,{seen:kind === "seen"});
     if(activeType === "museum") return renderers.museumCard(item);
     return renderers.exhibitionCard(item);
   }
 
   function labelFor(type){
     return {
-      artist:"Artist",
+      artist:"アーティスト",
       work:"作品",
       museum:"美術館",
       exhibition:"展覧会"

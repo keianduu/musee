@@ -22,14 +22,14 @@
   const submitButton = document.querySelector("[data-confirm-submit]");
 
   const configs = {
-    artist:{label:"Artist",empty:"保存したArtistはまだありません"},
+    artist:{label:"アーティスト",empty:"保存したアーティストはまだありません"},
     work:{label:"作品",empty:"保存した作品はまだありません"},
     museum:{label:"美術館",empty:"保存した美術館はまだありません"},
     exhibition:{label:"展覧会",empty:"保存した展覧会はまだありません"}
   };
 
-  let activeType = location.hash.replace("#","") || "artist";
-  if(!configs[activeType]) activeType = "artist";
+  let activeType = location.hash.replace("#","") || "exhibition";
+  if(!configs[activeType]) activeType = "exhibition";
 
   let pending = null;
   let lastFocused = null;

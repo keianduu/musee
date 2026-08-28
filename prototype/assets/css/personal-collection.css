@@ -257,3 +257,49 @@
     border-radius:22px;
   }
 }
+
+/* fixed-personal-tabs:start */
+
+/* Personal collection categories are a fixed four-item set.
+   Give each category exactly the same visual width. */
+.collection-tabs{
+  gap:0 !important;
+  overflow-x:visible !important;
+}
+
+.collection-tab{
+  flex:1 1 0 !important;
+  width:25%;
+  min-width:0 !important;
+  padding:0 4px 13px !important;
+  justify-content:center;
+  gap:4px;
+}
+
+.collection-tab span{
+  min-width:0;
+  white-space:nowrap;
+  word-break:keep-all;
+}
+
+@media(max-width:720px){
+  .collection-tabs{
+    gap:0 !important;
+  }
+
+  .collection-tab{
+    width:25%;
+    padding:0 1px 11px !important;
+    gap:3px;
+  }
+
+  .collection-tab span{
+    font-size:10px;
+  }
+
+  .collection-tab em{
+    font-size:8px;
+  }
+}
+
+/* fixed-personal-tabs:end */

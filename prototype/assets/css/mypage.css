@@ -701,3 +701,38 @@
   }
 }
 /* mypage-artwall-shared:end */
+
+/* mypage-profile-avatar-link:start */
+
+.mypage-profile-avatar-link{
+  flex:0 0 52px;
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  display:block;
+  overflow:hidden;
+  line-height:0;
+}
+
+.mypage-profile-avatar-link img{
+  display:block;
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover;
+  border-radius:50%;
+}
+
+.mypage-profile-avatar-link:focus-visible{
+  outline:2px solid var(--ink);
+  outline-offset:3px;
+}
+
+@media(max-width:720px){
+  .mypage-profile-avatar-link{
+    flex-basis:42px;
+    width:42px;
+    height:42px;
+  }
+}
+
+/* mypage-profile-avatar-link:end */

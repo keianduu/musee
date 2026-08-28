@@ -26,7 +26,9 @@
   document.querySelectorAll("[data-mypage-profile]").forEach(root => {
     root.innerHTML = `
       <div class="mypage-profile-person">
-        <img src="./assets/images/profile-avatar.jpg" alt="ashelry">
+        <a class="mypage-profile-avatar-link" href="./my-art.html" aria-label="MyPage TOP">
+          <img src="./assets/images/profile-avatar.jpg" alt="ashelry">
+        </a>
         <div>
           <strong>ashelry</strong>
           <span>Art Profile</span>
