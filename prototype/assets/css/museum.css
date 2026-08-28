@@ -1,0 +1,553 @@
+/* Muuzee Museum Detail — page specific */
+
+.museum-page{
+  background:#fff;
+}
+
+.museum-hero{
+  position:sticky;
+  top:0;
+  z-index:1;
+  width:100%;
+  height:min(72svh,760px);
+  min-height:520px;
+  overflow:hidden;
+  background:var(--greige);
+}
+
+.museum-hero img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.museum-detail-sheet{
+  position:relative;
+  z-index:2;
+  margin-top:-28px;
+  padding:0 0 20px;
+  border-radius:28px 28px 0 0;
+  background:#fff;
+}
+
+.museum-sheet-head{
+  min-height:196px;
+  padding:52px 0 40px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:32px;
+  border-bottom:1px solid var(--line);
+}
+
+.museum-sheet-meta{
+  margin-bottom:10px;
+  color:var(--muted2);
+  font-size:10px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.museum-sheet-head h1{
+  margin:0 0 10px;
+  font-size:32px;
+  line-height:1.14;
+  letter-spacing:-.045em;
+  font-weight:650;
+}
+
+.museum-sheet-head p{
+  margin:0;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.museum-save-button{
+  min-width:76px;
+  min-height:40px;
+  padding:0 14px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  cursor:pointer;
+}
+
+.museum-save-button svg{
+  width:15px;
+  height:15px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.6;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.museum-save-button span{
+  font-size:11px;
+}
+
+.museum-save-button.is-saved{
+  background:var(--ink);
+  border-color:var(--ink);
+  color:#fff;
+}
+
+.museum-section{
+  display:grid;
+  grid-template-columns:140px minmax(0,1fr);
+  gap:32px;
+  padding:56px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.museum-section-label{
+  padding-top:5px;
+  color:var(--muted2);
+  font-size:10px;
+  line-height:1;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+.museum-section-main{
+  min-width:0;
+}
+
+.museum-section-main > h2,
+.museum-section-head h2{
+  margin:0;
+  font-size:24px;
+  line-height:1.3;
+  letter-spacing:-.035em;
+  font-weight:620;
+}
+
+.museum-section-head{
+  margin-bottom:24px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.museum-section-sub{
+  margin:7px 0 0;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.museum-description{
+  max-width:720px;
+  margin:24px 0 0;
+  font-size:14px;
+  line-height:1.9;
+}
+
+.museum-text-link{
+  flex:0 0 auto;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.museum-access-grid{
+  display:grid;
+  grid-template-columns:minmax(240px,.72fr) minmax(420px,1.28fr);
+  gap:32px;
+  align-items:stretch;
+}
+
+.museum-access-copy{
+  display:flex;
+  flex-direction:column;
+  gap:28px;
+  padding:8px 0;
+}
+
+.museum-info-block small{
+  display:block;
+  margin-bottom:9px;
+  color:var(--muted2);
+  font-size:10px;
+  letter-spacing:.06em;
+}
+
+.museum-info-block p,
+.museum-info-block div{
+  margin:0;
+  font-size:13px;
+  line-height:1.75;
+}
+
+.museum-info-block div p + p{
+  margin-top:5px;
+}
+
+.museum-map{
+  width:100%;
+  min-height:320px;
+  border-radius:18px;
+  overflow:hidden;
+  background:var(--warm);
+}
+
+.museum-map .leaflet-tile{
+  max-width:none !important;
+  max-height:none !important;
+}
+
+.museum-map-marker{
+  width:26px;
+  height:26px;
+  border:6px solid var(--ink);
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 3px 14px rgba(38,37,34,.16);
+}
+
+.museum-opening-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  max-width:720px;
+  margin-top:24px;
+}
+
+.museum-opening-card{
+  min-height:104px;
+  padding:20px;
+  border-radius:16px;
+  background:var(--warm);
+}
+
+.museum-opening-card small{
+  display:block;
+  margin-bottom:12px;
+  color:var(--muted2);
+  font-size:10px;
+}
+
+.museum-opening-card strong{
+  font-size:14px;
+  line-height:1.5;
+  font-weight:600;
+}
+
+.museum-opening-note{
+  max-width:720px;
+  margin:14px 0 0;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.7;
+}
+
+.museum-exhibitions-section .poster-shell{
+  margin-top:4px;
+}
+
+.museum-calendar{
+  margin-top:24px;
+  border-top:1px solid var(--line);
+}
+
+.museum-calendar-months{
+  display:flex;
+  gap:0;
+  overflow-x:auto;
+  scrollbar-width:none;
+  border-bottom:1px solid var(--line);
+}
+
+.museum-calendar-months::-webkit-scrollbar{
+  display:none;
+}
+
+.museum-month{
+  flex:0 0 112px;
+  min-height:68px;
+  padding:14px 12px 12px;
+  border:0;
+  border-right:1px solid var(--line);
+  background:#fff;
+  text-align:left;
+  cursor:pointer;
+}
+
+.museum-month small{
+  display:block;
+  margin-bottom:5px;
+  color:var(--muted2);
+  font-size:9px;
+}
+
+.museum-month strong{
+  font-size:13px;
+  font-weight:600;
+}
+
+.museum-month.is-active{
+  background:var(--warm);
+}
+
+.museum-calendar-events{
+  min-height:104px;
+}
+
+.museum-calendar-event{
+  display:grid;
+  grid-template-columns:108px minmax(0,1fr) auto;
+  gap:20px;
+  align-items:center;
+  min-height:76px;
+  padding:16px 12px;
+  border-bottom:1px solid var(--line);
+}
+
+.museum-calendar-event time{
+  color:var(--muted);
+  font-size:10px;
+}
+
+.museum-calendar-event strong{
+  font-size:13px;
+  line-height:1.5;
+  font-weight:600;
+}
+
+.museum-calendar-event span{
+  color:var(--terra);
+  font-size:10px;
+}
+
+.museum-calendar-empty{
+  padding:36px 12px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.museum-work-rail,
+.museum-artist-rail{
+  display:flex;
+  gap:18px;
+  margin-top:24px;
+  padding:2px 36px 12px 0;
+  overflow-x:auto;
+  scrollbar-width:none;
+  scroll-snap-type:x proximity;
+}
+
+.museum-work-rail::-webkit-scrollbar,
+.museum-artist-rail::-webkit-scrollbar{
+  display:none;
+}
+
+.museum-work{
+  flex:0 0 220px;
+  width:220px;
+  scroll-snap-align:start;
+}
+
+.museum-work-image{
+  width:100%;
+  height:250px;
+  margin-bottom:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  background:var(--warm);
+}
+
+.museum-work-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.museum-work small{
+  display:block;
+  margin-bottom:5px;
+  color:var(--muted2);
+  font-size:9px;
+}
+
+.museum-work strong{
+  display:block;
+  margin-bottom:4px;
+  font-size:13px;
+  line-height:1.45;
+  font-weight:600;
+}
+
+.museum-work p{
+  margin:0;
+  color:var(--muted);
+  font-size:10px;
+}
+
+.museum-artist{
+  flex:0 0 116px;
+  width:116px;
+  text-align:center;
+  scroll-snap-align:start;
+}
+
+.museum-artist-image{
+  width:96px;
+  height:96px;
+  margin:0 auto 10px;
+  overflow:hidden;
+  border-radius:50%;
+  background:var(--warm);
+}
+
+.museum-artist-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.museum-artist-image.is-fallback{
+  display:grid;
+  place-items:center;
+  color:var(--muted);
+  font-size:18px;
+}
+
+.museum-artist strong{
+  display:block;
+  font-size:11px;
+  line-height:1.45;
+  font-weight:600;
+}
+
+.museum-quiet-empty{
+  margin-top:20px;
+  padding:22px 24px;
+  border-radius:14px;
+  background:var(--warm);
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.7;
+}
+
+@media(max-width:980px){
+  .museum-access-grid{
+    grid-template-columns:1fr;
+  }
+
+  .museum-map{
+    min-height:300px;
+  }
+}
+
+@media(max-width:720px){
+  .museum-hero{
+    height:min(62svh,112vw);
+    min-height:0;
+  }
+
+  .museum-detail-sheet{
+    margin-top:-22px;
+    border-radius:22px 22px 0 0;
+  }
+
+  .museum-sheet-head{
+    min-height:164px;
+    padding:38px 0 30px;
+    gap:18px;
+  }
+
+  .museum-sheet-head h1{
+    font-size:24px;
+  }
+
+  .museum-save-button{
+    min-width:64px;
+    padding:0 11px;
+  }
+
+  .museum-section{
+    display:block;
+    padding:42px 0;
+  }
+
+  .museum-section-label{
+    margin-bottom:14px;
+  }
+
+  .museum-section-main > h2,
+  .museum-section-head h2{
+    font-size:22px;
+  }
+
+  .museum-section-head{
+    margin-bottom:20px;
+    align-items:flex-start;
+  }
+
+  .museum-description{
+    margin-top:20px;
+  }
+
+  .museum-access-copy{
+    padding-top:0;
+  }
+
+  .museum-map{
+    min-height:260px;
+    border-radius:14px;
+  }
+
+  .museum-opening-grid{
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+
+  .museum-opening-card{
+    min-height:94px;
+    padding:16px;
+  }
+
+  .museum-month{
+    flex-basis:92px;
+    min-height:62px;
+  }
+
+  .museum-calendar-event{
+    grid-template-columns:82px minmax(0,1fr);
+    gap:10px;
+  }
+
+  .museum-calendar-event span{
+    grid-column:2;
+  }
+
+  .museum-work-rail,
+  .museum-artist-rail{
+    margin-right:-18px;
+    padding-right:24px;
+  }
+
+  .museum-work{
+    flex-basis:176px;
+    width:176px;
+  }
+
+  .museum-work-image{
+    height:210px;
+  }
+
+  .museum-artist{
+    flex-basis:104px;
+    width:104px;
+  }
+
+  .museum-artist-image{
+    width:88px;
+    height:88px;
+  }
+}

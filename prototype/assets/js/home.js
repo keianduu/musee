@@ -186,88 +186,30 @@ window.addEventListener('resize',()=>{
 (() => {
   "use strict";
 
-  const POPULAR_MUSEUMS = [
-    {
-      name:"国立新美術館",
-      location:"東京・六本木",
-      category:"企画展 / 建築",
-      image:"https://www.nact.jp/english/tips/media/01_tips_Exteriorview%20_Facade.jpg",
-      source:"The National Art Center, Tokyo"
-    },
-    {
-      name:"森美術館",
-      location:"東京・六本木",
-      category:"現代美術",
-      image:"https://cdn.cheapoguides.com/wp-content/uploads/sites/2/2025/04/AB782347-3FBF-4960-AEFE-EA1E4EC664F1_1_201_a-770x578.jpeg",
-      source:"Tokyo Cheapo"
-    },
-    {
-      name:"金沢21世紀美術館",
-      location:"石川・金沢",
-      category:"現代美術 / 建築",
-      image:"https://visitkanazawa.jp/lsc/upfile/articleDetail/0000/0906/906_2_xl.jpg",
-      source:"Visit Kanazawa"
-    },
-    {
-      name:"地中美術館",
-      location:"香川・直島",
-      category:"現代美術 / 建築",
-      image:"https://img.hankyung.com/photo/202402/01.36007592.1.jpg",
-      source:"Hankyung"
-    },
-    {
-      name:"ルーヴル美術館",
-      location:"パリ・フランス",
-      category:"古典 / 西洋美術",
-      image:"https://images.unsplash.com/photo-1500039436846-25ae2f11882e?auto=format&fit=crop&fm=jpg&q=82&w=1200",
-      source:"Unsplash / Chris Karidis"
-    },
-    {
-      name:"MoMA",
-      location:"ニューヨーク・アメリカ",
-      category:"近現代美術",
-      image:"https://images.unsplash.com/photo-1576531946810-5b358dc8d545?auto=format&fit=crop&fm=jpg&q=82&w=1200",
-      source:"Unsplash / Jamison McAndie"
-    },
-    {
-      name:"Tate Modern",
-      location:"ロンドン・イギリス",
-      category:"近現代美術",
-      image:"https://images.unsplash.com/photo-1671668943401-c296f0009358?auto=format&fit=crop&fm=jpg&q=82&w=1200",
-      source:"Unsplash / Samuel Regan-Asante"
-    },
-    {
-      name:"Guggenheim Museum Bilbao",
-      location:"ビルバオ・スペイン",
-      category:"現代美術 / 建築",
-      image:"https://images.unsplash.com/photo-1748790485676-b36207bd1cb7?auto=format&fit=crop&fm=jpg&q=82&w=1200",
-      source:"Unsplash / Jacek Urbanski"
-    },
-    {
-      name:"Centre Pompidou",
-      location:"パリ・フランス",
-      category:"近現代美術 / 建築",
-      image:"https://living.corriere.it/wp-content/uploads/2018/10/Exterior-view-of-Centre-Pompidou_France_Copyright-Ian-Dagnall_Alamy-Stock-Photo.jpg",
-      source:"Living / Corriere"
-    }
-  ];
+  const POPULAR_MUSEUMS = (window.MuuzeeMuseumCatalog || [])
+    .filter(museum => Number.isFinite(museum.popularRank))
+    .sort((a,b) => a.popularRank - b.popularRank);
 
   const rail = document.querySelector("[data-popular-museums]");
   if(!rail) return;
 
-  const esc = value => String(value ?? "").replace(/[&<>"']/g, char => ({
+  const esc = value => String(value ?? "").replace(/[&<>"']/g,char => ({
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
   }[char]));
 
-  rail.innerHTML = POPULAR_MUSEUMS.map(museum => `
-    <a class="popular-museum-card" href="./museums.html?q=${encodeURIComponent(museum.name)}">
+  rail.innerHTML = POPULAR_MUSEUMS.map(museum => {
+    const place = museum.scope === "jp"
+      ? [museum.prefecture,museum.location].filter(Boolean).join("・")
+      : [museum.city,museum.country].filter(Boolean).join("・");
+
+    return `<a class="popular-museum-card" href="./museum.html?id=${encodeURIComponent(museum.id)}">
       <div class="popular-museum-image">
         <img src="${esc(museum.image)}" alt="${esc(museum.name)}" loading="lazy">
       </div>
-      <small>${esc(museum.location)}</small>
+      <small>${esc(place)}</small>
       <h3>${esc(museum.name)}</h3>
       <p>${esc(museum.category)}</p>
-    </a>
-  `).join("");
+    </a>`;
+  }).join("");
 })();
 /* popular-museums:end */

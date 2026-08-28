@@ -1,77 +1,181 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Museum Detail — Muuzee Prototype</title>
-<link rel="stylesheet" href="./assets/css/muuzee-global.css?v=20260828-06">
-<link rel="stylesheet" href="./shared.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>美術館詳細 — Muuzee</title>
+  <meta name="description" content="Muuzee 美術館詳細ページ Prototype">
+  <link rel="stylesheet" href="./assets/css/muuzee-global.css?v=20260828-07">
+  <link rel="stylesheet" href="./assets/css/muuzee-detail.css?v=20260826-09">
+  <link rel="stylesheet" href="./assets/css/muuzee-exhibition-card.css?v=20260826-14">
+  <link rel="stylesheet" href="./assets/css/museum.css?v=20260828-07">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
-<body class="muuzee-app">
-<header class="header">
-  <div class="shell header-inner">
-    <a class="logo" href="./index.html">Muuzee</a>
-    <div class="top-actions"><span class="icon">●</span><span class="icon">MY</span></div>
-  </div>
-</header>
-<main>
-  <section class="shell page-head">
-    <div class="status">Prototype scaffold</div>
-    <div class="kicker">Museum</div>
-    <h1>Museum Detail</h1>
-    <p class="lead">美術館自体の情報と、現在・今後開催される展示、所蔵作品、アクセスをまとめる画面です。</p>
-  </section>
-  
-<section class="section">
-  <div class="shell">
-    <h2>Museum Identity</h2>
-    <div class="placeholder"></div>
-  </div>
-</section>
-<section class="section alt">
-  <div class="shell">
-    <h2>Current / Upcoming Exhibitions</h2>
-    <div class="card-grid"><div class="card"><strong>開催中</strong><p>現在開催中の展示。</p></div><div class="card"><strong>開催予定</strong><p>今後のスケジュール。</p></div><div class="card"><strong>Collection</strong><p>所蔵作品。</p></div></div>
-  </div>
-</section>
-<section class="section">
-  <div class="shell">
-    <h2>Access</h2>
-    <div class="placeholder"></div>
-  </div>
-</section>
-</main>
+<body class="muuzee-app museum-page">
+  <header class="site-header" id="siteHeader">
+    <div class="shell header-inner">
+      <a class="logo" href="./index.html">Muuzee</a>
+      <div class="header-actions">
+        <button aria-label="お知らせ" class="icon-button" type="button">
+          <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"></path></svg>
+          <i class="notice-dot"></i>
+        </button>
+        <a aria-label="ashelry My Art" class="avatar" href="#artwall" title="ashelry">
+          <img alt="ashelry" loading="eager" src="./assets/images/profile-avatar.jpg">
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="museum-hero" id="top">
+      <img data-museum-hero alt="" loading="eager">
+    </section>
+
+    <section class="museum-detail-sheet" data-muuzee-sheet>
+      <div class="shell">
+        <header class="museum-sheet-head">
+          <div>
+            <div class="museum-sheet-meta" data-museum-meta></div>
+            <h1 data-museum-name>美術館</h1>
+            <p data-museum-location></p>
+          </div>
+          <button class="museum-save-button" type="button" data-museum-save aria-pressed="false">
+            <svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4Z"></path></svg>
+            <span>保存</span>
+          </button>
+        </header>
+
+        <section class="museum-section museum-about">
+          <div class="museum-section-label">About</div>
+          <div class="museum-section-main">
+            <h2>美術館について</h2>
+            <p class="museum-description" data-museum-description></p>
+          </div>
+        </section>
+
+        <section class="museum-section museum-access-section">
+          <div class="museum-section-label">Access</div>
+          <div class="museum-section-main">
+            <div class="museum-section-head">
+              <h2>住所 / アクセス</h2>
+              <a class="museum-text-link" data-map-link target="_blank" rel="noopener">地図を開く →</a>
+            </div>
+            <div class="museum-access-grid">
+              <div class="museum-access-copy">
+                <div class="museum-info-block">
+                  <small>Address</small>
+                  <p data-museum-address></p>
+                </div>
+                <div class="museum-info-block">
+                  <small>Access</small>
+                  <div data-museum-access></div>
+                </div>
+              </div>
+              <div class="museum-map" data-museum-map aria-label="美術館の地図"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="museum-section museum-opening-section">
+          <div class="museum-section-label">Open</div>
+          <div class="museum-section-main">
+            <h2>開館情報</h2>
+            <div class="museum-opening-grid">
+              <div class="museum-opening-card">
+                <small>開館時間</small>
+                <strong data-museum-hours></strong>
+              </div>
+              <div class="museum-opening-card">
+                <small>休館日</small>
+                <strong data-museum-closed></strong>
+              </div>
+            </div>
+            <p class="museum-opening-note" data-museum-opening-note></p>
+          </div>
+        </section>
+
+        <section class="museum-section museum-exhibitions-section">
+          <div class="museum-section-label">Exhibitions</div>
+          <div class="museum-section-main">
+            <div class="museum-section-head">
+              <h2>開催中・開催予定の展覧会</h2>
+              <a class="museum-text-link" href="./exhibitions.html">すべて見る →</a>
+            </div>
+            <div class="poster-shell">
+              <div class="poster-rail" data-museum-exhibitions></div>
+            </div>
+            <div class="museum-quiet-empty" data-exhibitions-empty hidden>現在登録されている展覧会はありません。</div>
+          </div>
+        </section>
+
+        <section class="museum-section museum-schedule-section">
+          <div class="museum-section-label">Schedule</div>
+          <div class="museum-section-main">
+            <div class="museum-section-head">
+              <div>
+                <h2>展覧会Schedule</h2>
+                <p class="museum-section-sub">月ごとに開催状況を確認できます</p>
+              </div>
+            </div>
+            <div class="museum-calendar" data-museum-calendar>
+              <div class="museum-calendar-months" data-calendar-months></div>
+              <div class="museum-calendar-events" data-calendar-events></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="museum-section museum-collection-section">
+          <div class="museum-section-label">Collection</div>
+          <div class="museum-section-main">
+            <h2>所蔵作品</h2>
+            <div class="museum-work-rail" data-collection-works></div>
+            <div class="museum-quiet-empty" data-collection-empty hidden></div>
+          </div>
+        </section>
+
+        <section class="museum-section museum-artists-section">
+          <div class="museum-section-label">Artists</div>
+          <div class="museum-section-main">
+            <h2>所蔵Artist</h2>
+            <div class="museum-artist-rail" data-collection-artists></div>
+            <div class="museum-quiet-empty" data-artists-empty hidden></div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
 
   <footer class="footer">
     <div class="shell footer-inner">
       <nav aria-label="Primary navigation" class="footer-nav">
         <a class="nav-item" href="./index.html">
-          <svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9H7v-6h10v6"></path></svg>
-          <span>ホーム</span>
+          <svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9H7v-6h10v6"></path></svg><span>ホーム</span>
         </a>
         <a class="nav-item" href="./exhibitions.html">
-          <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1.5"></rect><circle cx="9" cy="9" r="1.5"></circle><path d="m6.5 17 4-4 3 3 2-2 2 3"></path></svg>
-          <span>展示会</span>
+          <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1.5"></rect><circle cx="9" cy="9" r="1.5"></circle><path d="m6.5 17 4-4 3 3 2-2 2 3"></path></svg><span>展示会</span>
         </a>
         <a class="nav-item" href="./artists.html">
-          <svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5"></rect><circle cx="12" cy="9" r="2.4"></circle><path d="M8.5 17c.5-2.3 1.8-3.5 3.5-3.5s3 1.2 3.5 3.5"></path></svg>
-          <span>アーティスト</span>
+          <svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5"></rect><circle cx="12" cy="9" r="2.4"></circle><path d="M8.5 17c.5-2.3 1.8-3.5 3.5-3.5s3 1.2 3.5 3.5"></path></svg><span>アーティスト</span>
         </a>
         <a class="nav-item active" href="./museums.html">
-          <svg viewBox="0 0 24 24"><path d="M3 9h18M5 9v10M9 9v10M15 9v10M19 9v10M3 19h18M4 8l8-5 8 5"></path></svg>
-          <span>美術館</span>
+          <svg viewBox="0 0 24 24"><path d="M3 9h18M5 9v10M9 9v10M15 9v10M19 9v10M3 19h18M4 8l8-5 8 5"></path></svg><span>美術館</span>
         </a>
         <a class="nav-item" href="./map.html">
-          <svg viewBox="0 0 24 24"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z"></path><path d="M9 3v15M15 6v15"></path></svg>
-          <span>マップ</span>
+          <svg viewBox="0 0 24 24"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z"></path><path d="M9 3v15M15 6v15"></path></svg><span>マップ</span>
         </a>
         <a class="nav-item" href="./saved.html">
-          <svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4Z"></path></svg>
-          <span>保存</span>
+          <svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4Z"></path></svg><span>保存</span>
         </a>
       </nav>
     </div>
   </footer>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="./assets/js/muuzee-global.js?v=20260828-07"></script>
+  <script src="./assets/js/museum-data.js?v=20260828-07"></script>
+  <script src="./assets/js/artist-data.js?v=20260826-09"></script>
+  <script src="./assets/js/muuzee-exhibition-card.js?v=20260826-14"></script>
+  <script src="./assets/js/museum.js?v=20260828-07"></script>
 </body>
 </html>
