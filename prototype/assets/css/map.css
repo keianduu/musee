@@ -176,10 +176,6 @@ body.map-page{
   font-size:10px;
 }
 
-.map-page .search-fab{
-  bottom:116px;
-}
-
 .muuzee-map-pin{
   width:34px;
   height:34px;
@@ -413,10 +409,6 @@ body.map-page{
     bottom:14px;
   }
 
-  .map-page .search-fab{
-    bottom:calc(88px + env(safe-area-inset-bottom));
-  }
-
   .muuzee-map-popup .leaflet-popup-content{
     width:230px !important;
   }
@@ -425,3 +417,146 @@ body.map-page{
     height:120px;
   }
 }
+
+/* map-overlay-layer-fix:start */
+.map-surface{
+  isolation:isolate;
+}
+
+.discovery-map{
+  position:absolute;
+  inset:0;
+  z-index:0;
+}
+
+.map-control-stack{
+  z-index:20;
+}
+
+.map-result-count{
+  z-index:20;
+}
+
+.map-surface .map-search-fab{
+  position:absolute;
+  right:24px;
+  bottom:24px;
+  z-index:30;
+}
+
+.muuzee-map-popup .leaflet-popup-content{
+  width:min(390px,calc(100vw - 56px)) !important;
+  margin:0;
+}
+
+.map-popup-card{
+  min-height:152px;
+  display:grid;
+  grid-template-columns:136px minmax(0,1fr);
+  background:#fff;
+}
+
+.map-popup-image{
+  width:136px;
+  height:100%;
+  min-height:152px;
+  overflow:hidden;
+  background:var(--warm);
+}
+
+.map-popup-image img,
+.map-popup-card.is-exhibition .map-popup-image img,
+.map-popup-card.is-museum .map-popup-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.map-popup-body{
+  min-width:0;
+  padding:13px 14px 12px;
+  display:flex;
+  flex-direction:column;
+}
+
+.map-popup-topline{
+  min-height:18px;
+  margin-bottom:5px;
+}
+
+.map-popup-meta{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.map-popup-title{
+  margin:0 0 5px;
+  display:-webkit-box;
+  overflow:hidden;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  font-size:13px;
+  line-height:1.4;
+}
+
+.map-popup-sub{
+  display:-webkit-box;
+  overflow:hidden;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  font-size:9px;
+  line-height:1.45;
+}
+
+.map-popup-actions{
+  margin-top:auto;
+  padding-top:9px;
+}
+
+.map-popup-save{
+  min-height:28px;
+  padding:0 9px;
+  font-size:9px;
+}
+
+.map-popup-detail{
+  font-size:9px;
+  white-space:nowrap;
+}
+
+@media(max-width:720px){
+  .map-surface .map-search-fab{
+    right:14px;
+    bottom:14px;
+  }
+
+  .muuzee-map-popup .leaflet-popup-content{
+    width:min(326px,calc(100vw - 42px)) !important;
+  }
+
+  .map-popup-card{
+    min-height:132px;
+    grid-template-columns:108px minmax(0,1fr);
+  }
+
+  .map-popup-image{
+    width:108px;
+    min-height:132px;
+  }
+
+  .map-popup-body{
+    padding:11px 12px 10px;
+  }
+
+  .map-popup-title{
+    font-size:12px;
+  }
+
+  .map-popup-actions{
+    padding-top:7px;
+    gap:7px;
+  }
+}
+/* map-overlay-layer-fix:end */

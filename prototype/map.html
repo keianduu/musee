@@ -7,7 +7,7 @@
   <meta name="description" content="現在地やエリアを起点に、近くの展覧会・美術館を探せるMuuzeeの地図検索。">
   <link rel="stylesheet" href="./assets/css/muuzee-global.css?v=20260828-08">
   <link rel="stylesheet" href="./assets/css/list-filter.css?v=20260828-08">
-  <link rel="stylesheet" href="./assets/css/map.css?v=20260828-08">
+  <link rel="stylesheet" href="./assets/css/map.css?v=20260828-10">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 <body class="muuzee-app map-page">
@@ -54,13 +54,13 @@
         <strong data-map-result-count>0</strong>
         <span data-map-result-label>exhibitions</span>
       </div>
+    
+      <button class="search-fab map-search-fab" type="button" data-filter-open aria-haspopup="dialog" aria-controls="mapFilterSheet">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><path d="m16 16 4 4"></path></svg>
+        <span>検索</span>
+      </button>
     </section>
   </main>
-
-  <button class="search-fab map-search-fab" type="button" data-filter-open aria-haspopup="dialog" aria-controls="mapFilterSheet">
-    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><path d="m16 16 4 4"></path></svg>
-    <span>検索</span>
-  </button>
 
   <div class="filter-backdrop" data-filter-backdrop hidden></div>
 
@@ -151,6 +151,6 @@
   <script src="./assets/js/list-filter.js?v=20260828-08"></script>
   <script src="./assets/js/exhibition-data.js?v=20260828-08"></script>
   <script src="./assets/js/museum-data.js?v=20260828-08"></script>
-  <script src="./assets/js/map.js?v=20260828-08"></script>
+  <script src="./assets/js/map.js?v=20260828-10"></script>
 </body>
 </html>

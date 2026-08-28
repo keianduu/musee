@@ -202,8 +202,8 @@
         popupHTML(item,type),
         {
           className:"muuzee-map-popup",
-          maxWidth:280,
-          minWidth:230,
+          maxWidth:420,
+          minWidth:300,
           closeButton:false,
           offset:[0,-2]
         }
