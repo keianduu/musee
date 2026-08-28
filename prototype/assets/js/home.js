@@ -14,7 +14,7 @@ const artistMeta = artist => {
   return [category,artist.country].filter(Boolean).join(" · ");
 };
 document.querySelector('[data-artists]').innerHTML = ARTISTS.map(a=>`
-  <a class="artist" href="./artist.html?name=${encodeURIComponent(a.name)}" aria-label="${esc(a.name)}">
+  <a class="artist" data-save-type="artist" data-save-id="${esc(a.name)}" href="./artist.html?name=${encodeURIComponent(a.name)}" aria-label="${esc(a.name)}">
     <img src="${a.image || a.img}" alt="${esc(a.name)}" loading="lazy" style="object-position:${a.position || 'center'}">
     <strong>${esc(a.name)}</strong><span>${esc(artistMeta(a))}</span>
   </a>`).join('');
@@ -25,7 +25,7 @@ document.querySelector('[data-posters]').innerHTML = EXHIBITIONS.map(x=>{
   const externalAttrs = isShojima ? '' : ' target="_blank" rel="noopener"';
 
   return `
-  <a class="poster-card" href="${esc(href)}"${externalAttrs}>
+  <a class="poster-card" data-save-type="exhibition" data-save-id="${esc(x.id || x.title)}" href="${esc(href)}"${externalAttrs}>
     <div class="poster-stage"><img src="${x.src}" alt="${esc(x.title)}" loading="lazy"></div>
     <div class="poster-status muuzee-pill muuzee-pill--status">${esc(x.status_ja)}</div>
     <h3>${esc(x.title)}</h3>
@@ -202,7 +202,7 @@ window.addEventListener('resize',()=>{
       ? [museum.prefecture,museum.location].filter(Boolean).join("・")
       : [museum.city,museum.country].filter(Boolean).join("・");
 
-    return `<a class="popular-museum-card" href="./museum.html?id=${encodeURIComponent(museum.id)}">
+    return `<a class="popular-museum-card" data-save-type="museum" data-save-id="${esc(museum.id)}" href="./museum.html?id=${encodeURIComponent(museum.id)}">
       <div class="popular-museum-image">
         <img src="${esc(museum.image)}" alt="${esc(museum.name)}" loading="lazy">
       </div>

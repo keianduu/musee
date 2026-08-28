@@ -56,7 +56,7 @@
       ? `href="${esc(item.href)}"` : `href="#" data-no-nav="true"`;
 
     return `
-      <article class="exhibition-list-card">
+      <article class="exhibition-list-card" data-save-type="exhibition" data-save-id="${esc(item.id || item.title)}">
         <a class="exhibition-card-link" ${linkAttrs}>
           <div class="exhibition-card-image">
             <img src="${esc(item.src)}" alt="${esc(item.title)}" loading="lazy">

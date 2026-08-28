@@ -66,7 +66,7 @@
 
   if(exhibitionsEl){
     exhibitionsEl.innerHTML = exhibitions.map(item => `
-      <a class="poster-card" href="${esc(item.href || "./exhibition.html")}">
+      <a class="poster-card" data-save-type="exhibition" data-save-id="${esc(item.id || item.title)}" href="${esc(item.href || "./exhibition.html")}">
         <div class="poster-stage">
           <img src="${esc(item.src)}" alt="${esc(item.title)}" loading="lazy">
         </div>
@@ -85,7 +85,7 @@
 
   if(worksEl){
     worksEl.innerHTML = works.map(work => `
-      <article class="museum-work">
+      <article class="museum-work" data-save-type="work">
         <div class="museum-work-image">
           <img src="${esc(work.image)}" alt="${esc(work.title)}" loading="lazy">
         </div>
@@ -110,7 +110,7 @@
         ? `<div class="museum-artist-image"><img src="${esc(image)}" alt="${esc(name)}" loading="lazy" style="object-position:${esc(artist?.position || "center")}"></div>`
         : `<div class="museum-artist-image is-fallback">${esc(name.slice(0,1))}</div>`;
 
-      return `<a class="museum-artist" href="./artist.html?name=${encodeURIComponent(name)}">
+      return `<a class="museum-artist" data-save-type="artist" data-save-id="${esc(name)}" href="./artist.html?name=${encodeURIComponent(name)}">
         ${imageMarkup}
         <strong>${esc(name)}</strong>
       </a>`;

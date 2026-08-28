@@ -63,7 +63,7 @@
   function render(){
     const artists = filteredArtists();
     grid.innerHTML = artists.map(artist => `
-      <a class="artist-card" href="./artist.html?name=${encodeURIComponent(artist.name)}" aria-label="${esc(artist.name)}">
+      <a class="artist-card" data-save-type="artist" data-save-id="${esc(artist.name)}" href="./artist.html?name=${encodeURIComponent(artist.name)}" aria-label="${esc(artist.name)}">
         <div class="artist-avatar"><img src="${esc(artist.image)}" alt="" loading="lazy" style="object-position:${esc(artist.position || 'center')}"></div>
         <strong>${esc(artist.name)}</strong>
         <span>${esc(primaryMeta(artist))}</span>

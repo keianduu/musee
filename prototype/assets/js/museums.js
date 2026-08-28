@@ -226,7 +226,7 @@
         ? [museum.prefecture,museum.city,museum.location].filter(Boolean).join(" · ")
         : [museum.country,museum.city].filter(Boolean).join(" · ");
 
-      return `<a class="museum-list-card" href="./museum.html?id=${encodeURIComponent(museum.id)}" data-museum-id="${esc(museum.id)}">
+      return `<a class="museum-list-card" data-save-type="museum" data-save-id="${esc(museum.id)}" href="./museum.html?id=${encodeURIComponent(museum.id)}" data-museum-id="${esc(museum.id)}">
         <div class="museum-list-image">
           <img src="${esc(museum.image)}" alt="${esc(museum.name)}" loading="lazy">
         </div>

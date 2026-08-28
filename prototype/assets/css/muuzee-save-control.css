@@ -1,0 +1,117 @@
+/* Muuzee Shared Save Control
+   Common overlay control for list/card content across discovery pages. */
+
+.muuzee-save-host{
+  position:relative !important;
+}
+
+.muuzee-card-save{
+  position:absolute;
+  top:8px;
+  right:8px;
+  z-index:12;
+  width:34px;
+  height:34px;
+  padding:0;
+  border:1px solid rgba(38,37,34,.08);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:rgba(255,255,255,.94);
+  color:var(--ink);
+  box-shadow:0 5px 16px rgba(38,37,34,.08);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  cursor:pointer;
+  transition:
+    color var(--motion-fast) ease,
+    background-color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.muuzee-card-save:hover{
+  transform:translateY(-1px);
+}
+
+.muuzee-card-save svg{
+  width:16px;
+  height:16px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.6;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  pointer-events:none;
+}
+
+.muuzee-card-save.is-saved{
+  border-color:var(--ink);
+  background:var(--ink);
+  color:#fff;
+}
+
+.muuzee-card-save.is-saved svg{
+  fill:currentColor;
+}
+
+.muuzee-card-save:focus-visible{
+  outline:2px solid var(--ink);
+  outline-offset:2px;
+}
+
+/* Circle-image Artist cards: keep the control visually attached to the avatar. */
+.artist-card.muuzee-save-host .muuzee-card-save,
+.artist.muuzee-save-host .muuzee-card-save,
+.related-artist.muuzee-save-host .muuzee-card-save,
+.museum-artist.muuzee-save-host .muuzee-card-save{
+  top:2px;
+  right:8px;
+}
+
+/* Text-only related museum cards. */
+.museum-card.muuzee-save-host{
+  padding-right:44px;
+}
+
+/* Museum collection works use an image card rather than a full-card link. */
+.museum-work.muuzee-save-host .muuzee-card-save{
+  top:8px;
+  right:8px;
+}
+
+/* Shared exhibition poster cards must remain the sizing owner. */
+.poster-card.muuzee-save-host{
+  position:relative;
+}
+
+/* Existing component save controls should visually remain above cards. */
+.work-save,
+.exhibition-artist-save,
+.artist-save-button,
+.museum-save-button{
+  position:relative;
+  z-index:13;
+}
+
+@media(max-width:720px){
+  .muuzee-card-save{
+    top:6px;
+    right:6px;
+    width:30px;
+    height:30px;
+  }
+
+  .muuzee-card-save svg{
+    width:14px;
+    height:14px;
+  }
+
+  .artist-card.muuzee-save-host .muuzee-card-save,
+  .artist.muuzee-save-host .muuzee-card-save,
+  .related-artist.muuzee-save-host .muuzee-card-save,
+  .museum-artist.muuzee-save-host .muuzee-card-save{
+    top:0;
+    right:2px;
+  }
+}

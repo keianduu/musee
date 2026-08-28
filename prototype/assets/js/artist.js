@@ -138,7 +138,7 @@
 
   const exhibitionsEl = document.querySelector("[data-current-exhibitions]");
   exhibitionsEl.innerHTML = EXHIBITIONS.map(item => `
-    <a class="poster-card" href="./exhibition.html">
+    <a class="poster-card" data-save-type="exhibition" data-save-id="${esc(item.id || item.title)}" href="./exhibition.html">
       <div class="poster-stage"><img src="${esc(item.image)}" alt="${esc(item.title)}" loading="lazy"></div>
       <h3>${esc(item.title)}</h3>
       <p>${esc(item.venue)}</p>
@@ -147,7 +147,7 @@
   `).join("");
 
   document.querySelector("[data-museums]").innerHTML = detail.museums.map(museum => `
-    <article class="museum-card">
+    <article class="museum-card" data-save-type="museum">
       <small>${esc(museum[1])}</small>
       <h3>${esc(museum[0])}</h3>
       <p>${esc(museum[2])}</p>
@@ -169,7 +169,7 @@
   }
 
   document.querySelector("[data-related-artists]").innerHTML = related.slice(0,6).map(item => `
-    <a class="related-artist" href="./artist.html?name=${encodeURIComponent(item.name)}">
+    <a class="related-artist" data-save-type="artist" data-save-id="${esc(item.name)}" href="./artist.html?name=${encodeURIComponent(item.name)}">
       <img src="${esc(item.image || item.img)}" alt="${esc(item.name)}" loading="lazy" style="object-position:${esc(item.position || "center")}">
       <strong>${esc(item.name)}</strong>
       <span>${esc(item.category[0])}</span>
