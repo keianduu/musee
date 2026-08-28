@@ -1,0 +1,259 @@
+/* Muuzee Personal Collections — only tabs, states and contextual controls.
+   Card visuals themselves come from artists.css / exhibitions.css / museums.css / artist.css. */
+
+.collection-tabs{
+  width:100%;
+  max-width:100%;
+  display:flex;
+  gap:24px;
+  overflow-x:auto;
+  margin-bottom:32px;
+  border-bottom:1px solid var(--line);
+  scrollbar-width:none;
+}
+
+.collection-tabs::-webkit-scrollbar{
+  display:none;
+}
+
+.collection-tab{
+  position:relative;
+  flex:0 0 auto;
+  min-height:46px;
+  padding:0 2px 13px;
+  border:0;
+  background:transparent;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:var(--muted);
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+.collection-tab::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-1px;
+  height:2px;
+  background:transparent;
+}
+
+.collection-tab span{
+  font-size:12px;
+  font-weight:600;
+}
+
+.collection-tab em{
+  font-style:normal;
+  color:var(--muted2);
+  font-size:9px;
+}
+
+.collection-tab.is-active{
+  color:var(--ink);
+}
+
+.collection-tab.is-active::after{
+  background:var(--ink);
+}
+
+.collection-list{
+  width:100%;
+  min-width:0;
+  max-width:100%;
+}
+
+.collection-item-wrap{
+  position:relative;
+  min-width:0;
+}
+
+.collection-item-wrap > .artist-card,
+.collection-item-wrap > .museum-list-card{
+  width:100%;
+}
+
+.collection-remove-button{
+  position:absolute;
+  top:7px;
+  right:7px;
+  z-index:5;
+  width:34px;
+  height:34px;
+  padding:0;
+  border:0;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:rgba(255,255,255,.94);
+  color:var(--terra);
+  box-shadow:0 5px 16px rgba(38,37,34,.09);
+  cursor:pointer;
+}
+
+.collection-remove-button svg{
+  width:16px;
+  height:16px;
+  fill:currentColor;
+  stroke:currentColor;
+  stroke-width:1.2;
+  stroke-linejoin:round;
+}
+
+.collection-item-wrap--artist .collection-remove-button{
+  right:max(0px,calc(50% - 66px));
+}
+
+.collection-empty{
+  min-height:180px;
+  padding:44px 0;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  color:var(--muted);
+}
+
+.collection-empty h3{
+  margin:0 0 7px;
+  color:var(--ink);
+  font-size:13px;
+  font-weight:620;
+}
+
+.collection-empty p{
+  margin:0;
+  font-size:11px;
+  line-height:1.7;
+}
+
+.collection-seen-mark{
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  color:var(--muted);
+}
+
+.collection-seen-mark svg{
+  width:19px;
+  height:19px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+/* Keep exact source-list grids when wrappers are added for Saved contextual controls. */
+.collection-list.artist-grid .collection-item-wrap--artist{
+  text-align:center;
+}
+
+.collection-list.exhibition-grid .collection-item-wrap--exhibition,
+.collection-list.museum-grid .collection-item-wrap--museum{
+  min-width:0;
+}
+
+/* Dialog remains page-context UI, not card UI. */
+.save-confirm-layer{
+  position:fixed;
+  inset:0;
+  z-index:150;
+  display:grid;
+  place-items:center;
+  padding:20px;
+  background:rgba(38,37,34,.28);
+}
+
+.save-confirm-layer[hidden]{
+  display:none !important;
+}
+
+.save-confirm-dialog{
+  width:min(390px,100%);
+  padding:26px;
+  border-radius:20px;
+  background:#fff;
+  box-shadow:0 24px 70px rgba(38,37,34,.18);
+}
+
+.save-confirm-dialog small{
+  display:block;
+  margin-bottom:9px;
+  color:var(--muted2);
+  font-size:9px;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+}
+
+.save-confirm-dialog h2{
+  margin:0 0 10px;
+  font-size:18px;
+  line-height:1.4;
+  font-weight:620;
+}
+
+.save-confirm-dialog p{
+  margin:0;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.7;
+}
+
+.save-confirm-actions{
+  margin-top:24px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.save-confirm-actions button{
+  min-height:44px;
+  border-radius:999px;
+  cursor:pointer;
+}
+
+.save-confirm-cancel{
+  border:1px solid var(--line);
+  background:#fff;
+}
+
+.save-confirm-submit{
+  border:1px solid var(--ink);
+  background:var(--ink);
+  color:#fff;
+}
+
+@media(max-width:720px){
+  .collection-tabs{
+    gap:20px;
+    margin-bottom:26px;
+  }
+
+  .collection-remove-button{
+    width:30px;
+    height:30px;
+  }
+
+  .collection-item-wrap--artist .collection-remove-button{
+    right:max(0px,calc(50% - 48px));
+  }
+
+  .collection-seen-mark{
+    width:38px;
+    height:38px;
+  }
+
+  .save-confirm-layer{
+    align-items:end;
+    padding:12px;
+  }
+
+  .save-confirm-dialog{
+    width:100%;
+    padding:24px 20px calc(20px + env(safe-area-inset-bottom));
+    border-radius:22px;
+  }
+}

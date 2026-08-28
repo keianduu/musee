@@ -4,10 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>保存 — Muuzee</title>
-  <meta name="description" content="保存したArtist、作品、美術館、展覧会をまとめて確認するMuuzeeの保存ページ。">
-  <link rel="stylesheet" href="./assets/css/muuzee-global.css?v=20260828-12">
-  <link rel="stylesheet" href="./assets/css/mypage.css?v=20260828-12">
-  <link rel="stylesheet" href="./assets/css/saved.css?v=20260828-12">
+  <link rel="stylesheet" href="./assets/css/muuzee-global.css?v=20260828-15">
+  <link rel="stylesheet" href="./assets/css/mypage.css?v=20260828-15">
+  <link rel="stylesheet" href="./assets/css/artists.css?v=20260828-15">
+  <link rel="stylesheet" href="./assets/css/exhibitions.css?v=20260828-15">
+  <link rel="stylesheet" href="./assets/css/museums.css?v=20260828-15">
+  <link rel="stylesheet" href="./assets/css/artist.css?v=20260828-15">
+  <link rel="stylesheet" href="./assets/css/personal-collection.css?v=20260828-15">
 </head>
 <body class="muuzee-app mypage-page saved-page">
   <header class="site-header is-over-sheet">
@@ -18,11 +21,12 @@
           <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"></path></svg>
           <i class="notice-dot"></i>
         </button>
-        <a aria-label="MyPage" class="avatar" href="./my-art.html"><img alt="ashelry" src="./assets/images/profile-avatar.jpg"></a>
+        <a aria-label="MyPage" class="avatar" href="./my-art.html">
+          <img alt="ashelry" src="./assets/images/profile-avatar.jpg">
+        </a>
       </div>
     </div>
   </header>
-
   <main>
     <section class="mypage-profile-shell">
       <div class="shell mypage-profile" data-mypage-profile></div>
@@ -31,29 +35,32 @@
     <section class="mypage-nav-shell">
       <div class="shell" data-mypage-nav data-mypage-active="saved"></div>
     </section>
-
     <div class="shell mypage-content-shell">
       <header class="mypage-content-head">
         <small>Saved</small>
         <h1>保存</h1>
       </header>
 
-      <div class="saved-tabs" role="tablist" aria-label="保存カテゴリ">
-        <button class="saved-tab is-active" type="button" role="tab" aria-selected="true" data-saved-tab="artist"><span>Artist</span><em>0</em></button>
-        <button class="saved-tab" type="button" role="tab" aria-selected="false" data-saved-tab="work"><span>作品</span><em>0</em></button>
-        <button class="saved-tab" type="button" role="tab" aria-selected="false" data-saved-tab="museum"><span>美術館</span><em>0</em></button>
-        <button class="saved-tab" type="button" role="tab" aria-selected="false" data-saved-tab="exhibition"><span>展覧会</span><em>0</em></button>
+      <div class="collection-tabs" role="tablist" aria-label="カテゴリ">
+        <button class="collection-tab is-active" type="button" role="tab" aria-selected="true" data-collection-tab="artist">
+          <span>Artist</span><em>0</em>
+        </button>
+        <button class="collection-tab" type="button" role="tab" aria-selected="false" data-collection-tab="work">
+          <span>作品</span><em>0</em>
+        </button>
+        <button class="collection-tab" type="button" role="tab" aria-selected="false" data-collection-tab="museum">
+          <span>美術館</span><em>0</em>
+        </button>
+        <button class="collection-tab" type="button" role="tab" aria-selected="false" data-collection-tab="exhibition">
+          <span>展覧会</span><em>0</em>
+        </button>
       </div>
 
-      <div class="saved-grid" data-saved-grid data-saved-type="artist"></div>
+      <div class="collection-list artist-grid" data-collection-list></div>
 
-      <div class="saved-empty" data-saved-empty hidden>
-        <div>
-          <svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4Z"></path></svg>
-          <h3 data-empty-title></h3>
-          <p data-empty-copy></p>
-          <a data-empty-link href="#">探しに行く →</a>
-        </div>
+      <div class="collection-empty" data-collection-empty hidden>
+        <h3 data-empty-title></h3>
+        <p data-empty-copy></p>
       </div>
     </div>
   </main>
@@ -78,17 +85,17 @@
         <a class="nav-item" href="./artists.html"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5"></rect><circle cx="12" cy="9" r="2.4"></circle><path d="M8.5 17c.5-2.3 1.8-3.5 3.5-3.5s3 1.2 3.5 3.5"></path></svg><span>アーティスト</span></a>
         <a class="nav-item" href="./museums.html"><svg viewBox="0 0 24 24"><path d="M3 9h18M5 9v10M9 9v10M15 9v10M19 9v10M3 19h18M4 8l8-5 8 5"></path></svg><span>美術館</span></a>
         <a class="nav-item" href="./map.html"><svg viewBox="0 0 24 24"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z"></path><path d="M9 3v15M15 6v15"></path></svg><span>マップ</span></a>
-        <a class="nav-item active" href="./saved.html"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4Z"></path></svg><span>保存</span></a>
+        <a class="nav-item" href="./saved.html"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4Z"></path></svg><span>保存</span></a>
       </nav>
     </div>
   </footer>
-
-  <script src="./assets/js/muuzee-global.js?v=20260828-14"></script>
-  <script src="./assets/js/artist-data.js?v=20260828-14"></script>
-  <script src="./assets/js/museum-data.js?v=20260828-14"></script>
-  <script src="./assets/js/exhibition-data.js?v=20260828-14"></script>
-  <script src="./assets/js/personal-data.js?v=20260828-14"></script>
-  <script src="./assets/js/mypage-nav.js?v=20260828-14"></script>
-  <script src="./assets/js/saved.js?v=20260828-14"></script>
+  <script src="./assets/js/muuzee-global.js?v=20260828-15"></script>
+  <script src="./assets/js/artist-data.js?v=20260828-15"></script>
+  <script src="./assets/js/museum-data.js?v=20260828-15"></script>
+  <script src="./assets/js/exhibition-data.js?v=20260828-15"></script>
+  <script src="./assets/js/personal-data.js?v=20260828-15"></script>
+  <script src="./assets/js/mypage-nav.js?v=20260828-15"></script>
+  <script src="./assets/js/collection-renderers.js?v=20260828-15"></script>
+  <script src="./assets/js/saved.js?v=20260828-15"></script>
 </body>
 </html>

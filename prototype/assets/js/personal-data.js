@@ -1,4 +1,4 @@
-/* Muuzee Personal Data — prototype local persistence + one-time sample seed */
+/* Muuzee Personal Data — prototype local persistence + sample seed */
 (() => {
   "use strict";
 
@@ -26,29 +26,38 @@
     writeArray(key,merged);
   };
 
+  const objectIdentity = item => {
+    if(!item || typeof item !== "object") return "";
+    if(item.type === "work"){
+      return `${item.type}:${item.artist || ""}:${item.title || item.id || ""}`;
+    }
+    return `${item.type || ""}:${item.id || item.name || ""}`;
+  };
+
   const mergeObjects = (key,samples) => {
     const current = readArray(key);
+    const identities = new Set(current.map(objectIdentity));
     const merged = [...current];
 
     samples.forEach(sample => {
-      const exists = merged.some(item =>
-        item &&
-        item.type === sample.type &&
-        item.id === sample.id
-      );
-
-      if(!exists) merged.push(sample);
+      const identity = objectIdentity(sample);
+      if(identity && !identities.has(identity)){
+        merged.push(sample);
+        identities.add(identity);
+      }
     });
 
     writeArray(key,merged);
   };
 
-  const seedKey = "muuzee:prototype-personal-samples:v2";
+  /* v4 adds samples for every visible personal collection tab.
+     It only merges; existing user prototype data is never overwritten. */
+  const seedKey = "muuzee:prototype-personal-samples:v4";
 
   if(localStorage.getItem(seedKey) !== "done"){
     mergePrimitive("muuzee:saved-artists",[
-      "草間彌生",
       "クロード・モネ",
+      "村上隆",
       "庄島歩音"
     ]);
 
@@ -69,22 +78,28 @@
       "印象・日の出"
     ]);
 
-    mergePrimitive("muuzee:saved-works:草間彌生",[
-      "Infinity Nets"
+    mergePrimitive("muuzee:saved-works:村上隆",[
+      "727"
     ]);
 
     mergeObjects("muuzee:seen-items",[
-      {type:"exhibition",id:"dream-river",date:"2026.08.24"},
+      {type:"artist",id:"クロード・モネ",date:"2026.08.10"},
+      {type:"artist",id:"村上隆",date:"2026.07.02"},
+      {type:"work",id:"monet-water-lilies",artist:"クロード・モネ",title:"睡蓮",year:"1916",date:"2026.08.10"},
+      {type:"work",id:"monet-impression",artist:"クロード・モネ",title:"印象・日の出",year:"1872",date:"2026.06.15"},
+      {type:"museum",id:"nact",date:"2026.08.24"},
       {type:"museum",id:"21kanazawa",date:"2026.07.18"},
-      {type:"exhibition",id:"curious-matters",date:"2026.06.06"},
-      {type:"museum",id:"nact",date:"2026.05.24"}
+      {type:"exhibition",id:"dream-river",date:"2026.08.24"},
+      {type:"exhibition",id:"curious-matters",date:"2026.06.06"}
     ]);
 
     mergeObjects("muuzee:favorite-items",[
-      {type:"artist",id:"草間彌生"},
       {type:"artist",id:"クロード・モネ"},
+      {type:"artist",id:"村上隆"},
+      {type:"artist",id:"庄島歩音"},
       {type:"museum",id:"21kanazawa"},
-      {type:"exhibition",id:"dream-river"}
+      {type:"museum",id:"moma"},
+      {type:"museum",id:"chichu"}
     ]);
 
     localStorage.setItem(seedKey,"done");
@@ -106,7 +121,7 @@
           id:`${artist}::${title}`,
           artist,
           title,
-          storageKey:key
+          year:""
         });
       });
     }
