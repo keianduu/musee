@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Map — Musee Prototype</title>
+<title>Map — Muuzee Prototype</title>
 <link rel="stylesheet" href="./shared.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
@@ -19,7 +19,7 @@ body{display:flex;flex-direction:column}
 </style>
 </head>
 <body>
-<div class="map-head"><a class="logo" href="./index.html">Musee</a><strong>Map</strong><span>東京</span></div>
+<div class="map-head"><a class="logo" href="./index.html">Muuzee</a><strong>Map</strong><span>東京</span></div>
 <div id="map"></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
@@ -38,7 +38,7 @@ const map=L.map("map",{scrollWheelZoom:true}).fitBounds([[35.662,139.752],[35.73
 L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",{subdomains:"abcd",maxZoom:20,attribution:"&copy; OpenStreetMap contributors &copy; CARTO"}).addTo(map);
 museums.forEach(([name,lat,lng])=>{
  const icon=L.divIcon({className:"",html:'<div class="museum-pin"></div>',iconSize:[28,28],iconAnchor:[14,14]});
- L.marker([lat,lng],{icon}).addTo(map).bindPopup(`<b>${name}</b><br><small>Museeで開催展を見る</small>`);
+ L.marker([lat,lng],{icon}).addTo(map).bindPopup(`<b>${name}</b><br><small>Muuzeeで開催展を見る</small>`);
 });
 </script>
 </body>

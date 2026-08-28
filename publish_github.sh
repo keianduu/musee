@@ -2,11 +2,11 @@
 set -euo pipefail
 
 OWNER="keianduu"
-REPO="musee"
+REPO="$(basename -s .git "$(git remote get-url origin)")"
 REMOTE="https://github.com/${OWNER}/${REPO}.git"
 PAGES_URL="https://${OWNER}.github.io/${REPO}/prototype/"
 
-echo "== Musee GitHub publish =="
+echo "== Muuzee GitHub publish =="
 
 if ! command -v git >/dev/null 2>&1; then
   echo "git が見つかりません。"
@@ -43,7 +43,7 @@ if ! gh repo view "${OWNER}/${REPO}" >/dev/null 2>&1; then
   echo "GitHub repo ${OWNER}/${REPO} を作成します..."
   gh repo create "${OWNER}/${REPO}" \
     --public \
-    --description "Musee — art discovery and personal archive prototype"
+    --description "Muuzee — art discovery and personal archive prototype"
 fi
 
 if git remote get-url origin >/dev/null 2>&1; then
@@ -55,7 +55,7 @@ fi
 git add .
 
 if ! git diff --cached --quiet; then
-  git commit -m "prototype: initialize Musee UI workspace"
+  git commit -m "prototype: initialize Muuzee UI workspace"
 else
   echo "Commit対象の変更はありません。"
 fi

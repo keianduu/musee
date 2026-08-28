@@ -1,4 +1,4 @@
-# Musee Prototype
+# Muuzee Prototype
 
 This directory is the exploratory UI/UX workspace.
 

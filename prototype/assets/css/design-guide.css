@@ -1,4 +1,4 @@
-/* Musee Design Guide — page-specific presentation */
+/* Muuzee Design Guide — page-specific presentation */
 
 :root{
   /* Brand / surface */
@@ -291,9 +291,9 @@ main{padding:72px 0 120px}
     linear-gradient(120deg,rgba(255,255,255,.12),transparent 38%),
     radial-gradient(circle at 64% 38%,#b96f55 0 9%,transparent 10%),
     linear-gradient(145deg,#262522,#77736d 46%,#eeeae3);
-  animation:museeHeroZoomOut 10s cubic-bezier(.22,.61,.36,1) forwards;
+  animation:muuzeeHeroZoomOut 10s cubic-bezier(.22,.61,.36,1) forwards;
 }
-@keyframes museeHeroZoomOut{
+@keyframes muuzeeHeroZoomOut{
   0%{transform:scale(1.08)}
   100%{transform:scale(1)}
 }

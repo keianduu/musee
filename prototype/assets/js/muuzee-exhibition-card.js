@@ -1,5 +1,5 @@
 /*
-  Musee Exhibition Card — Shared behavior
+  Muuzee Exhibition Card — Shared behavior
   Detect poster orientation from the actual image dimensions.
 */
 (() => {
@@ -22,12 +22,12 @@
   }
 
   function bindImage(img){
-    if(img.dataset.museePosterOrientationBound === "true"){
+    if(img.dataset.muuzeePosterOrientationBound === "true"){
       if(img.complete) classifyImage(img);
       return;
     }
 
-    img.dataset.museePosterOrientationBound = "true";
+    img.dataset.muuzeePosterOrientationBound = "true";
 
     if(img.complete){
       classifyImage(img);

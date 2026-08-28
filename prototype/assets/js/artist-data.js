@@ -1,4 +1,4 @@
-/* Musee Artist Data — shared source of truth */
+/* Muuzee Artist Data — shared source of truth */
 (() => {
   "use strict";
 
@@ -50,13 +50,13 @@
     };
   });
 
-  window.MuseeArtistCatalog = catalog;
+  window.MuuzeeArtistCatalog = catalog;
 })();
 
 /* exhibition-sample-artist:start */
 (() => {
   "use strict";
-  const catalog = window.MuseeArtistCatalog;
+  const catalog = window.MuuzeeArtistCatalog;
   if(!Array.isArray(catalog) || catalog.some(artist => artist.name === "庄島歩音")) return;
 
   catalog.push({

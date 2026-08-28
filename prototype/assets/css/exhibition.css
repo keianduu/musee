@@ -1,4 +1,4 @@
-/* Musee Exhibition Detail — page-specific styles */
+/* Muuzee Exhibition Detail — page-specific styles */
 .exhibition-hero{position:sticky;top:0;z-index:1;min-height:88svh;height:88svh;overflow:hidden;background:#171714}
 .exhibition-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 44%;transform:scale(1.015)}
 .exhibition-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,17,15,.08) 0%,rgba(18,17,15,.03) 40%,rgba(18,17,15,.72) 100%)}

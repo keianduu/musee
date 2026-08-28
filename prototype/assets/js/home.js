@@ -1,7 +1,7 @@
-/* Musee Home — page-specific JS */
+/* Muuzee Home — page-specific JS */
 
 const ARTISTS = (() => {
-  const catalog = window.MuseeArtistCatalog || [];
+  const catalog = window.MuuzeeArtistCatalog || [];
   const featured = catalog.filter(artist => artist.featured);
   return featured.length ? featured : catalog.slice(0,8);
 })();
@@ -27,7 +27,7 @@ document.querySelector('[data-posters]').innerHTML = EXHIBITIONS.map(x=>{
   return `
   <a class="poster-card" href="${esc(href)}"${externalAttrs}>
     <div class="poster-stage"><img src="${x.src}" alt="${esc(x.title)}" loading="lazy"></div>
-    <div class="poster-status musee-pill musee-pill--status">${esc(x.status_ja)}</div>
+    <div class="poster-status muuzee-pill muuzee-pill--status">${esc(x.status_ja)}</div>
     <h3>${esc(x.title)}</h3>
     <p>${esc(x.venue)} · ${esc(x.city)}</p>
     <p class="date">${esc(x.date)}</p>
@@ -41,11 +41,11 @@ let wallRenderToken = 0;
 async function renderWall(){
   const token = ++wallRenderToken;
   const grid = document.querySelector("[data-wall-grid]");
-  if(!grid || !window.Musee?.layoutMasonry) return;
+  if(!grid || !window.Muuzee?.layoutMasonry) return;
 
   const items = EXHIBITIONS.map((x,i)=>({...x, originalIndex:i}));
 
-  await window.Musee.layoutMasonry({
+  await window.Muuzee.layoutMasonry({
     grid,
     items,
     columns:4,
@@ -87,8 +87,8 @@ window.addEventListener('resize',()=>{
 
 
 (function(){
-  const MUSEE_MUSEUMS = [{"name": "東京都美術館", "area": "上野", "lat": 35.71711, "lng": 139.77318, "type": "Art Museum"}, {"name": "国立西洋美術館", "area": "上野", "lat": 35.71536, "lng": 139.77585, "type": "Western Art"}, {"name": "上野の森美術館", "area": "上野", "lat": 35.71285, "lng": 139.77477, "type": "Art Museum"}, {"name": "すみだ北斎美術館", "area": "両国", "lat": 35.69675, "lng": 139.80039, "type": "Hokusai"}, {"name": "刀剣博物館", "area": "両国", "lat": 35.69882, "lng": 139.79371, "type": "Japanese Swords"}, {"name": "東京都現代美術館", "area": "清澄白河", "lat": 35.68, "lng": 139.80806, "type": "Contemporary Art"}, {"name": "アーティゾン美術館", "area": "京橋", "lat": 35.67875, "lng": 139.77213, "type": "Modern & Contemporary"}, {"name": "三井記念美術館", "area": "日本橋", "lat": 35.6863, "lng": 139.77314, "type": "Japanese & Asian Art"}, {"name": "東京ステーションギャラリー", "area": "丸の内", "lat": 35.68243, "lng": 139.76649, "type": "Art Museum"}];
-  const mapEl = document.getElementById('museeLeafletMap');
+  const MUUZEE_MUSEUMS = [{"name": "東京都美術館", "area": "上野", "lat": 35.71711, "lng": 139.77318, "type": "Art Museum"}, {"name": "国立西洋美術館", "area": "上野", "lat": 35.71536, "lng": 139.77585, "type": "Western Art"}, {"name": "上野の森美術館", "area": "上野", "lat": 35.71285, "lng": 139.77477, "type": "Art Museum"}, {"name": "すみだ北斎美術館", "area": "両国", "lat": 35.69675, "lng": 139.80039, "type": "Hokusai"}, {"name": "刀剣博物館", "area": "両国", "lat": 35.69882, "lng": 139.79371, "type": "Japanese Swords"}, {"name": "東京都現代美術館", "area": "清澄白河", "lat": 35.68, "lng": 139.80806, "type": "Contemporary Art"}, {"name": "アーティゾン美術館", "area": "京橋", "lat": 35.67875, "lng": 139.77213, "type": "Modern & Contemporary"}, {"name": "三井記念美術館", "area": "日本橋", "lat": 35.6863, "lng": 139.77314, "type": "Japanese & Asian Art"}, {"name": "東京ステーションギャラリー", "area": "丸の内", "lat": 35.68243, "lng": 139.76649, "type": "Art Museum"}];
+  const mapEl = document.getElementById('muuzeeLeafletMap');
   if(!mapEl) return;
 
   if(typeof L === 'undefined'){
@@ -112,12 +112,12 @@ window.addEventListener('resize',()=>{
 
   const bounds = L.latLngBounds([]);
 
-  let museeActiveMarker = null;
+  let muuzeeActiveMarker = null;
 
-  MUSEE_MUSEUMS.forEach((m, idx) => {
+  MUUZEE_MUSEUMS.forEach((m, idx) => {
     const icon = L.divIcon({
       className:'',
-      html:'<div class="musee-map-marker"></div>',
+      html:'<div class="muuzee-map-marker"></div>',
       iconSize:[28,28],
       iconAnchor:[14,14],
       popupAnchor:[0,-12]
@@ -128,24 +128,24 @@ window.addEventListener('resize',()=>{
       direction:'top',
       offset:[0,-11],
       opacity:1,
-      className:'musee-tooltip'
+      className:'muuzee-tooltip'
     });
 
     marker.on('click', () => {
-      if(museeActiveMarker){
-        const prev = museeActiveMarker.getElement()?.querySelector('.musee-map-marker');
+      if(muuzeeActiveMarker){
+        const prev = muuzeeActiveMarker.getElement()?.querySelector('.muuzee-map-marker');
         if(prev) prev.classList.remove('is-active');
       }
-      const current = marker.getElement()?.querySelector('.musee-map-marker');
+      const current = marker.getElement()?.querySelector('.muuzee-map-marker');
       if(current) current.classList.add('is-active');
-      museeActiveMarker = marker;
+      muuzeeActiveMarker = marker;
     });
 
     marker.bindPopup(`
-      <div class="musee-popup-kicker">${m.area} · ${m.type}</div>
-      <div class="musee-popup-title">${m.name}</div>
-      <div class="musee-popup-meta">Museeで開催展・スケジュールを見る</div>
-      <a class="musee-popup-link" href="#">詳細を見る →</a>
+      <div class="muuzee-popup-kicker">${m.area} · ${m.type}</div>
+      <div class="muuzee-popup-title">${m.name}</div>
+      <div class="muuzee-popup-meta">Muuzeeで開催展・スケジュールを見る</div>
+      <a class="muuzee-popup-link" href="#">詳細を見る →</a>
     `);
 
     bounds.extend([m.lat,m.lng]);

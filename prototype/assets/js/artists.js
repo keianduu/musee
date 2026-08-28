@@ -1,8 +1,8 @@
-/* Musee Artist List — page specific */
+/* Muuzee Artist List — page specific */
 (() => {
   "use strict";
 
-  const ARTISTS = window.MuseeArtistCatalog || [];
+  const ARTISTS = window.MuuzeeArtistCatalog || [];
 
   const grid = document.querySelector("[data-artist-grid]");
   const count = document.querySelector("[data-artist-count]");
@@ -126,7 +126,7 @@
 
   applyButton?.addEventListener("click",() => {
     render();
-    window.Musee?.filterSheet?.close();
+    window.Muuzee?.filterSheet?.close();
   });
   resetButton?.addEventListener("click",resetFilters);
   emptyReset?.addEventListener("click",resetFilters);
@@ -149,7 +149,7 @@
     if(event.key === "Enter"){
       event.preventDefault();
       render();
-      window.Musee?.filterSheet?.close();
+      window.Muuzee?.filterSheet?.close();
     }
   });
 

@@ -1,5 +1,5 @@
 /*
-  Musee Exhibition Artists
+  Muuzee Exhibition Artists
   Page-specific prototype data + UI behavior.
   Add artist names to EXHIBITION_ARTIST_NAMES when an exhibition has multiple artists.
 */
@@ -17,7 +17,7 @@
   const toggle = document.querySelector("[data-exhibition-artists-toggle]");
   if(!root) return;
 
-  const catalog = window.MuseeArtistCatalog || [];
+  const catalog = window.MuuzeeArtistCatalog || [];
 
   const esc = value => String(value ?? "").replace(/[&<>"']/g,char => ({
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
@@ -33,7 +33,7 @@
     toggle.remove();
   }
 
-  const storageKey = "musee:saved-artists";
+  const storageKey = "muuzee:saved-artists";
 
   const getSaved = () => {
     try{return JSON.parse(localStorage.getItem(storageKey) || "[]")}

@@ -1,8 +1,8 @@
-/* Musee Artist Detail — page specific */
+/* Muuzee Artist Detail — page specific */
 (() => {
   "use strict";
 
-  const catalog = window.MuseeArtistCatalog || [];
+  const catalog = window.MuuzeeArtistCatalog || [];
   if(!catalog.length) return;
 
   const DETAILS = {
@@ -45,7 +45,7 @@
   };
 
   const EXHIBITIONS = [
-    {title:"光と色、その先へ",venue:"Musee Art Center",date:"開催中 — 2026.10.18",image:"./assets/images/exhibitions/exhibition-03.jpg"},
+    {title:"光と色、その先へ",venue:"Muuzee Art Center",date:"開催中 — 2026.10.18",image:"./assets/images/exhibitions/exhibition-03.jpg"},
     {title:"Modern Masters: Selected Works",venue:"City Museum of Art",date:"2026.09.05 — 11.23",image:"./assets/images/exhibitions/exhibition-06.jpg"}
   ];
 
@@ -53,7 +53,7 @@
   const requested = params.get("name");
   const artist = catalog.find(item => item.name === requested) || catalog[0];
   const detail = DETAILS[artist.name] || {
-    intro:`${artist.category.join("、")}の文脈で知られる${artist.name}。作品の背景や時代との関係を知ることで、展示で作品に出会ったときの見え方がより立体的になります。Museeでは代表作、展覧会、所蔵美術館を一つのプロフィールとしてまとめます。`,
+    intro:`${artist.category.join("、")}の文脈で知られる${artist.name}。作品の背景や時代との関係を知ることで、展示で作品に出会ったときの見え方がより立体的になります。Muuzeeでは代表作、展覧会、所蔵美術館を一つのプロフィールとしてまとめます。`,
     works:[[`${artist.name} 代表作 I`,"—"],[`${artist.name} 代表作 II`,"—"],[`${artist.name} 代表作 III`,"—"]],
     museums:[["主要所蔵美術館","Collection","所蔵情報は今後データ連携予定"],["国内の関連美術館","Japan","展示・所蔵情報を順次追加予定"]],
     related:[]
@@ -70,7 +70,7 @@
     hero.style.setProperty("--artist-position", artist.position || "center");
   }
 
-  document.title = `${artist.name} — Musee`;
+  document.title = `${artist.name} — Muuzee`;
   document.querySelector("[data-artist-name]").textContent = artist.name;
   document.querySelector("[data-artist-sub]").textContent = `${artist.country} · ${artist.eras.join(" / ")}`;
   document.querySelector("[data-artist-style]").textContent = artist.category.join(" / ");
@@ -81,7 +81,7 @@
   document.querySelector("[data-artist-categories]").innerHTML = artist.category
     .map(category => `<span class="artist-tag">${esc(category)}</span>`).join("");
 
-  const workStorageKey = `musee:saved-works:${artist.name}`;
+  const workStorageKey = `muuzee:saved-works:${artist.name}`;
   const getSavedWorks = () => {
     try{return JSON.parse(localStorage.getItem(workStorageKey) || "[]")}catch{return []}
   };
@@ -118,7 +118,7 @@
   });
 
   const artistSave = document.querySelector("[data-artist-save]");
-  const artistStorageKey = "musee:saved-artists";
+  const artistStorageKey = "muuzee:saved-artists";
   const getSavedArtists = () => {
     try{return JSON.parse(localStorage.getItem(artistStorageKey) || "[]")}catch{return []}
   };

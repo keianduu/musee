@@ -1,4 +1,4 @@
-/* Musee shared list filter sheet — behavior only */
+/* Muuzee shared list filter sheet — behavior only */
 (() => {
   "use strict";
 
@@ -36,6 +36,6 @@
     if(event.key === "Escape" && sheet.classList.contains("is-open")) closeSheet();
   });
 
-  window.Musee = window.Musee || {};
-  window.Musee.filterSheet = {open:openSheet,close:closeSheet};
+  window.Muuzee = window.Muuzee || {};
+  window.Muuzee.filterSheet = {open:openSheet,close:closeSheet};
 })();

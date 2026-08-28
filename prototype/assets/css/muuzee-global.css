@@ -1,5 +1,5 @@
 /*
-  Musee Global CSS
+  Muuzee Global CSS
   Shared by all prototype pages.
   Page-specific CSS should be loaded after this file.
 */
@@ -191,7 +191,7 @@ svg{display:block}
 }
 
 /* ---------- Shared Pills ---------- */
-.musee-pill{
+.muuzee-pill{
   width:max-content;
   min-height:28px;
   padding:6px 10px;
@@ -204,35 +204,35 @@ svg{display:block}
   letter-spacing:.06em;
   white-space:nowrap;
 }
-.musee-pill--neutral{
+.muuzee-pill--neutral{
   background:var(--warm);
   color:var(--muted);
 }
-.musee-pill--status{
+.muuzee-pill--status{
   background:rgba(185,111,85,.11);
   color:var(--terra);
 }
 
 /* ---------- Shared Masonry primitives ---------- */
-.musee-masonry-grid{
+.muuzee-masonry-grid{
   position:absolute;
   inset:0;
   overflow:hidden;
 }
-.musee-masonry-item{
+.muuzee-masonry-item{
   position:absolute;
   overflow:hidden;
   border-radius:0;
   background:#f5f2ec;
 }
-.musee-masonry-item img{
+.muuzee-masonry-item img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
 
 /* ---------- Shared Motion ---------- */
-@keyframes museeHeroZoomOut{
+@keyframes muuzeeHeroZoomOut{
   0%{transform:scale(1.08)}
   100%{transform:scale(1)}
 }
@@ -242,7 +242,7 @@ svg{display:block}
 }
 
 @media(max-width:720px){
-  body.musee-app{padding-bottom:72px}
+  body.muuzee-app{padding-bottom:72px}
   .shell{width:calc(100% - 36px)}
   .site-header{height:62px}
   .logo{font-size:21px}

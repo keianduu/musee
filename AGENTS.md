@@ -1,4 +1,4 @@
-# Art / Musee Project Instructions
+# Art / Muuzee Project Instructions
 
 ## Project Context
 
@@ -9,7 +9,7 @@ Before starting project-related work, read:
 Use the Notion Project URL defined there to access the project specifications through the Notion MCP when the task requires approved product specifications, decisions, or project context.
 
 The local project directory may remain named `art` during the exploration phase.
-The intended product / repository name is `musee`.
+The intended product / repository name is `muuzee`.
 
 ---
 
@@ -144,7 +144,7 @@ Rules:
 ## Recommended Local Structure
 
 ```text
-art/                         # rename to musee later
+art/                         # rename to muuzee later
 ├── AGENTS.md
 ├── README.md
 │
@@ -220,7 +220,8 @@ Git should be used from the prototype phase onward.
 
 Intended repository:
 
-`https://github.com/keianduu/musee`
+The current repository URL is defined by `git remote get-url origin`.
+After the pending repository rename, use `https://github.com/keianduu/muuzee`.
 
 The local directory may remain named `art`; the local folder name does not need to match the GitHub repository name.
 
@@ -254,7 +255,7 @@ Example commit messages:
 prototype: refine home hero
 prototype: add featured artist portraits
 prototype: add museum map
-design: approve Musee home IA
+design: approve Muuzee home IA
 spec: sync approved ArtWall behavior
 feat: implement exhibition detail
 ```
@@ -267,7 +268,11 @@ During prototype development, publish the prototype for browser / mobile review.
 
 Preferred preview path:
 
-`https://keianduu.github.io/musee/prototype/`
+After the pending repository rename:
+
+`https://keianduu.github.io/muuzee/prototype/`
+
+Until then, derive the preview path from the current `origin` repository name.
 
 If a root `index.html` is used, it may redirect to `prototype/`.
 
@@ -474,7 +479,7 @@ Do not write every prototype iteration to Notion.
 
 ---
 
-## Renaming `art` to `musee`
+## Renaming `art` to `muuzee`
 
 Do not rename the local directory only for naming consistency while integrations are still being established.
 
@@ -482,10 +487,10 @@ Rename when the project identity and repository workflow are stable.
 
 When renaming:
 
-1. Rename local `art/` -> `musee/`.
+1. Rename local `art/` -> `muuzee/`.
 2. Confirm Codex workspace path.
 3. Confirm Notion project references in `docs/project-context.md`.
-4. Confirm Git remote still points to `https://github.com/keianduu/musee`.
+4. Confirm Git remote points to the current repository URL; update it to `https://github.com/keianduu/muuzee` after the repository rename.
 5. Update this file's Project Boundaries section.
 6. Validate local scripts and absolute paths.
 
@@ -495,10 +500,10 @@ Git history is not affected by changing the local folder name.
 
 ## Project Boundaries
 
-This AGENTS.md currently applies only to the `art` project, which is the working directory for Musee.
+This AGENTS.md currently applies only to the `art` project, which is the working directory for Muuzee.
 
 Do not use specifications, research, Tasks, or Decisions from other projects under `my-project`.
 
 Do not modify files outside this project unless the user explicitly requests it.
 
-When the local project directory is renamed from `art` to `musee`, update this section accordingly.
+When the local project directory is renamed from `art` to `muuzee`, update this section accordingly.

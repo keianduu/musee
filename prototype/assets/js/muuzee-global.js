@@ -1,17 +1,17 @@
 /*
-  Musee Global JS
+  Muuzee Global JS
   Shared behavior only. Do not put page-specific data here.
 */
 (() => {
   "use strict";
 
   /* Header Reveal
-     A page opts in by adding data-musee-sheet to the rising content surface.
+     A page opts in by adding data-muuzee-sheet to the rising content surface.
   */
   function initHeaderReveal(){
     const header = document.querySelector(".site-header");
     const sheet =
-      document.querySelector("[data-musee-sheet]") ||
+      document.querySelector("[data-muuzee-sheet]") ||
       document.querySelector(".main-surface, .detail-sheet");
 
     if(!header || !sheet) return;
@@ -124,7 +124,7 @@
       const node = renderItem(item, geometry, index);
       if(!node) return;
 
-      node.classList.add("musee-masonry-item");
+      node.classList.add("muuzee-masonry-item");
       node.style.left = `${geometry.left}px`;
       node.style.top = `${geometry.top}px`;
       node.style.width = `${geometry.width}px`;
@@ -133,8 +133,8 @@
     });
   }
 
-  window.Musee = window.Musee || {};
-  window.Musee.layoutMasonry = layoutMasonry;
+  window.Muuzee = window.Muuzee || {};
+  window.Muuzee.layoutMasonry = layoutMasonry;
 
   if(document.readyState === "loading"){
     document.addEventListener("DOMContentLoaded", initHeaderReveal, {once:true});

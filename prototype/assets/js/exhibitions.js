@@ -1,4 +1,4 @@
-/* Musee Exhibition List — page specific */
+/* Muuzee Exhibition List — page specific */
 (() => {
   "use strict";
 
@@ -51,7 +51,7 @@
   }
 
   function cardHTML(item){
-    const statusClass = item.status === "now" ? "musee-pill--status" : "musee-pill--neutral";
+    const statusClass = item.status === "now" ? "muuzee-pill--status" : "muuzee-pill--neutral";
     const linkAttrs = item.href && item.href !== "#"
       ? `href="${esc(item.href)}"` : `href="#" data-no-nav="true"`;
 
@@ -63,7 +63,7 @@
           </div>
           <div class="exhibition-card-body">
             <div class="exhibition-card-topline">
-              <span class="musee-pill ${statusClass}">${esc(item.statusLabel)}</span>
+              <span class="muuzee-pill ${statusClass}">${esc(item.statusLabel)}</span>
               <span class="exhibition-card-category">${esc(item.category)}</span>
               <span class="exhibition-card-area">${esc(item.area)}</span>
             </div>
