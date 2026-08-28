@@ -641,3 +641,20 @@ body.map-page{
 }
 
 /* safe-popup-centering:end */
+
+/* popup-save-hit-area:start */
+
+.muuzee-map-popup .map-popup-save{
+  position:relative !important;
+  z-index:50 !important;
+  pointer-events:auto !important;
+  touch-action:manipulation;
+  isolation:isolate;
+}
+
+.muuzee-map-popup .map-popup-topline{
+  position:relative;
+  z-index:20;
+}
+
+/* popup-save-hit-area:end */

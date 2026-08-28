@@ -262,6 +262,40 @@
   }
   /* safe-popup-centering:end */
 
+  /* popup-save-in-place:start */
+  function refreshVisibleMarkerSavedState(type,id){
+    const saved = isSaved(type,id);
+
+    markerLayer.eachLayer(layer => {
+      if(
+        layer?._muuzeeSaveType !== type
+        || layer?._muuzeeSaveId !== id
+      ) return;
+
+      const pin = layer.getElement?.()?.querySelector(".muuzee-map-pin");
+      pin?.classList.toggle("is-saved",saved);
+    });
+  }
+
+  function syncPopupSaveButton(button){
+    const type = button.dataset.popupType;
+    const id = button.dataset.popupId;
+    const saved = isSaved(type,id);
+
+    button.classList.toggle("is-saved",saved);
+    button.setAttribute("aria-pressed",String(saved));
+    button.setAttribute("aria-label",saved ? "保存済み" : "保存");
+
+    /*
+      Supports both the current Bookmark UI and an older text-button
+      baseline without forcing either markup shape.
+    */
+    if(!button.querySelector("svg")){
+      button.textContent = saved ? "保存済" : "保存";
+    }
+  }
+  /* popup-save-in-place:end */
+
   function renderMarkers({fit=false} = {}){
     markerLayer.clearLayers();
 
@@ -275,6 +309,9 @@
         [item.lat,item.lng],
         {icon:createIcon(type,isSaved(type,item.id))}
       );
+
+      marker._muuzeeSaveType = type;
+      marker._muuzeeSaveId = item.id;
 
       marker.bindPopup(
         popupHTML(item,type),
@@ -498,15 +535,32 @@
     renderFilterUI();
   });
 
-  mapEl.addEventListener("click",event => {
-    const button = event.target.closest("[data-popup-save]");
-    if(!button) return;
+  map.on("popupopen",event => {
+    const popupEl = event.popup.getElement?.();
+    if(!popupEl) return;
 
-    event.preventDefault();
-    event.stopPropagation();
+    /*
+      Popup interactions must not be interpreted as Map clicks.
+      This prevents Leaflet's close-on-map-click behavior as well.
+    */
+    L.DomEvent.disableClickPropagation(popupEl);
 
-    toggleSaved(button.dataset.popupType,button.dataset.popupId);
-    renderMarkers({fit:false});
+    const button = popupEl.querySelector("[data-popup-save]");
+    if(!button || button.dataset.muuzeeBound === "true") return;
+
+    button.dataset.muuzeeBound = "true";
+
+    button.addEventListener("click",clickEvent => {
+      clickEvent.preventDefault();
+      clickEvent.stopPropagation();
+
+      const type = button.dataset.popupType;
+      const id = button.dataset.popupId;
+
+      toggleSaved(type,id);
+      syncPopupSaveButton(button);
+      refreshVisibleMarkerSavedState(type,id);
+    });
   });
 
   locateButton?.addEventListener("click",() => {
