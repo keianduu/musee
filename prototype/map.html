@@ -1,77 +1,156 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Map — Muuzee Prototype</title>
-<link rel="stylesheet" href="./assets/css/muuzee-global.css?v=20260828-06">
-<link rel="stylesheet" href="./shared.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<style>
-html,body{height:100%}
-body{display:flex;flex-direction:column}
-.map-head{padding:18px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
-.map-head strong{font-size:22px;letter-spacing:-.04em}
-#map{flex:1;min-height:620px}
-.leaflet-container{font-family:var(--sans);background:#f4f2ed}
-.map-page .footer{margin-top:0}
-.museum-pin{width:28px;height:28px;border-radius:50%;background:var(--ink);border:2px solid #fff;box-shadow:0 5px 14px rgba(0,0,0,.18)}
-.museum-pin:after{content:"";display:block;width:5px;height:5px;border-radius:50%;background:#fff;margin:9px auto}
-@media(max-width:720px){#map{min-height:calc(100svh - 124px)}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>地図から探す — Muuzee</title>
+  <meta name="description" content="現在地やエリアを起点に、近くの展覧会・美術館を探せるMuuzeeの地図検索。">
+  <link rel="stylesheet" href="./assets/css/muuzee-global.css?v=20260828-08">
+  <link rel="stylesheet" href="./assets/css/list-filter.css?v=20260828-08">
+  <link rel="stylesheet" href="./assets/css/map.css?v=20260828-08">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 <body class="muuzee-app map-page">
-<div class="map-head"><a class="logo" href="./index.html">Muuzee</a><strong>Map</strong><span>東京</span></div>
-<div id="map"></div>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-const museums=[
- ["東京都美術館",35.71711,139.77318],
- ["国立西洋美術館",35.71536,139.77585],
- ["上野の森美術館",35.71285,139.77477],
- ["すみだ北斎美術館",35.69675,139.80039],
- ["刀剣博物館",35.69882,139.79371],
- ["東京都現代美術館",35.68000,139.80806],
- ["アーティゾン美術館",35.67875,139.77213],
- ["三井記念美術館",35.68630,139.77314],
- ["東京ステーションギャラリー",35.68243,139.76649]
-];
-const map=L.map("map",{scrollWheelZoom:true}).fitBounds([[35.662,139.752],[35.731,139.823]],{padding:[18,18],maxZoom:12.25});
-L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",{subdomains:"abcd",maxZoom:20,attribution:"&copy; OpenStreetMap contributors &copy; CARTO"}).addTo(map);
-museums.forEach(([name,lat,lng])=>{
- const icon=L.divIcon({className:"",html:'<div class="museum-pin"></div>',iconSize:[28,28],iconAnchor:[14,14]});
- L.marker([lat,lng],{icon}).addTo(map).bindPopup(`<b>${name}</b><br><small>Muuzeeで開催展を見る</small>`);
-});
-</script>
+  <header class="site-header is-over-sheet">
+    <div class="shell header-inner">
+      <a class="logo" href="./index.html">Muuzee</a>
+      <div class="header-actions">
+        <button aria-label="お知らせ" class="icon-button" type="button">
+          <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"></path></svg>
+          <i class="notice-dot"></i>
+        </button>
+        <a aria-label="ashelry My Art" class="avatar" href="#artwall" title="ashelry">
+          <img alt="ashelry" loading="eager" src="./assets/images/profile-avatar.jpg">
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="map-main">
+    <section class="map-surface" aria-label="Muuzee 地図検索">
+      <div id="discoveryMap" class="discovery-map"></div>
+
+      <div class="map-control-stack" aria-label="地図の表示切り替え">
+        <div class="map-mode-bar">
+          <button class="map-mode-button is-active" type="button" data-map-mode="exhibition" aria-pressed="true">
+            <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1.5"></rect><circle cx="9" cy="9" r="1.5"></circle><path d="m6.5 17 4-4 3 3 2-2 2 3"></path></svg>
+            <span>展示会</span>
+          </button>
+          <button class="map-mode-button" type="button" data-map-mode="museum" aria-pressed="false">
+            <svg viewBox="0 0 24 24"><path d="M3 9h18M5 9v10M9 9v10M15 9v10M19 9v10M3 19h18M4 8l8-5 8 5"></path></svg>
+            <span>美術館</span>
+          </button>
+        </div>
+
+        <button class="map-locate-button" type="button" data-locate aria-label="現在地へ移動">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 3v3M12 18v3M3 12h3M18 12h3"></path></svg>
+          <span>現在地</span>
+        </button>
+
+        <div class="map-filter-summary" data-map-filter-summary hidden></div>
+      </div>
+
+      <div class="map-result-count" aria-live="polite">
+        <strong data-map-result-count>0</strong>
+        <span data-map-result-label>exhibitions</span>
+      </div>
+    </section>
+  </main>
+
+  <button class="search-fab map-search-fab" type="button" data-filter-open aria-haspopup="dialog" aria-controls="mapFilterSheet">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><path d="m16 16 4 4"></path></svg>
+    <span>検索</span>
+  </button>
+
+  <div class="filter-backdrop" data-filter-backdrop hidden></div>
+
+  <section class="filter-sheet map-filter-sheet" id="mapFilterSheet" data-filter-sheet role="dialog" aria-modal="true" aria-labelledby="mapFilterTitle" aria-hidden="true">
+    <div class="filter-sheet-head">
+      <div>
+        <small>Map discovery</small>
+        <h2 id="mapFilterTitle">地図を絞り込む</h2>
+      </div>
+      <button class="filter-close" type="button" data-filter-close aria-label="閉じる">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+      </button>
+    </div>
+
+    <div class="filter-sheet-body">
+      <div class="filter-group">
+        <h3>探すもの</h3>
+        <div class="filter-chips" data-filter-mode-group>
+          <button class="filter-chip is-selected" type="button" data-filter-mode="exhibition">展示会</button>
+          <button class="filter-chip" type="button" data-filter-mode="museum">美術館</button>
+        </div>
+      </div>
+
+      <div data-exhibition-filter-groups>
+        <div class="filter-group">
+          <h3>開催状況</h3>
+          <div class="filter-chips" data-exhibition-status-options>
+            <button class="filter-chip" type="button" data-value="now">開催中</button>
+            <button class="filter-chip" type="button" data-value="upcoming">開催予定</button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h3>表現カテゴリ</h3>
+          <div class="filter-chips" data-expression-options></div>
+        </div>
+      </div>
+
+      <div data-museum-filter-groups hidden>
+        <div class="filter-group">
+          <h3>国内 / 海外</h3>
+          <div class="filter-chips" data-museum-scope-options>
+            <button class="filter-chip is-selected" type="button" data-value="jp">国内</button>
+            <button class="filter-chip" type="button" data-value="overseas">海外</button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h3 data-museum-area-title>地方</h3>
+          <div class="filter-chips" data-museum-area-options></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-sheet-actions">
+      <button class="filter-reset" type="button" data-filter-reset>クリア</button>
+      <button class="filter-apply" type="button" data-filter-apply>この条件で見る</button>
+    </div>
+  </section>
+
   <footer class="footer">
     <div class="shell footer-inner">
       <nav aria-label="Primary navigation" class="footer-nav">
         <a class="nav-item" href="./index.html">
-          <svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9H7v-6h10v6"></path></svg>
-          <span>ホーム</span>
+          <svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9H7v-6h10v6"></path></svg><span>ホーム</span>
         </a>
         <a class="nav-item" href="./exhibitions.html">
-          <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1.5"></rect><circle cx="9" cy="9" r="1.5"></circle><path d="m6.5 17 4-4 3 3 2-2 2 3"></path></svg>
-          <span>展示会</span>
+          <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1.5"></rect><circle cx="9" cy="9" r="1.5"></circle><path d="m6.5 17 4-4 3 3 2-2 2 3"></path></svg><span>展示会</span>
         </a>
         <a class="nav-item" href="./artists.html">
-          <svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5"></rect><circle cx="12" cy="9" r="2.4"></circle><path d="M8.5 17c.5-2.3 1.8-3.5 3.5-3.5s3 1.2 3.5 3.5"></path></svg>
-          <span>アーティスト</span>
+          <svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5"></rect><circle cx="12" cy="9" r="2.4"></circle><path d="M8.5 17c.5-2.3 1.8-3.5 3.5-3.5s3 1.2 3.5 3.5"></path></svg><span>アーティスト</span>
         </a>
         <a class="nav-item" href="./museums.html">
-          <svg viewBox="0 0 24 24"><path d="M3 9h18M5 9v10M9 9v10M15 9v10M19 9v10M3 19h18M4 8l8-5 8 5"></path></svg>
-          <span>美術館</span>
+          <svg viewBox="0 0 24 24"><path d="M3 9h18M5 9v10M9 9v10M15 9v10M19 9v10M3 19h18M4 8l8-5 8 5"></path></svg><span>美術館</span>
         </a>
         <a class="nav-item active" href="./map.html">
-          <svg viewBox="0 0 24 24"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z"></path><path d="M9 3v15M15 6v15"></path></svg>
-          <span>マップ</span>
+          <svg viewBox="0 0 24 24"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z"></path><path d="M9 3v15M15 6v15"></path></svg><span>マップ</span>
         </a>
         <a class="nav-item" href="./saved.html">
-          <svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4Z"></path></svg>
-          <span>保存</span>
+          <svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4Z"></path></svg><span>保存</span>
         </a>
       </nav>
     </div>
   </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="./assets/js/muuzee-global.js?v=20260828-08"></script>
+  <script src="./assets/js/list-filter.js?v=20260828-08"></script>
+  <script src="./assets/js/exhibition-data.js?v=20260828-08"></script>
+  <script src="./assets/js/museum-data.js?v=20260828-08"></script>
+  <script src="./assets/js/map.js?v=20260828-08"></script>
 </body>
 </html>
