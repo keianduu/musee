@@ -220,8 +220,9 @@ Git should be used from the prototype phase onward.
 
 Intended repository:
 
-The current repository URL is defined by `git remote get-url origin`.
-After the pending repository rename, use `https://github.com/keianduu/muuzee`.
+Repository:
+
+`https://github.com/keianduu/muuzee`
 
 The local directory may remain named `art`; the local folder name does not need to match the GitHub repository name.
 
@@ -268,11 +269,7 @@ During prototype development, publish the prototype for browser / mobile review.
 
 Preferred preview path:
 
-After the pending repository rename:
-
 `https://keianduu.github.io/muuzee/prototype/`
-
-Until then, derive the preview path from the current `origin` repository name.
 
 If a root `index.html` is used, it may redirect to `prototype/`.
 
@@ -490,7 +487,7 @@ When renaming:
 1. Rename local `art/` -> `muuzee/`.
 2. Confirm Codex workspace path.
 3. Confirm Notion project references in `docs/project-context.md`.
-4. Confirm Git remote points to the current repository URL; update it to `https://github.com/keianduu/muuzee` after the repository rename.
+4. Confirm Git remote points to `https://github.com/keianduu/muuzee`.
 5. Update this file's Project Boundaries section.
 6. Validate local scripts and absolute paths.
 
