@@ -231,3 +231,107 @@
 }
 
 /* shared-saved-state:end */
+
+/* save-over-image:start */
+
+/* Shared Save Controls belong to the visual, not to the whole card. */
+.muuzee-save-visual-host{
+  position:relative !important;
+}
+
+/* Default: photo/card visual top-right. */
+.muuzee-save-visual-host > .muuzee-card-save{
+  top:8px !important;
+  right:8px !important;
+}
+
+/* Keep the bookmark optically and mathematically centered in the circle. */
+.muuzee-card-save{
+  display:grid !important;
+  place-items:center !important;
+  line-height:0 !important;
+}
+
+.muuzee-card-save svg{
+  display:block !important;
+  align-self:center !important;
+  justify-self:center !important;
+  margin:0 !important;
+  flex:none !important;
+}
+
+/* TOP Featured Artists have a direct <img>, so JS creates this circular visual wrapper. */
+.artist-rail .muuzee-save-artist-visual{
+  position:relative;
+  width:90px;
+  height:90px;
+  margin:0 auto 11px;
+  overflow:hidden;
+  border-radius:50%;
+}
+
+.artist-rail .muuzee-save-artist-visual > img{
+  width:100% !important;
+  height:100% !important;
+  margin:0 !important;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+/* Artist images use a smaller, quieter save badge fully inside the portrait. */
+.artist-avatar.muuzee-save-visual-host > .muuzee-card-save,
+.muuzee-save-artist-visual > .muuzee-card-save,
+.related-artist-image.muuzee-save-visual-host > .muuzee-card-save,
+.museum-artist-image.muuzee-save-visual-host > .muuzee-card-save{
+  top:6px !important;
+  right:6px !important;
+  width:28px;
+  height:28px;
+}
+
+.artist-avatar.muuzee-save-visual-host > .muuzee-card-save svg,
+.muuzee-save-artist-visual > .muuzee-card-save svg,
+.related-artist-image.muuzee-save-visual-host > .muuzee-card-save svg,
+.museum-artist-image.muuzee-save-visual-host > .muuzee-card-save svg{
+  width:13px;
+  height:13px;
+}
+
+/* Existing visual containers already own radius/cropping. */
+.artist-avatar.muuzee-save-visual-host,
+.museum-artist-image.muuzee-save-visual-host{
+  overflow:hidden;
+}
+
+@media(max-width:720px){
+  .muuzee-save-visual-host > .muuzee-card-save{
+    top:6px !important;
+    right:6px !important;
+  }
+
+  .artist-rail .muuzee-save-artist-visual{
+    width:66px;
+    height:66px;
+    margin-bottom:8px;
+  }
+
+  .artist-avatar.muuzee-save-visual-host > .muuzee-card-save,
+  .muuzee-save-artist-visual > .muuzee-card-save,
+  .related-artist-image.muuzee-save-visual-host > .muuzee-card-save,
+  .museum-artist-image.muuzee-save-visual-host > .muuzee-card-save{
+    top:4px !important;
+    right:4px !important;
+    width:24px;
+    height:24px;
+  }
+
+  .artist-avatar.muuzee-save-visual-host > .muuzee-card-save svg,
+  .muuzee-save-artist-visual > .muuzee-card-save svg,
+  .related-artist-image.muuzee-save-visual-host > .muuzee-card-save svg,
+  .museum-artist-image.muuzee-save-visual-host > .muuzee-card-save svg{
+    width:11px;
+    height:11px;
+  }
+}
+
+/* save-over-image:end */

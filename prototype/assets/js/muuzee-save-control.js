@@ -235,6 +235,68 @@
     control.title = saved ? "保存済み" : "保存";
   }
 
+  /* save-visual-host:start */
+  const visualSelectors = [
+    ".artist-avatar",
+    ".exhibition-card-image",
+    ".poster-stage",
+    ".popular-museum-image",
+    ".museum-list-image",
+    ".museum-thumb",
+    ".museum-work-image",
+    ".museum-artist-image",
+    ".related-artist-image"
+  ];
+
+  function directChildImage(host){
+    return [...host.children].find(child => child.tagName === "IMG") || null;
+  }
+
+  function ensureTopArtistVisual(host){
+    if(!host.matches(".artist-rail .artist")) return null;
+
+    const existing = host.querySelector(":scope > .muuzee-save-artist-visual");
+    if(existing) return existing;
+
+    const image = directChildImage(host);
+    if(!image) return null;
+
+    const wrapper = document.createElement("span");
+    wrapper.className = "muuzee-save-artist-visual muuzee-save-visual-host";
+
+    host.insertBefore(wrapper,image);
+    wrapper.appendChild(image);
+
+    return wrapper;
+  }
+
+  function visualHostFor(host){
+    const topArtistVisual = ensureTopArtistVisual(host);
+    if(topArtistVisual) return topArtistVisual;
+
+    for(const selector of visualSelectors){
+      const visual = host.querySelector(`:scope > ${selector}`) || host.querySelector(selector);
+      if(visual){
+        visual.classList.add("muuzee-save-visual-host");
+        return visual;
+      }
+    }
+
+    /* Fallback for a card whose image is directly inside the card. */
+    const image = directChildImage(host);
+    if(image){
+      const wrapper = document.createElement("span");
+      wrapper.className = "muuzee-save-direct-visual muuzee-save-visual-host";
+      host.insertBefore(wrapper,image);
+      wrapper.appendChild(image);
+      return wrapper;
+    }
+
+    host.classList.add("muuzee-save-visual-host");
+    return host;
+  }
+  /* save-visual-host:end */
+
   function createControl(host,descriptor){
     const control = document.createElement("span");
     control.className = "muuzee-card-save";
@@ -266,7 +328,9 @@
     });
 
     host.classList.add("muuzee-save-host");
-    host.appendChild(control);
+
+    const visualHost = visualHostFor(host);
+    visualHost.appendChild(control);
   }
 
   function enhanceHost(host){
