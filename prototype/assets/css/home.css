@@ -842,3 +842,13 @@
   }
 }
 /* popular-museums-and-map:end */
+
+/* home-section-cta:start */
+
+/* TOP section CTAs all use the existing ArtWall CTA visual.
+   Only typography is explicitly fixed to 12px. */
+.home-page .section-head .cta{
+  font-size:12px !important;
+}
+
+/* home-section-cta:end */
