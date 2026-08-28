@@ -4,8 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>推し — Muuzee</title>
-  <link rel="stylesheet" href="./assets/css/muuzee-global.css?v=20260828-12">
-  <link rel="stylesheet" href="./assets/css/mypage.css?v=20260828-12">
+  <link rel="stylesheet" href="./assets/css/muuzee-global.css?v=20260828-14">
+  <link rel="stylesheet" href="./assets/css/mypage.css?v=20260828-14">
+  <link rel="stylesheet" href="./assets/css/personal-list.css?v=20260828-14">
 </head>
 <body class="muuzee-app mypage-page">
   <header class="site-header is-over-sheet">
@@ -16,7 +17,9 @@
           <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"></path></svg>
           <i class="notice-dot"></i>
         </button>
-        <a aria-label="MyPage" class="avatar" href="./my-art.html"><img alt="ashelry" src="./assets/images/profile-avatar.jpg"></a>
+        <a aria-label="MyPage" class="avatar" href="./my-art.html">
+          <img alt="ashelry" src="./assets/images/profile-avatar.jpg">
+        </a>
       </div>
     </div>
   </header>
@@ -24,22 +27,21 @@
     <section class="mypage-profile-shell">
       <div class="shell mypage-profile" data-mypage-profile></div>
     </section>
+
     <section class="mypage-nav-shell">
       <div class="shell" data-mypage-nav data-mypage-active="favorites"></div>
     </section>
+
     <div class="shell mypage-content-shell">
       <header class="mypage-content-head">
         <small>Favorites</small>
         <h1>推し</h1>
-        <p>保存より強いPreferenceとして、特に好きな対象をまとめるページです。</p>
       </header>
-      <div class="mypage-placeholder">
-        <small>Favorites</small>
-        <h2>推し</h2>
-        <p>このページの詳細UIは次のPrototypeで追加します。</p>
-      </div>
+
+      <div class="personal-list-grid" data-personal-list="favorites"></div>
     </div>
   </main>
+
   <footer class="footer">
     <div class="shell footer-inner">
       <nav aria-label="Primary navigation" class="footer-nav">
@@ -52,7 +54,13 @@
       </nav>
     </div>
   </footer>
-  <script src="./assets/js/muuzee-global.js?v=20260828-12"></script>
-  <script src="./assets/js/mypage-nav.js?v=20260828-12"></script>
+
+  <script src="./assets/js/muuzee-global.js?v=20260828-14"></script>
+  <script src="./assets/js/artist-data.js?v=20260828-14"></script>
+  <script src="./assets/js/museum-data.js?v=20260828-14"></script>
+  <script src="./assets/js/exhibition-data.js?v=20260828-14"></script>
+  <script src="./assets/js/personal-data.js?v=20260828-14"></script>
+  <script src="./assets/js/mypage-nav.js?v=20260828-14"></script>
+  <script src="./assets/js/personal-list.js?v=20260828-14"></script>
 </body>
 </html>

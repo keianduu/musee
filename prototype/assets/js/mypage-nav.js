@@ -1,4 +1,4 @@
-/* Muuzee MyPage shared profile + primary navigation */
+/* Muuzee MyPage primary navigation — collection pages only */
 (() => {
   "use strict";
 
@@ -40,7 +40,7 @@
     const active = root.dataset.mypageActive || "";
 
     root.innerHTML = `
-      <nav class="mypage-primary-nav" aria-label="MyPage primary navigation">
+      <nav class="mypage-primary-nav" aria-label="MyPage navigation">
         ${NAV.map(item => `
           <a class="mypage-primary-nav-item${active === item.key ? " is-active" : ""}"
              href="${item.href}"

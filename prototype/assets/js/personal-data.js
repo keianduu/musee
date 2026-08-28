@@ -1,4 +1,4 @@
-/* Muuzee Personal Data — compatibility layer for current prototype storage */
+/* Muuzee Personal Data — prototype local persistence + one-time sample seed */
 (() => {
   "use strict";
 
@@ -14,6 +14,81 @@
   const writeArray = (key,value) => {
     localStorage.setItem(key,JSON.stringify(value));
   };
+
+  const mergePrimitive = (key,samples) => {
+    const current = readArray(key);
+    const merged = [...current];
+
+    samples.forEach(value => {
+      if(!merged.includes(value)) merged.push(value);
+    });
+
+    writeArray(key,merged);
+  };
+
+  const mergeObjects = (key,samples) => {
+    const current = readArray(key);
+    const merged = [...current];
+
+    samples.forEach(sample => {
+      const exists = merged.some(item =>
+        item &&
+        item.type === sample.type &&
+        item.id === sample.id
+      );
+
+      if(!exists) merged.push(sample);
+    });
+
+    writeArray(key,merged);
+  };
+
+  const seedKey = "muuzee:prototype-personal-samples:v2";
+
+  if(localStorage.getItem(seedKey) !== "done"){
+    mergePrimitive("muuzee:saved-artists",[
+      "草間彌生",
+      "クロード・モネ",
+      "庄島歩音"
+    ]);
+
+    mergePrimitive("muuzee:saved-museums",[
+      "nact",
+      "21kanazawa",
+      "moma"
+    ]);
+
+    mergePrimitive("muuzee:saved-exhibitions",[
+      "dream-river",
+      "storytelling",
+      "noise"
+    ]);
+
+    mergePrimitive("muuzee:saved-works:クロード・モネ",[
+      "睡蓮",
+      "印象・日の出"
+    ]);
+
+    mergePrimitive("muuzee:saved-works:草間彌生",[
+      "Infinity Nets"
+    ]);
+
+    mergeObjects("muuzee:seen-items",[
+      {type:"exhibition",id:"dream-river",date:"2026.08.24"},
+      {type:"museum",id:"21kanazawa",date:"2026.07.18"},
+      {type:"exhibition",id:"curious-matters",date:"2026.06.06"},
+      {type:"museum",id:"nact",date:"2026.05.24"}
+    ]);
+
+    mergeObjects("muuzee:favorite-items",[
+      {type:"artist",id:"草間彌生"},
+      {type:"artist",id:"クロード・モネ"},
+      {type:"museum",id:"21kanazawa"},
+      {type:"exhibition",id:"dream-river"}
+    ]);
+
+    localStorage.setItem(seedKey,"done");
+  }
 
   const workPrefix = "muuzee:saved-works:";
 
@@ -75,5 +150,9 @@
     }
   };
 
-  window.MuuzeePersonalData = {saved};
+  window.MuuzeePersonalData = {
+    saved,
+    seen:() => readArray("muuzee:seen-items"),
+    favorites:() => readArray("muuzee:favorite-items")
+  };
 })();
