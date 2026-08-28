@@ -209,13 +209,6 @@ window.addEventListener('resize',()=>{
       source:"Visit Kanazawa"
     },
     {
-      name:"ベネッセハウス ミュージアム",
-      location:"香川・直島",
-      category:"現代美術 / 建築",
-      image:"https://cloudfront.chushikokuandtokyo.org/front_assets/images_other/spot/big/benessehaouse1.jpg",
-      source:"CHUGOKU + SHIKOKU × TOKYO"
-    },
-    {
       name:"地中美術館",
       location:"香川・直島",
       category:"現代美術 / 建築",
