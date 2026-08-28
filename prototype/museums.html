@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>美術館を探す — Muuzee</title>
+  <meta name="description" content="国内・海外の美術館をエリアやキーワードから探せるMuuzeeの美術館一覧。">
+  <link rel="stylesheet" href="./assets/css/muuzee-global.css?v=20260828-03">
+  <link rel="stylesheet" href="./assets/css/list-filter.css?v=20260828-03">
+  <link rel="stylesheet" href="./assets/css/museums.css?v=20260828-03">
+</head>
+<body class="muuzee-app museums-page">
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="logo" href="./index.html">Muuzee</a>
+      <div class="header-actions">
+        <button aria-label="お知らせ" class="icon-button" type="button">
+          <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"></path></svg>
+          <i class="notice-dot"></i>
+        </button>
+        <a aria-label="ashelry My Art" class="avatar" href="#artwall" title="ashelry">
+          <img alt="ashelry" loading="eager" src="./assets/images/profile-avatar.jpg">
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="museums-intro">
+      <div class="shell">
+        <div class="museums-kicker">Museums</div>
+        <div class="museums-heading-row">
+          <h1>美術館を探す</h1>
+          <p><strong data-museum-count>0</strong> museums</p>
+        </div>
+
+        <div class="museum-tabs" role="tablist" aria-label="国内・海外">
+          <button class="museum-tab is-active" type="button" role="tab" aria-selected="true" data-museum-tab="jp">
+            <span>日本</span><em data-tab-count="jp">0</em>
+          </button>
+          <button class="museum-tab" type="button" role="tab" aria-selected="false" data-museum-tab="overseas">
+            <span>海外</span><em data-tab-count="overseas">0</em>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="museums-results">
+      <div class="shell">
+        <div class="museum-context">
+          <div class="active-filters" data-active-filters hidden></div>
+          <p class="museum-result-label" data-result-label>日本の美術館</p>
+        </div>
+
+        <div class="museum-grid" data-museum-grid></div>
+
+        <div class="museum-empty" data-museum-empty hidden>
+          <p>条件に合う美術館が見つかりませんでした。</p>
+          <button type="button" data-empty-reset>条件をクリア</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <button class="search-fab" type="button" data-filter-open aria-label="美術館を絞り込む">
+    <svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>
+    <span>絞り込み</span>
+  </button>
+
+  <div class="filter-backdrop" data-filter-backdrop hidden></div>
+
+  <section class="filter-sheet museum-filter-sheet" data-filter-sheet aria-hidden="true" aria-label="美術館の絞り込み">
+    <div class="filter-sheet-head">
+      <div>
+        <small>Filter museums</small>
+        <h2>絞り込み</h2>
+      </div>
+      <button class="filter-close" type="button" data-filter-close aria-label="閉じる">
+        <svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19"></path></svg>
+      </button>
+    </div>
+
+    <div class="filter-sheet-body">
+      <div class="filter-group">
+        <h3>キーワード</h3>
+        <label class="keyword-input-wrap">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><path d="m16 16 4 4"></path></svg>
+          <input type="search" placeholder="美術館名・エリア・ジャンルで検索" data-keyword>
+        </label>
+      </div>
+
+      <div class="filter-group">
+        <h3>国内 / 海外</h3>
+        <div class="filter-chips museum-scope-chips" data-scope-filter>
+          <button type="button" class="filter-chip is-selected" data-scope-value="jp">
+            <span>日本</span><em data-scope-count="jp">0</em>
+          </button>
+          <button type="button" class="filter-chip" data-scope-value="overseas">
+            <span>海外</span><em data-scope-count="overseas">0</em>
+          </button>
+        </div>
+      </div>
+
+      <div class="filter-group" data-japan-region-group>
+        <h3>地方</h3>
+        <div class="filter-chips museum-filter-options" data-region-options></div>
+      </div>
+
+      <div class="filter-group" data-prefecture-group>
+        <h3>都道府県</h3>
+        <div class="filter-chips museum-filter-options" data-prefecture-options></div>
+      </div>
+
+      <div class="filter-group" data-city-group>
+        <h3>市区</h3>
+        <div class="filter-chips museum-filter-options" data-city-options></div>
+      </div>
+
+      <div class="filter-group" data-overseas-city-group hidden>
+        <h3>主要都市</h3>
+        <div class="filter-chips museum-filter-options" data-overseas-city-options></div>
+      </div>
+    </div>
+
+    <div class="filter-sheet-actions">
+      <button class="filter-reset" type="button" data-filter-reset>クリア</button>
+      <button class="filter-apply" type="button" data-filter-apply>この条件で見る</button>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="shell footer-inner">
+      <nav aria-label="Primary navigation" class="footer-nav">
+        <a class="nav-item" href="./index.html">
+          <svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9H7v-6h10v6"></path></svg><span>ホーム</span>
+        </a>
+        <a class="nav-item" href="./exhibitions.html">
+          <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1.5"></rect><circle cx="9" cy="9" r="1.5"></circle><path d="m6.5 17 4-4 3 3 2-2 2 3"></path></svg><span>展示会一覧</span>
+        </a>
+        <a class="nav-item" href="./artists.html">
+          <svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5"></rect><circle cx="12" cy="9" r="2.4"></circle><path d="M8.5 17c.5-2.3 1.8-3.5 3.5-3.5s3 1.2 3.5 3.5"></path></svg><span>アーティスト</span>
+        </a>
+        <a class="nav-item" href="./map.html">
+          <svg viewBox="0 0 24 24"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z"></path><path d="M9 3v15M15 6v15"></path></svg><span>マップ</span>
+        </a>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4Z"></path></svg><span>保存</span>
+        </a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="./assets/js/muuzee-global.js?v=20260828-03"></script>
+  <script src="./assets/js/list-filter.js?v=20260828-03"></script>
+  <script src="./assets/js/museums.js?v=20260828-03"></script>
+</body>
+</html>

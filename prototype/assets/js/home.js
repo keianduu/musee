@@ -260,14 +260,14 @@ window.addEventListener('resize',()=>{
   }[char]));
 
   rail.innerHTML = POPULAR_MUSEUMS.map(museum => `
-    <article class="popular-museum-card">
+    <a class="popular-museum-card" href="./museums.html?q=${encodeURIComponent(museum.name)}">
       <div class="popular-museum-image">
         <img src="${esc(museum.image)}" alt="${esc(museum.name)}" loading="lazy">
       </div>
       <small>${esc(museum.location)}</small>
       <h3>${esc(museum.name)}</h3>
       <p>${esc(museum.category)}</p>
-    </article>
+    </a>
   `).join("");
 })();
 /* popular-museums:end */
