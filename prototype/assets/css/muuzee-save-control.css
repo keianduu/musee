@@ -455,3 +455,232 @@
 }
 
 /* artist-circle-save-placement:end */
+
+/* semantic-save-card-v2:start */
+
+.muuzee-savable-card,
+.muuzee-save-host{
+  position:relative !important;
+  min-width:0;
+}
+
+.muuzee-savable-card > .muuzee-card-save,
+.muuzee-save-host > .muuzee-card-save{
+  position:absolute !important;
+  top:8px !important;
+  right:8px !important;
+  left:auto !important;
+  bottom:auto !important;
+  z-index:20 !important;
+}
+
+.muuzee-card-save{
+  position:absolute !important;
+  width:34px;
+  height:34px;
+  padding:0 !important;
+  border-radius:50%;
+  display:grid !important;
+  place-items:center !important;
+  line-height:0 !important;
+  background:#fff !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+
+.muuzee-card-save svg{
+  display:block !important;
+  width:16px;
+  height:16px;
+  margin:0 !important;
+  align-self:center !important;
+  justify-self:center !important;
+}
+
+/* Artist List */
+.artist-grid > .muuzee-savable-card--artist{
+  width:100%;
+  min-width:0;
+  text-align:center;
+}
+
+.artist-grid > .muuzee-savable-card--artist > .artist-card{
+  display:block;
+  width:100%;
+}
+
+.artist-grid > .muuzee-savable-card--artist > .muuzee-card-save{
+  top:8px !important;
+  right:max(0px,calc((100% - 132px) / 2 - 8px)) !important;
+}
+
+/* TOP Featured Artists */
+.artist-rail > .muuzee-savable-card--artist{
+  flex:0 0 150px;
+  width:150px;
+  min-width:0;
+  text-align:center;
+}
+
+.artist-rail > .muuzee-savable-card--artist > .artist{
+  display:block;
+  width:100%;
+  flex:none !important;
+}
+
+.artist-rail > .muuzee-savable-card--artist > .muuzee-card-save{
+  top:10px !important;
+  right:0 !important;
+}
+
+/* Exhibition List */
+.exhibition-list-card.muuzee-save-host{
+  position:relative !important;
+}
+
+/* Shared Exhibition Rails */
+.poster-rail > .muuzee-savable-card--exhibition{
+  --poster-card-width:190px;
+  --poster-card-width-mobile:150px;
+  flex:0 0 var(--poster-card-width);
+  width:var(--poster-card-width);
+  min-width:0;
+  scroll-snap-align:start;
+}
+
+.poster-rail > .muuzee-savable-card--exhibition:has(> .poster-card.is-landscape){
+  --poster-card-width:280px;
+  --poster-card-width-mobile:200px;
+}
+
+.poster-rail > .muuzee-savable-card--exhibition > .poster-card{
+  display:block;
+  width:100% !important;
+  flex:none !important;
+}
+
+/* Museum List */
+.museum-grid > .muuzee-savable-card--museum{
+  width:100%;
+  min-width:0;
+}
+
+.museum-grid > .muuzee-savable-card--museum > .museum-list-card{
+  display:block;
+  width:100%;
+}
+
+/* TOP Popular Museums */
+.popular-museum-rail > .muuzee-savable-card--museum{
+  flex:0 0 286px;
+  width:286px;
+  min-width:0;
+  scroll-snap-align:start;
+}
+
+.popular-museum-rail > .muuzee-savable-card--museum > .popular-museum-card{
+  display:block;
+  width:100%;
+  flex:none !important;
+}
+
+/* Related Artists */
+.related-artist-rail > .muuzee-savable-card--artist{
+  flex:0 0 112px;
+  width:112px;
+  min-width:0;
+  text-align:center;
+}
+
+.related-artist-rail > .muuzee-savable-card--artist > .related-artist{
+  display:block;
+  width:100%;
+  flex:none !important;
+}
+
+.related-artist-rail > .muuzee-savable-card--artist > .muuzee-card-save{
+  top:4px !important;
+  right:0 !important;
+}
+
+/* Museum Detail Artists */
+.museum-artist-rail > .muuzee-savable-card--artist{
+  flex:0 0 116px;
+  width:116px;
+  min-width:0;
+  text-align:center;
+  scroll-snap-align:start;
+}
+
+.museum-artist-rail > .muuzee-savable-card--artist > .museum-artist{
+  display:block;
+  width:100%;
+  flex:none !important;
+}
+
+.museum-artist-rail > .muuzee-savable-card--artist > .muuzee-card-save{
+  top:4px !important;
+  right:0 !important;
+}
+
+.museum-work.muuzee-save-host > .muuzee-card-save{
+  top:8px !important;
+  right:8px !important;
+}
+
+.museum-card.muuzee-save-host > .muuzee-card-save{
+  top:10px !important;
+  right:10px !important;
+}
+
+@media(max-width:720px){
+  .muuzee-savable-card > .muuzee-card-save,
+  .muuzee-save-host > .muuzee-card-save{
+    width:30px;
+    height:30px;
+    top:6px !important;
+    right:6px !important;
+  }
+
+  .muuzee-card-save svg{
+    width:14px;
+    height:14px;
+  }
+
+  .artist-grid > .muuzee-savable-card--artist > .muuzee-card-save{
+    top:5px !important;
+    right:max(0px,calc((100% - 96px) / 2 - 6px)) !important;
+  }
+
+  .artist-rail > .muuzee-savable-card--artist{
+    flex-basis:108px;
+    width:108px;
+  }
+
+  .artist-rail > .muuzee-savable-card--artist > .muuzee-card-save{
+    top:6px !important;
+    right:0 !important;
+  }
+
+  .poster-rail > .muuzee-savable-card--exhibition{
+    flex-basis:var(--poster-card-width-mobile);
+    width:var(--poster-card-width-mobile);
+  }
+
+  .popular-museum-rail > .muuzee-savable-card--museum{
+    flex-basis:min(74vw,260px);
+    width:min(74vw,260px);
+  }
+
+  .related-artist-rail > .muuzee-savable-card--artist{
+    flex-basis:100px;
+    width:100px;
+  }
+
+  .museum-artist-rail > .muuzee-savable-card--artist{
+    flex-basis:104px;
+    width:104px;
+  }
+}
+
+/* semantic-save-card-v2:end */

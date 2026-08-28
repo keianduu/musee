@@ -235,73 +235,39 @@
     control.title = saved ? "保存済み" : "保存";
   }
 
-  /* save-visual-host:start */
-  const visualSelectors = [
-    ".artist-avatar",
-    ".exhibition-card-image",
-    ".poster-stage",
-    ".popular-museum-image",
-    ".museum-list-image",
-    ".museum-thumb",
-    ".museum-work-image",
-    ".museum-artist-image",
-    ".related-artist-image"
-  ];
 
-  function directChildImage(host){
-    return [...host.children].find(child => child.tagName === "IMG") || null;
-  }
 
-  function ensureTopArtistVisual(host){
-    if(!host.matches(".artist-rail .artist")) return null;
+    function ensureCardWrapper(host,descriptor){
+    /*
+      Structural rule:
+      wrapper
+      - <a> detail link
+      - <button> save
 
-    const existing = host.querySelector(":scope > .muuzee-save-artist-visual");
-    if(existing) return existing;
+      Save must never be inserted inside <a>.
+    */
+    if(host.tagName !== "A"){
+      host.classList.add("muuzee-save-host");
+      return host;
+    }
 
-    const image = directChildImage(host);
-    if(!image) return null;
+    if(host.parentElement?.classList.contains("muuzee-savable-card")){
+      return host.parentElement;
+    }
 
-    const wrapper = document.createElement("span");
-    wrapper.className = "muuzee-save-artist-visual muuzee-save-visual-host";
+    const wrapper = document.createElement("div");
+    wrapper.className = `muuzee-savable-card muuzee-savable-card--${descriptor.type}`;
 
-    host.insertBefore(wrapper,image);
-    wrapper.appendChild(image);
+    host.parentNode.insertBefore(wrapper,host);
+    wrapper.appendChild(host);
 
     return wrapper;
   }
 
-  function visualHostFor(host){
-    const topArtistVisual = ensureTopArtistVisual(host);
-    if(topArtistVisual) return topArtistVisual;
-
-    for(const selector of visualSelectors){
-      const visual = host.querySelector(`:scope > ${selector}`) || host.querySelector(selector);
-      if(visual){
-        visual.classList.add("muuzee-save-visual-host");
-        return visual;
-      }
-    }
-
-    /* Fallback for a card whose image is directly inside the card. */
-    const image = directChildImage(host);
-    if(image){
-      const wrapper = document.createElement("span");
-      wrapper.className = "muuzee-save-direct-visual muuzee-save-visual-host";
-      host.insertBefore(wrapper,image);
-      wrapper.appendChild(image);
-      return wrapper;
-    }
-
-    host.classList.add("muuzee-save-visual-host");
-    return host;
-  }
-  /* save-visual-host:end */
-
   function createControl(host,descriptor){
-    const control = document.createElement("span");
+    const control = document.createElement("button");
     control.className = "muuzee-card-save";
-    control.setAttribute("role","button");
-    control.setAttribute("tabindex","0");
+    control.type = "button";
     control.dataset.muuzeeSaveType = descriptor.type;
     control.dataset.muuzeeSaveId = descriptor.id;
     if(descriptor.artist) control.dataset.muuzeeSaveArtist = descriptor.artist;
@@ -309,8 +275,7 @@
 
     syncControl(control,descriptor);
 
-    const toggle = event => {
-      event.preventDefault();
+    control.addEventListener("click",event => {
       event.stopPropagation();
 
       const nowSaved = togglePrimitive(descriptor.storageKey,descriptor.id);
@@ -319,18 +284,12 @@
       if(nowSaved){
         celebrateSave(control);
       }
-    };
-
-    control.addEventListener("click",toggle);
-    control.addEventListener("keydown",event => {
-      if(event.key !== "Enter" && event.key !== " ") return;
-      toggle(event);
     });
 
-    host.classList.add("muuzee-save-host");
+    host.classList.add("muuzee-save-enhanced");
 
-    const visualHost = visualHostFor(host);
-    visualHost.appendChild(control);
+    const wrapper = ensureCardWrapper(host,descriptor);
+    wrapper.appendChild(control);
   }
 
   function enhanceHost(host){
