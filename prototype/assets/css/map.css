@@ -629,10 +629,10 @@ body.map-page{
 
 /* popup-save-icon:end */
 
-/* popup-center-motion:start */
+/* safe-popup-centering:start */
 
 .muuzee-map-popup{
-  transition:opacity 160ms ease;
+  transition:opacity 150ms ease;
 }
 
 .muuzee-map-popup.is-positioning{
@@ -640,4 +640,4 @@ body.map-page{
   pointer-events:none !important;
 }
 
-/* popup-center-motion:end */
+/* safe-popup-centering:end */
