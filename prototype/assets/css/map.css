@@ -661,17 +661,19 @@ body.map-page{
 
 /* map-mode-toggle-width:start */
 
-/* Keep Exhibition / Museum labels on one line and give the toggle
-   a little more horizontal breathing room. */
+/* Keep labels on one line without letting the mode toggle collide
+   with Leaflet zoom controls on narrow screens. */
 .map-mode-bar{
-  width:276px;
-  min-width:276px;
+  width:clamp(164px,36vw,220px);
+  min-width:164px;
 }
 
 .map-mode-button{
   flex:1 1 0;
   min-width:0;
   justify-content:center;
+  gap:6px;
+  padding-inline:8px;
   white-space:nowrap;
 }
 
@@ -683,12 +685,13 @@ body.map-page{
 
 @media(max-width:720px){
   .map-mode-bar{
-    width:min(264px,calc(100vw - 84px));
-    min-width:0;
+    width:clamp(164px,46vw,210px);
+    min-width:164px;
   }
 
   .map-mode-button{
-    padding:0 10px;
+    gap:5px;
+    padding-inline:6px;
   }
 
   .map-mode-button span{
