@@ -546,3 +546,138 @@ body.is-hamburger-open{
 }
 
 /* hamburger-header-safe-area:end */
+
+/* hamburger-menu-groups:start */
+
+.muuzee-menu-notice-cta{
+  min-height:64px;
+  margin:0 0 20px;
+  padding:10px 13px;
+  display:grid;
+  grid-template-columns:38px minmax(0,1fr) 10px;
+  align-items:center;
+  gap:11px;
+  border:1px solid rgba(38,37,34,.11);
+  border-radius:16px;
+  background:var(--warm);
+  box-shadow:0 5px 16px rgba(38,37,34,.045);
+  color:var(--ink);
+}
+
+.muuzee-menu-notice-icon{
+  position:relative;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#fff;
+  box-shadow:0 2px 8px rgba(38,37,34,.055);
+}
+
+.muuzee-menu-notice-icon svg{
+  width:20px;
+  height:20px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.65;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.muuzee-menu-notice-icon .notice-dot{
+  right:4px;
+  top:3px;
+}
+
+.muuzee-menu-notice-copy{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+
+.muuzee-menu-notice-copy strong{
+  font-size:13px;
+  line-height:1.35;
+  font-weight:650;
+}
+
+.muuzee-menu-notice-copy small{
+  overflow:hidden;
+  color:var(--muted2);
+  font-size:9px;
+  line-height:1.35;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.muuzee-menu-notice-arrow{
+  width:7px;
+  height:7px;
+  border-top:1.4px solid currentColor;
+  border-right:1.4px solid currentColor;
+  transform:rotate(45deg);
+  opacity:.42;
+}
+
+.muuzee-menu-link.is-auth{
+  position:relative;
+  min-height:48px;
+  padding:0 12px 0 16px;
+  border-bottom:1px solid rgba(185,111,85,.11);
+  background:linear-gradient(
+    90deg,
+    rgba(185,111,85,.075),
+    rgba(247,245,241,.46)
+  );
+}
+
+.muuzee-menu-link.is-auth::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:8px;
+  bottom:8px;
+  width:4px;
+  border-radius:99px;
+  background:var(--terra);
+}
+
+.muuzee-menu-link.is-auth-first{
+  margin-top:18px;
+  border-top:1px solid rgba(185,111,85,.11);
+  border-radius:8px 8px 0 0;
+}
+
+.muuzee-menu-link.is-auth:hover,
+.muuzee-menu-link.is-auth.is-current{
+  color:var(--terra);
+  background:linear-gradient(
+    90deg,
+    rgba(185,111,85,.12),
+    rgba(247,245,241,.62)
+  );
+}
+
+@media(max-width:720px){
+  .muuzee-menu-notice-cta{
+    min-height:60px;
+    margin-bottom:16px;
+    padding:9px 11px;
+    grid-template-columns:36px minmax(0,1fr) 9px;
+    border-radius:14px;
+  }
+
+  .muuzee-menu-notice-icon{
+    width:36px;
+    height:36px;
+  }
+
+  .muuzee-menu-link.is-auth{
+    min-height:46px;
+    padding-left:14px;
+  }
+}
+
+/* hamburger-menu-groups:end */

@@ -54,15 +54,22 @@
     if(!header || !actions) return;
     if(actions.querySelector("[data-muuzee-menu-toggle]")) return;
 
+    /* Notice lives in the Drawer, not in the Header. */
+    header
+      .querySelector('button[aria-label="お知らせ"], a[aria-label="お知らせ"]')
+      ?.remove();
+
     const menuItems = [
       {label:"ホーム",href:"./index.html"},
       {label:"展示会を探す",href:"./exhibitions.html"},
       {label:"アーティストを探す",href:"./artists.html"},
       {label:"美術館を探す",href:"./museums.html"},
       {label:"地図から探す",href:"./map.html"},
-      {label:"マイページ",href:"./my-art.html"},
-      {label:"保存",href:"./saved.html"},
-      {label:"ArtWall",href:"./my-art.html#artwall"},
+
+      {label:"マイページ",href:"./my-art.html",auth:true,authFirst:true},
+      {label:"保存",href:"./saved.html",auth:true},
+      {label:"ArtWall",href:"./my-art.html#artwall",auth:true},
+
       {label:"免責事項",href:"./disclaimer.html",secondary:true,secondaryFirst:true},
       {label:"プライバシーポリシー",href:"./privacy-policy.html",secondary:true},
       {label:"お問い合わせ",href:"./contact.html",secondary:true}
@@ -93,6 +100,23 @@
     drawer.id = "muuzee-hamburger-drawer";
     drawer.setAttribute("aria-hidden","true");
 
+    const noticeCta = document.createElement("a");
+    noticeCta.className = "muuzee-menu-notice-cta";
+    noticeCta.href = "./notifications.html";
+    noticeCta.innerHTML = `
+      <span class="muuzee-menu-notice-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"></path>
+        </svg>
+        <i class="notice-dot"></i>
+      </span>
+      <span class="muuzee-menu-notice-copy">
+        <strong>お知らせ</strong>
+        <small>最新のお知らせを確認</small>
+      </span>
+      <span class="muuzee-menu-notice-arrow" aria-hidden="true"></span>
+    `;
+
     const nav = document.createElement("nav");
     nav.className = "muuzee-menu-nav";
     nav.setAttribute("aria-label","Menu navigation");
@@ -107,13 +131,10 @@
       link.href = item.href;
       link.textContent = item.label;
 
-      if(item.secondary){
-        link.classList.add("is-secondary");
-      }
-
-      if(item.secondaryFirst){
-        link.classList.add("is-secondary-first");
-      }
+      if(item.auth) link.classList.add("is-auth");
+      if(item.authFirst) link.classList.add("is-auth-first");
+      if(item.secondary) link.classList.add("is-secondary");
+      if(item.secondaryFirst) link.classList.add("is-secondary-first");
 
       const hrefPath =
         item.href
@@ -131,7 +152,7 @@
       nav.appendChild(link);
     });
 
-    drawer.appendChild(nav);
+    drawer.append(noticeCta,nav);
     document.body.append(scrim,drawer);
 
     let open = false;
@@ -149,31 +170,22 @@
 
       if(open){
         window.requestAnimationFrame(() => {
-          drawer.querySelector("a")?.focus({preventScroll:true});
+          noticeCta.focus({preventScroll:true});
         });
       }else{
         toggle.focus({preventScroll:true});
       }
     }
 
-    toggle.addEventListener("click",() => {
-      setOpen(!open);
-    });
-
-    scrim.addEventListener("click",() => {
-      setOpen(false);
-    });
+    toggle.addEventListener("click",() => setOpen(!open));
+    scrim.addEventListener("click",() => setOpen(false));
 
     drawer.addEventListener("click",event => {
-      if(event.target.closest("a")){
-        setOpen(false);
-      }
+      if(event.target.closest("a")) setOpen(false);
     });
 
     document.addEventListener("keydown",event => {
-      if(event.key === "Escape" && open){
-        setOpen(false);
-      }
+      if(event.key === "Escape" && open) setOpen(false);
     });
   }
   /* hamburger-navigation:end */
