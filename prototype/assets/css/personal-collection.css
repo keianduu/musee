@@ -49,7 +49,7 @@
 .collection-tab em{
   font-style:normal;
   color:var(--muted2);
-  font-size:9px;
+  font-size:10px;
 }
 
 .collection-tab.is-active{
@@ -118,13 +118,13 @@
 .collection-empty h3{
   margin:0 0 7px;
   color:var(--ink);
-  font-size:13px;
+  font-size:14px;
   font-weight:620;
 }
 
 .collection-empty p{
   margin:0;
-  font-size:11px;
+  font-size:12px;
   line-height:1.7;
 }
 
@@ -183,14 +183,14 @@
   display:block;
   margin-bottom:9px;
   color:var(--muted2);
-  font-size:9px;
+  font-size:10px;
   letter-spacing:.09em;
   text-transform:uppercase;
 }
 
 .save-confirm-dialog h2{
   margin:0 0 10px;
-  font-size:18px;
+  font-size:22px;
   line-height:1.4;
   font-weight:620;
 }
@@ -198,7 +198,7 @@
 .save-confirm-dialog p{
   margin:0;
   color:var(--muted);
-  font-size:11px;
+  font-size:12px;
   line-height:1.7;
 }
 
@@ -298,7 +298,7 @@
   }
 
   .collection-tab em{
-    font-size:8px;
+    font-size:10px;
   }
 }
 
@@ -359,7 +359,7 @@
 }
 
 .collection-tabs.is-pill-buttons .collection-tab em{
-  font-size:9px;
+  font-size:10px;
   line-height:1;
   font-style:normal;
   color:var(--muted2);
@@ -397,11 +397,11 @@
   }
 
   .collection-tabs.is-pill-buttons .collection-tab span{
-    font-size:11px;
+    font-size:12px;
   }
 
   .collection-tabs.is-pill-buttons .collection-tab em{
-    font-size:8px;
+    font-size:10px;
   }
 }
 

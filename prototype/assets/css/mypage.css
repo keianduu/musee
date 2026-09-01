@@ -105,7 +105,7 @@
   justify-content:center;
   gap:8px;
   color:var(--muted);
-  font-size:11px;
+  font-size:12px;
 }
 
 .mypage-primary-nav-item::after{
@@ -267,7 +267,7 @@
 .mypage-section-more{
   flex:0 0 auto;
   color:var(--muted);
-  font-size:11px;
+  font-size:12px;
   white-space:nowrap;
 }
 
@@ -370,7 +370,7 @@
   text-overflow:ellipsis;
   white-space:nowrap;
   color:var(--muted2);
-  font-size:9px;
+  font-size:10px;
 }
 
 .mypage-preview-card strong{
@@ -412,7 +412,7 @@
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
-  font-size:11px;
+  font-size:12px;
   font-weight:620;
 }
 
@@ -420,7 +420,7 @@
   display:block;
   margin-top:3px;
   color:var(--muted2);
-  font-size:9px;
+  font-size:10px;
 }
 
 .mypage-group-card{
@@ -438,13 +438,13 @@
 .mypage-group-card small{
   margin-bottom:auto;
   color:var(--muted2);
-  font-size:9px;
+  font-size:10px;
   letter-spacing:.06em;
   text-transform:uppercase;
 }
 
 .mypage-group-card strong{
-  font-size:13px;
+  font-size:14px;
   line-height:1.45;
   font-weight:620;
 }
@@ -452,7 +452,7 @@
 .mypage-group-card span{
   margin-top:5px;
   color:var(--muted);
-  font-size:9px;
+  font-size:10px;
 }
 
 .mypage-empty-preview{
@@ -505,13 +505,13 @@
   }
 
   .mypage-profile-person strong{
-    font-size:13px;
+    font-size:14px;
   }
 
   .mypage-profile-settings{
     min-height:34px;
     padding:0 10px;
-    font-size:9px;
+    font-size:10px;
   }
 
   .mypage-primary-nav{
@@ -557,7 +557,7 @@
   }
 
   .mypage-section-title h2{
-    font-size:20px;
+    font-size:22px;
   }
 
   .mypage-section-more{
@@ -571,7 +571,7 @@
   .mypage-artwall-action{
     min-height:32px;
     padding:0 9px;
-    font-size:9px;
+    font-size:10px;
   }
 
   
@@ -692,7 +692,7 @@
   .mypage-artwall-action{
     min-height:32px;
     padding:0 9px;
-    font-size:9px;
+    font-size:10px;
   }
 
   .mypage-artwall-action svg{
@@ -788,7 +788,7 @@
 }
 
 .mypage-schedule-month strong{
-  font-size:18px;
+  font-size:14px;
   line-height:1;
   font-weight:620;
 }
@@ -812,7 +812,7 @@
 
 .mypage-schedule-date{
   color:var(--muted);
-  font-size:11px;
+  font-size:12px;
   line-height:1.45;
   letter-spacing:.01em;
 }
@@ -827,7 +827,7 @@
 .mypage-schedule-title{
   margin:0 0 8px;
   color:var(--ink);
-  font-size:15px;
+  font-size:14px;
   line-height:1.5;
   font-weight:620;
   letter-spacing:-.025em;
@@ -875,7 +875,7 @@
   display:flex;
   align-items:center;
   color:var(--muted2);
-  font-size:11px;
+  font-size:12px;
   line-height:1.6;
 }
 
@@ -889,7 +889,7 @@
   }
 
   .mypage-schedule-head .mypage-section-title h2{
-    font-size:18px;
+    font-size:22px;
   }
 
   .mypage-schedule-month{
@@ -899,11 +899,11 @@
   }
 
   .mypage-schedule-month small{
-    font-size:9px;
+    font-size:10px;
   }
 
   .mypage-schedule-month strong{
-    font-size:15px;
+    font-size:14px;
   }
 
   .mypage-schedule-item{
@@ -914,17 +914,17 @@
   }
 
   .mypage-schedule-date{
-    font-size:9px;
+    font-size:10px;
   }
 
   .mypage-schedule-title{
     margin-bottom:7px;
-    font-size:13px;
+    font-size:14px;
   }
 
   .mypage-schedule-venue,
   .mypage-schedule-status{
-    font-size:9px;
+    font-size:10px;
   }
 }
 
@@ -980,7 +980,7 @@
   }
 
   .mypage-schedule-head .mypage-section-title h2{
-    font-size:18px;
+    font-size:22px;
     line-height:1.35;
   }
 
@@ -995,7 +995,7 @@
   }
 
   .mypage-schedule-head .mypage-section-title h2{
-    font-size:17px;
+    font-size:22px;
   }
 
   .mypage-schedule-head .muuzee-section-cta{
@@ -1057,7 +1057,7 @@
   }
 
   .mypage-schedule-head .mypage-section-title h2{
-    font-size:18px;
+    font-size:22px;
     line-height:1.35;
   }
 
@@ -1074,7 +1074,7 @@
   }
 
   .mypage-schedule-head .mypage-section-title h2{
-    font-size:17px;
+    font-size:22px;
   }
 
   .mypage-schedule-head .mypage-section-more.muuzee-section-cta{
@@ -1141,7 +1141,7 @@
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  font-size:11px;
+  font-size:12px;
   font-weight:600;
   white-space:nowrap;
 }
@@ -1189,7 +1189,7 @@
   gap:5px;
   background:rgba(255,255,255,.94);
   color:var(--ink);
-  font-size:9px;
+  font-size:10px;
   line-height:1;
   font-weight:620;
 }
@@ -1203,7 +1203,7 @@
 .mypage-group-card.is-rich .mypage-group-body strong{
   display:block;
   margin:0;
-  font-size:13px;
+  font-size:14px;
   line-height:1.4;
   font-weight:650;
 }
@@ -1211,7 +1211,7 @@
   display:block;
   margin-top:3px;
   color:var(--muted2);
-  font-size:9px;
+  font-size:10px;
 }
 .mypage-group-members{
   margin-top:11px;
@@ -1237,7 +1237,7 @@
   align-items:center;
   justify-content:center;
   color:var(--ink);
-  font-size:13px;
+  font-size:14px;
   line-height:1;
   font-weight:650;
 }
@@ -1253,7 +1253,7 @@
     width:42px !important;
     height:42px !important;
   }
-  .mypage-preview-person strong{font-size:9px}
+  .mypage-preview-person strong{font-size:10px}
   .mypage-friend-status{
     right:-1px;
     bottom:0;
@@ -1285,7 +1285,7 @@
     top:8px;
     min-height:23px;
     padding-inline:8px;
-    font-size:8px;
+    font-size:10px;
   }
 }
 /* mypage-friends-groups-final:end */

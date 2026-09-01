@@ -15,7 +15,7 @@
   stroke-linecap:round;stroke-linejoin:round
 }
 .muuzee-personal-action span{
-  font-size:11px;line-height:1;font-weight:560
+  font-size:12px;line-height:1;font-weight:560
 }
 .muuzee-personal-action.is-active{
   border-color:rgba(185,111,85,.30);background:#fff;color:var(--terra)
@@ -32,7 +32,7 @@
 .muuzee-personal-action--compact svg{
   width:13px;height:13px;flex-basis:13px
 }
-.muuzee-personal-action--compact span{font-size:9px}
+.muuzee-personal-action--compact span{font-size:10px}
 @media(max-width:720px){
   .muuzee-detail-actions{margin-top:18px;gap:7px}
   .muuzee-personal-action{

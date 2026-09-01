@@ -7,7 +7,7 @@
 <meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
 <title>Muuzee — Global Design Guide</title>
 
-<link href="./assets/css/muuzee-global.css?v=20260901-04" rel="stylesheet"/><link href="./assets/css/design-guide.css?v=20260828-06" rel="stylesheet"/><link rel="stylesheet" href="./assets/css/muuzee-save-control.css?v=20260828-24">
+<link href="./assets/css/muuzee-global.css?v=20260902-02" rel="stylesheet"/><link href="./assets/css/design-guide.css?v=20260828-06" rel="stylesheet"/><link rel="stylesheet" href="./assets/css/muuzee-save-control.css?v=20260828-24">
 </head>
 <body class="design-guide-page">
 <header class="guide-header">
@@ -382,6 +382,12 @@ Breakpoints: 980px / 720px</pre></div>
   <p>展覧会・美術館などのDetailではSave / Seenを共通Personal Actionとして扱い、muuzee-personal-actions.css / jsを利用する。Seenはmuuzee:seen-itemsへ記録する。Section Title右側の「すべて見る →」「詳細検索 →」「保存を見る →」「一覧を見る →」等はmuuzee-section-ctaを共通利用し、TOP CTAと同じInk Pill / White Text / 12pxで統一する。</p>
 </div>
 <!-- personal-actions-and-section-cta:end -->
+<!-- typography-implementation-guard:start -->
+<div class="global-rule">
+  <strong>Typography implementation guard</strong>
+  <p>新規・変更UIの本文系font-sizeはPrimary 14px / Secondary 12px / Tertiary 10pxを使用する。見出しはGuide定義の22px / 24px / 28px、Hero Displayは明示されたpage-specific値のみを使用する。実装時はscripts/audit_design_guide_fonts.pyでprototype全体を監査し、新しいGuide外font-sizeを追加しない。</p>
+</div>
+<!-- typography-implementation-guard:end -->
 </main>
 <script id="muuzee-design-tokens" type="application/json">
 {
