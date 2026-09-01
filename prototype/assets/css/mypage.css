@@ -747,10 +747,6 @@
   margin-bottom:28px;
 }
 
-.mypage-schedule-head .mypage-section-more{
-  padding-bottom:3px;
-}
-
 .mypage-schedule-months{
   width:100%;
   display:grid;
@@ -1008,3 +1004,82 @@
 }
 
 /* schedule-head-layout-fix:end */
+
+/* saved-calendar-head-alignment:start */
+
+/*
+  Schedule heading has a two-line title block (eyebrow + h2).
+  Center the CTA against that block, while keeping the CTA's own
+  text mathematically centered inside its pill.
+*/
+.mypage-section-head.mypage-schedule-head{
+  display:flex;
+  align-items:center !important;
+  justify-content:space-between;
+  gap:18px;
+}
+
+.mypage-schedule-head .mypage-section-title{
+  min-width:0;
+  flex:1 1 auto;
+}
+
+.mypage-schedule-head .mypage-section-title h2{
+  margin:0;
+  min-width:0;
+  display:block;
+  font-size:22px;
+  line-height:1.3;
+  white-space:normal;
+}
+
+/*
+  Override .mypage-section-more and the shared CTA only where needed:
+  no asymmetric bottom padding, no baseline alignment.
+*/
+.mypage-schedule-head .mypage-section-more.muuzee-section-cta{
+  flex:0 0 auto;
+  align-self:center !important;
+  min-height:38px;
+  height:38px;
+  margin:0 !important;
+  padding:0 15px !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  line-height:1 !important;
+  white-space:nowrap;
+}
+
+@media(max-width:720px){
+  .mypage-section-head.mypage-schedule-head{
+    gap:12px;
+  }
+
+  .mypage-schedule-head .mypage-section-title h2{
+    font-size:18px;
+    line-height:1.35;
+  }
+
+  .mypage-schedule-head .mypage-section-more.muuzee-section-cta{
+    min-height:36px;
+    height:36px;
+    padding:0 12px !important;
+  }
+}
+
+@media(max-width:420px){
+  .mypage-section-head.mypage-schedule-head{
+    gap:9px;
+  }
+
+  .mypage-schedule-head .mypage-section-title h2{
+    font-size:17px;
+  }
+
+  .mypage-schedule-head .mypage-section-more.muuzee-section-cta{
+    padding:0 10px !important;
+  }
+}
+
+/* saved-calendar-head-alignment:end */
