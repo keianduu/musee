@@ -944,3 +944,67 @@
   .mypage-schedule-row-actions{gap:8px}
 }
 /* schedule-personal-action:end */
+
+/* schedule-head-layout-fix:start */
+
+/*
+  Schedule header has a longer title than other MyPage sections.
+  Give title and section CTA explicit columns so neither crushes the other.
+*/
+.mypage-schedule-head{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:end !important;
+  gap:18px;
+}
+
+.mypage-schedule-head .mypage-section-title{
+  min-width:0;
+}
+
+.mypage-schedule-head .mypage-section-title h2{
+  display:block;
+  min-width:0;
+  margin:0;
+  font-size:22px;
+  line-height:1.3;
+  white-space:normal;
+}
+
+.mypage-schedule-head .muuzee-section-cta{
+  align-self:end;
+  margin:0;
+}
+
+@media(max-width:720px){
+  .mypage-schedule-head{
+    grid-template-columns:minmax(0,1fr) auto;
+    align-items:center !important;
+    gap:12px;
+  }
+
+  .mypage-schedule-head .mypage-section-title h2{
+    font-size:18px;
+    line-height:1.35;
+  }
+
+  .mypage-schedule-head .muuzee-section-cta{
+    padding-inline:11px;
+  }
+}
+
+@media(max-width:420px){
+  .mypage-schedule-head{
+    gap:9px;
+  }
+
+  .mypage-schedule-head .mypage-section-title h2{
+    font-size:17px;
+  }
+
+  .mypage-schedule-head .muuzee-section-cta{
+    padding-inline:10px;
+  }
+}
+
+/* schedule-head-layout-fix:end */
