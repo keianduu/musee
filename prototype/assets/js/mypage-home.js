@@ -342,21 +342,68 @@
 
   const friendRail = document.querySelector("[data-preview-friends]");
   if(friendRail){
+    /*
+      Prototype activity status:
+      recent  = accessed within 7 days
+      warm    = accessed within 6 months
+      dormant = no access within 6 months
+    */
     const demo = [
-      ["Mina","Art & Architecture"],
-      ["Ryo","Contemporary"],
-      ["Nao","Impressionism"],
-      ["Saki","Photography"],
-      ["Jun","Design"]
+      {name:"Mina",lastActiveDays:2},
+      {name:"Ryo",lastActiveDays:5},
+      {name:"Nao",lastActiveDays:42},
+      {name:"Saki",lastActiveDays:118},
+      {name:"Jun",lastActiveDays:248}
     ];
 
-    friendRail.innerHTML = demo.map(([name,interest],index) => `
-      <a class="mypage-preview-person" href="./friends.html">
-        <img src="./assets/images/profile-avatar.jpg" alt="${esc(name)}" loading="lazy" style="object-position:${50 + (index%2)*4}% 42%">
-        <strong>${esc(name)}</strong>
-        <span>${esc(interest)}</span>
-      </a>
-    `).join("");
+    const activityState = days => {
+      if(days <= 7){
+        return {
+          className:"is-recent",
+          label:"直近1週間以内にアクセス"
+        };
+      }
+
+      if(days <= 183){
+        return {
+          className:"is-warm",
+          label:"半年以内にアクセス"
+        };
+      }
+
+      return {
+        className:"is-dormant",
+        label:"半年以内のアクセスなし"
+      };
+    };
+
+    friendRail.innerHTML = demo.map((friend,index) => {
+      const activity = activityState(friend.lastActiveDays);
+
+      return `
+        <a
+          class="mypage-preview-person"
+          href="./friends.html"
+          aria-label="${esc(friend.name)}"
+        >
+          <div class="mypage-friend-avatar">
+            <img
+              src="./assets/images/profile-avatar.jpg"
+              alt="${esc(friend.name)}"
+              loading="lazy"
+              style="object-position:${50 + (index % 2) * 4}% 42%"
+            >
+            <i
+              class="mypage-friend-status ${activity.className}"
+              aria-label="${esc(activity.label)}"
+              title="${esc(activity.label)}"
+            ></i>
+          </div>
+
+          <strong>${esc(friend.name)}</strong>
+        </a>
+      `;
+    }).join("");
   }
 
   const groupRail = document.querySelector("[data-preview-groups]");

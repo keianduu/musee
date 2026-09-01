@@ -1083,3 +1083,96 @@
 }
 
 /* saved-calendar-head-alignment:end */
+
+/* mypage-friend-compact:start */
+
+/* Friend avatar matches the MyPage profile-icon scale. */
+.mypage-preview-person{
+  flex:0 0 76px;
+  width:76px;
+  min-width:0;
+  text-align:center;
+}
+
+.mypage-preview-person .mypage-friend-avatar{
+  position:relative;
+  width:52px;
+  height:52px;
+  margin:0 auto 8px;
+  display:block;
+}
+
+.mypage-preview-person .mypage-friend-avatar img{
+  display:block;
+  width:52px !important;
+  height:52px !important;
+  margin:0 !important;
+  border-radius:50%;
+  object-fit:cover;
+  background:var(--warm);
+}
+
+.mypage-preview-person strong{
+  display:block;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:10px;
+  line-height:1.35;
+  font-weight:620;
+}
+
+.mypage-friend-status{
+  position:absolute;
+  right:-1px;
+  bottom:1px;
+  width:11px;
+  height:11px;
+  border:2px solid #fff;
+  border-radius:50%;
+  display:block;
+  box-sizing:border-box;
+}
+
+.mypage-friend-status.is-recent{
+  background:#62a66e;
+}
+
+.mypage-friend-status.is-warm{
+  background:#d6ae55;
+}
+
+.mypage-friend-status.is-dormant{
+  background:#aaa7a1;
+}
+
+@media(max-width:720px){
+  .mypage-preview-person{
+    flex-basis:66px;
+    width:66px;
+  }
+
+  .mypage-preview-person .mypage-friend-avatar{
+    width:42px;
+    height:42px;
+    margin:0 auto 7px;
+  }
+
+  .mypage-preview-person .mypage-friend-avatar img{
+    width:42px !important;
+    height:42px !important;
+  }
+
+  .mypage-preview-person strong{
+    font-size:9px;
+  }
+
+  .mypage-friend-status{
+    right:-1px;
+    bottom:0;
+    width:10px;
+    height:10px;
+  }
+}
+
+/* mypage-friend-compact:end */
