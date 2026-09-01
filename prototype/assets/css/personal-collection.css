@@ -303,3 +303,107 @@
 }
 
 /* fixed-personal-tabs:end */
+
+/* saved-category-buttons:start */
+
+/*
+  Saved page only:
+  fixed collection categories are presented as pill buttons rather than
+  underline tabs. Seen / Favorites keep their existing navigation UI.
+*/
+.saved-page .collection-tabs{
+  width:auto !important;
+  max-width:100%;
+  margin-bottom:32px;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:10px !important;
+  overflow:visible !important;
+  border-bottom:0 !important;
+}
+
+.saved-page .collection-tab{
+  position:relative;
+  flex:0 0 auto !important;
+  width:auto !important;
+  min-width:0 !important;
+  min-height:44px;
+  padding:0 17px !important;
+  border:1px solid var(--line) !important;
+  border-radius:999px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  background:#fff !important;
+  color:var(--muted);
+  white-space:nowrap;
+  cursor:pointer;
+  transition:
+    background-color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.saved-page .collection-tab::after{
+  display:none !important;
+}
+
+.saved-page .collection-tab span{
+  font-size:12px;
+  line-height:1;
+  font-weight:560;
+  white-space:nowrap;
+  word-break:keep-all;
+}
+
+.saved-page .collection-tab em{
+  font-size:9px;
+  line-height:1;
+  font-style:normal;
+  color:var(--muted2);
+}
+
+.saved-page .collection-tab:hover{
+  border-color:rgba(38,37,34,.22) !important;
+  color:var(--ink);
+}
+
+.saved-page .collection-tab.is-active{
+  border-color:var(--ink) !important;
+  background:var(--ink) !important;
+  color:#fff !important;
+}
+
+.saved-page .collection-tab.is-active em{
+  color:rgba(255,255,255,.68);
+}
+
+.saved-page .collection-tab:focus-visible{
+  outline:2px solid var(--terra);
+  outline-offset:2px;
+}
+
+@media(max-width:720px){
+  .saved-page .collection-tabs{
+    gap:8px !important;
+    margin-bottom:26px;
+  }
+
+  .saved-page .collection-tab{
+    min-height:40px;
+    padding:0 13px !important;
+  }
+
+  .saved-page .collection-tab span{
+    font-size:11px;
+  }
+
+  .saved-page .collection-tab em{
+    font-size:8px;
+  }
+}
+
+/* saved-category-buttons:end */
