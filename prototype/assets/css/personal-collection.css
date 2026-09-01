@@ -304,14 +304,14 @@
 
 /* fixed-personal-tabs:end */
 
-/* saved-category-buttons:start */
+/* personal-category-pill-buttons:start */
 
 /*
-  Saved page only:
-  fixed collection categories are presented as pill buttons rather than
-  underline tabs. Seen / Favorites keep their existing navigation UI.
+  Saved / Seen / Favorites category selector.
+  Categories are fixed sets, but buttons keep content-based widths
+  rather than stretching across the full row.
 */
-.saved-page .collection-tabs{
+.collection-tabs.is-pill-buttons{
   width:auto !important;
   max-width:100%;
   margin-bottom:32px;
@@ -323,7 +323,7 @@
   border-bottom:0 !important;
 }
 
-.saved-page .collection-tab{
+.collection-tabs.is-pill-buttons .collection-tab{
   position:relative;
   flex:0 0 auto !important;
   width:auto !important;
@@ -343,15 +343,14 @@
   transition:
     background-color var(--motion-fast) ease,
     border-color var(--motion-fast) ease,
-    color var(--motion-fast) ease,
-    transform var(--motion-fast) ease;
+    color var(--motion-fast) ease;
 }
 
-.saved-page .collection-tab::after{
+.collection-tabs.is-pill-buttons .collection-tab::after{
   display:none !important;
 }
 
-.saved-page .collection-tab span{
+.collection-tabs.is-pill-buttons .collection-tab span{
   font-size:12px;
   line-height:1;
   font-weight:560;
@@ -359,51 +358,51 @@
   word-break:keep-all;
 }
 
-.saved-page .collection-tab em{
+.collection-tabs.is-pill-buttons .collection-tab em{
   font-size:9px;
   line-height:1;
   font-style:normal;
   color:var(--muted2);
 }
 
-.saved-page .collection-tab:hover{
+.collection-tabs.is-pill-buttons .collection-tab:hover{
   border-color:rgba(38,37,34,.22) !important;
   color:var(--ink);
 }
 
-.saved-page .collection-tab.is-active{
+.collection-tabs.is-pill-buttons .collection-tab.is-active{
   border-color:var(--ink) !important;
   background:var(--ink) !important;
   color:#fff !important;
 }
 
-.saved-page .collection-tab.is-active em{
+.collection-tabs.is-pill-buttons .collection-tab.is-active em{
   color:rgba(255,255,255,.68);
 }
 
-.saved-page .collection-tab:focus-visible{
+.collection-tabs.is-pill-buttons .collection-tab:focus-visible{
   outline:2px solid var(--terra);
   outline-offset:2px;
 }
 
 @media(max-width:720px){
-  .saved-page .collection-tabs{
+  .collection-tabs.is-pill-buttons{
     gap:8px !important;
     margin-bottom:26px;
   }
 
-  .saved-page .collection-tab{
+  .collection-tabs.is-pill-buttons .collection-tab{
     min-height:40px;
     padding:0 13px !important;
   }
 
-  .saved-page .collection-tab span{
+  .collection-tabs.is-pill-buttons .collection-tab span{
     font-size:11px;
   }
 
-  .saved-page .collection-tab em{
+  .collection-tabs.is-pill-buttons .collection-tab em{
     font-size:8px;
   }
 }
 
-/* saved-category-buttons:end */
+/* personal-category-pill-buttons:end */
