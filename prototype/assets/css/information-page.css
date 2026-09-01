@@ -1,0 +1,70 @@
+/* Prototype information pages */
+.information-page{
+  min-height:100vh;
+  background:var(--warm);
+}
+
+.information-page .site-header{
+  background:rgba(255,255,255,.96);
+  color:var(--ink);
+  border-bottom:1px solid rgba(38,37,34,.07);
+  box-shadow:0 5px 18px rgba(38,37,34,.045);
+  text-shadow:none;
+}
+
+.information-page .site-header .logo{
+  color:var(--ink);
+}
+
+.information-page .site-header .icon-button{
+  color:var(--ink);
+  background:rgba(38,37,34,.045);
+}
+
+.information-page-main{
+  min-height:calc(100vh - 92px);
+  padding:148px 0 100px;
+}
+
+.information-page-card{
+  max-width:760px;
+  padding:42px 44px;
+  border-radius:24px;
+  background:#fff;
+}
+
+.information-page-card small{
+  color:var(--muted2);
+  font-size:10px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.information-page-card h1{
+  margin:10px 0 18px;
+  font-size:28px;
+  line-height:1.35;
+  letter-spacing:-.035em;
+}
+
+.information-page-card p{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.9;
+}
+
+@media(max-width:720px){
+  .information-page-main{
+    padding:104px 0 72px;
+  }
+
+  .information-page-card{
+    padding:30px 24px;
+    border-radius:20px;
+  }
+
+  .information-page-card h1{
+    font-size:22px;
+  }
+}

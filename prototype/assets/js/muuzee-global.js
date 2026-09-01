@@ -46,6 +46,138 @@
     window.addEventListener("resize", requestUpdate);
   }
 
+  /* hamburger-navigation:start */
+  function initHamburgerNavigation(){
+    const header = document.querySelector(".site-header");
+    const actions = header?.querySelector(".header-actions");
+
+    if(!header || !actions) return;
+    if(actions.querySelector("[data-muuzee-menu-toggle]")) return;
+
+    const menuItems = [
+      {label:"ホーム",href:"./index.html"},
+      {label:"展示会を探す",href:"./exhibitions.html"},
+      {label:"アーティストを探す",href:"./artists.html"},
+      {label:"美術館を探す",href:"./museums.html"},
+      {label:"地図から探す",href:"./map.html"},
+      {label:"マイページ",href:"./my-art.html"},
+      {label:"保存",href:"./saved.html"},
+      {label:"ArtWall",href:"./my-art.html#artwall"},
+      {label:"免責事項",href:"./disclaimer.html",secondary:true,secondaryFirst:true},
+      {label:"プライバシーポリシー",href:"./privacy-policy.html",secondary:true},
+      {label:"お問い合わせ",href:"./contact.html",secondary:true}
+    ];
+
+    const toggle = document.createElement("button");
+    toggle.className = "icon-button muuzee-menu-toggle";
+    toggle.type = "button";
+    toggle.setAttribute("aria-label","メニュー");
+    toggle.setAttribute("aria-expanded","false");
+    toggle.setAttribute("aria-controls","muuzee-hamburger-drawer");
+    toggle.dataset.muuzeeMenuToggle = "";
+    toggle.innerHTML = `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 7h14M5 12h14M5 17h14"></path>
+      </svg>
+    `;
+    actions.appendChild(toggle);
+
+    const scrim = document.createElement("button");
+    scrim.className = "muuzee-menu-scrim";
+    scrim.type = "button";
+    scrim.setAttribute("aria-label","メニューを閉じる");
+    scrim.tabIndex = -1;
+
+    const drawer = document.createElement("aside");
+    drawer.className = "muuzee-menu-drawer";
+    drawer.id = "muuzee-hamburger-drawer";
+    drawer.setAttribute("aria-hidden","true");
+
+    const nav = document.createElement("nav");
+    nav.className = "muuzee-menu-nav";
+    nav.setAttribute("aria-label","Menu navigation");
+
+    const currentPath =
+      location.pathname.split("/").pop()
+      || "index.html";
+
+    menuItems.forEach(item => {
+      const link = document.createElement("a");
+      link.className = "muuzee-menu-link";
+      link.href = item.href;
+      link.textContent = item.label;
+
+      if(item.secondary){
+        link.classList.add("is-secondary");
+      }
+
+      if(item.secondaryFirst){
+        link.classList.add("is-secondary-first");
+      }
+
+      const hrefPath =
+        item.href
+          .split("#")[0]
+          .replace("./","");
+
+      if(
+        hrefPath === currentPath
+        && !item.href.includes("#")
+      ){
+        link.classList.add("is-current");
+        link.setAttribute("aria-current","page");
+      }
+
+      nav.appendChild(link);
+    });
+
+    drawer.appendChild(nav);
+    document.body.append(scrim,drawer);
+
+    let open = false;
+
+    function setOpen(next){
+      open = Boolean(next);
+
+      toggle.setAttribute("aria-expanded",String(open));
+      drawer.setAttribute("aria-hidden",String(!open));
+
+      header.classList.toggle("is-menu-open",open);
+      scrim.classList.toggle("is-open",open);
+      drawer.classList.toggle("is-open",open);
+      document.body.classList.toggle("is-hamburger-open",open);
+
+      if(open){
+        window.requestAnimationFrame(() => {
+          drawer.querySelector("a")?.focus({preventScroll:true});
+        });
+      }else{
+        toggle.focus({preventScroll:true});
+      }
+    }
+
+    toggle.addEventListener("click",() => {
+      setOpen(!open);
+    });
+
+    scrim.addEventListener("click",() => {
+      setOpen(false);
+    });
+
+    drawer.addEventListener("click",event => {
+      if(event.target.closest("a")){
+        setOpen(false);
+      }
+    });
+
+    document.addEventListener("keydown",event => {
+      if(event.key === "Escape" && open){
+        setOpen(false);
+      }
+    });
+  }
+  /* hamburger-navigation:end */
+
   /* Generic true masonry helper.
      Important: this calculates masonry item geometry only.
      It never resizes Hero / exhibition artwork from viewport height.
@@ -136,9 +268,14 @@
   window.Muuzee = window.Muuzee || {};
   window.Muuzee.layoutMasonry = layoutMasonry;
 
-  if(document.readyState === "loading"){
-    document.addEventListener("DOMContentLoaded", initHeaderReveal, {once:true});
-  }else{
+  function initGlobalUI(){
     initHeaderReveal();
+    initHamburgerNavigation();
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", initGlobalUI, {once:true});
+  }else{
+    initGlobalUI();
   }
 })();

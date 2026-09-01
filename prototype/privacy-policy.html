@@ -3,17 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>推し — Muuzee</title>
+  <title>プライバシーポリシー — Muuzee</title>
   <link rel="stylesheet" href="./assets/css/muuzee-global.css?v=20260901-01">
-  <link rel="stylesheet" href="./assets/css/mypage.css?v=20260828-37">
-  <link rel="stylesheet" href="./assets/css/artists.css?v=20260828-15">
-  <link rel="stylesheet" href="./assets/css/exhibitions.css?v=20260828-15">
-  <link rel="stylesheet" href="./assets/css/museums.css?v=20260828-15">
-  <link rel="stylesheet" href="./assets/css/artist.css?v=20260828-15">
-  <link rel="stylesheet" href="./assets/css/personal-collection.css?v=20260828-39">
-  <link rel="stylesheet" href="./assets/css/muuzee-save-control.css?v=20260828-37">
+  <link rel="stylesheet" href="./assets/css/information-page.css?v=20260901-01">
 </head>
-<body class="muuzee-app mypage-page personal-collection-page" data-personal-kind="favorites">
+<body class="muuzee-app information-page">
   <header class="site-header is-over-sheet">
     <div class="shell header-inner">
       <a class="logo" href="./index.html">Muuzee</a>
@@ -28,33 +22,15 @@
       </div>
     </div>
   </header>
-  <main>
-    <section class="mypage-profile-shell">
-      <div class="shell mypage-profile" data-mypage-profile></div>
-    </section>
-
-    <section class="mypage-nav-shell">
-      <div class="shell" data-mypage-nav data-mypage-active="favorites"></div>
-    </section>
-    <div class="shell mypage-content-shell">
-      <div class="collection-tabs" role="tablist" aria-label="カテゴリ">
-        <button class="collection-tab is-active" type="button" role="tab" aria-selected="true" data-collection-tab="museum">
-          <span>美術館</span><em>0</em>
-        </button>
-        <button class="collection-tab" type="button" role="tab" aria-selected="false" data-collection-tab="artist">
-          <span>アーティスト</span><em>0</em>
-        </button>
-      </div>
-
-      <div class="collection-list museum-grid" data-collection-list></div>
-
-      <div class="collection-empty" data-collection-empty hidden>
-        <h3 data-empty-title></h3>
-        <p data-empty-copy></p>
-      </div>
+  <main class="information-page-main">
+    <div class="shell">
+      <section class="information-page-card">
+        <small>Information</small>
+        <h1>プライバシーポリシー</h1>
+        <p>このページの内容は現在準備中です。</p>
+      </section>
     </div>
   </main>
-
   <footer class="footer">
     <div class="shell footer-inner">
       <nav aria-label="Primary navigation" class="footer-nav">
@@ -68,12 +44,5 @@
     </div>
   </footer>
   <script src="./assets/js/muuzee-global.js?v=20260901-01"></script>
-  <script src="./assets/js/artist-data.js?v=20260828-15"></script>
-  <script src="./assets/js/museum-data.js?v=20260828-15"></script>
-  <script src="./assets/js/exhibition-data.js?v=20260828-15"></script>
-  <script src="./assets/js/personal-data.js?v=20260828-15"></script>
-  <script src="./assets/js/mypage-nav.js?v=20260828-37"></script>
-  <script src="./assets/js/collection-renderers.js?v=20260828-15"></script>
-  <script src="./assets/js/personal-tabs.js?v=20260828-39"></script>
 </body>
 </html>
