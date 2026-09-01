@@ -342,64 +342,28 @@
 
   const friendRail = document.querySelector("[data-preview-friends]");
   if(friendRail){
-    /*
-      Prototype activity status:
-      recent  = accessed within 7 days
-      warm    = accessed within 6 months
-      dormant = no access within 6 months
-    */
     const demo = [
-      {name:"Mina",lastActiveDays:2},
-      {name:"Ryo",lastActiveDays:5},
-      {name:"Nao",lastActiveDays:42},
-      {name:"Saki",lastActiveDays:118},
-      {name:"Jun",lastActiveDays:248}
+      {name:"Mina",lastActiveDays:2,image:"./assets/images/mypage/friend-mina.jpg"},
+      {name:"Ryo",lastActiveDays:5,image:"./assets/images/mypage/friend-ryo.jpg"},
+      {name:"Nao",lastActiveDays:42,image:"./assets/images/mypage/friend-nao.jpg"},
+      {name:"Saki",lastActiveDays:118,image:"./assets/images/mypage/friend-saki.jpg"},
+      {name:"Jun",lastActiveDays:248,image:"./assets/images/mypage/friend-jun.jpg"}
     ];
 
     const activityState = days => {
-      if(days <= 7){
-        return {
-          className:"is-recent",
-          label:"直近1週間以内にアクセス"
-        };
-      }
-
-      if(days <= 183){
-        return {
-          className:"is-warm",
-          label:"半年以内にアクセス"
-        };
-      }
-
-      return {
-        className:"is-dormant",
-        label:"半年以内のアクセスなし"
-      };
+      if(days <= 7) return {className:"is-recent",label:"直近1週間以内にアクセス"};
+      if(days <= 183) return {className:"is-warm",label:"半年以内にアクセス"};
+      return {className:"is-dormant",label:"半年以内のアクセスなし"};
     };
 
-    friendRail.innerHTML = demo.map((friend,index) => {
+    friendRail.innerHTML = demo.map(friend => {
       const activity = activityState(friend.lastActiveDays);
-
       return `
-        <a
-          class="mypage-preview-person"
-          href="./friends.html"
-          aria-label="${esc(friend.name)}"
-        >
+        <a class="mypage-preview-person" href="./friends.html" aria-label="${esc(friend.name)}">
           <div class="mypage-friend-avatar">
-            <img
-              src="./assets/images/profile-avatar.jpg"
-              alt="${esc(friend.name)}"
-              loading="lazy"
-              style="object-position:${50 + (index % 2) * 4}% 42%"
-            >
-            <i
-              class="mypage-friend-status ${activity.className}"
-              aria-label="${esc(activity.label)}"
-              title="${esc(activity.label)}"
-            ></i>
+            <img src="${esc(friend.image)}" alt="${esc(friend.name)}" loading="lazy">
+            <i class="mypage-friend-status ${activity.className}" aria-label="${esc(activity.label)}" title="${esc(activity.label)}"></i>
           </div>
-
           <strong>${esc(friend.name)}</strong>
         </a>
       `;
@@ -408,20 +372,54 @@
 
   const groupRail = document.querySelector("[data-preview-groups]");
   if(groupRail){
-    const demo = [
-      ["Tokyo Contemporary","124 members"],
-      ["Museum Trips","86 members"],
-      ["Impressionism Lovers","72 members"],
-      ["Architecture & Art","58 members"]
+    const groups = [
+      {
+        title:"Tokyo Contemporary",
+        members:124,
+        background:"./assets/images/mypage/group-contemporary.jpg",
+        hasNewComment:true,
+        participants:["./assets/images/mypage/friend-mina.jpg","./assets/images/mypage/friend-ryo.jpg","./assets/images/mypage/friend-nao.jpg","./assets/images/mypage/friend-saki.jpg","./assets/images/mypage/friend-jun.jpg","./assets/images/mypage/friend-ryo.jpg"]
+      },
+      {
+        title:"Weekend Museum Club",
+        members:38,
+        background:"./assets/images/mypage/group-museum.jpg",
+        hasNewComment:false,
+        participants:["./assets/images/mypage/friend-jun.jpg","./assets/images/mypage/friend-nao.jpg","./assets/images/mypage/friend-mina.jpg","./assets/images/mypage/friend-saki.jpg"]
+      },
+      {
+        title:"Architecture & Art",
+        members:16,
+        background:"./assets/images/mypage/group-architecture.jpg",
+        hasNewComment:true,
+        participants:["./assets/images/mypage/friend-nao.jpg","./assets/images/mypage/friend-mina.jpg","./assets/images/mypage/friend-jun.jpg","./assets/images/mypage/friend-ryo.jpg","./assets/images/mypage/friend-saki.jpg","./assets/images/mypage/friend-mina.jpg","./assets/images/mypage/friend-jun.jpg"]
+      }
     ];
 
-    groupRail.innerHTML = demo.map(([name,members]) => `
-      <a class="mypage-group-card" href="./groups.html">
-        <small>Group</small>
-        <strong>${esc(name)}</strong>
-        <span>${esc(members)}</span>
-      </a>
-    `).join("");
+    groupRail.innerHTML = groups.map(group => {
+      const shown = group.participants.slice(0,5);
+      const hasMore = group.participants.length > 5;
+
+      return `
+        <a class="mypage-group-card is-rich" href="./groups.html">
+          <div class="mypage-group-cover" style="background-image:url('${esc(group.background)}')">
+            ${group.hasNewComment ? `
+              <span class="mypage-group-comment-badge"><i aria-hidden="true"></i>新着コメントあり</span>
+            ` : ""}
+          </div>
+          <div class="mypage-group-body">
+            <strong>${esc(group.title)}</strong>
+            <span class="mypage-group-member-count">${esc(String(group.members))} members</span>
+            <div class="mypage-group-members" aria-label="参加者">
+              ${shown.map((image,index) => `
+                <img src="${esc(image)}" alt="" loading="lazy" style="z-index:${shown.length - index}">
+              `).join("")}
+              ${hasMore ? `<span class="mypage-group-members-more" aria-label="他の参加者">+</span>` : ""}
+            </div>
+          </div>
+        </a>
+      `;
+    }).join("");
   }
 
   const share = document.querySelector("[data-artwall-share]");
