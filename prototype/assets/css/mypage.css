@@ -736,3 +736,200 @@
 }
 
 /* mypage-profile-avatar-link:end */
+
+/* mypage-saved-schedule:start */
+
+.mypage-saved-schedule-section{
+  padding-top:48px;
+}
+
+.mypage-schedule-head{
+  margin-bottom:28px;
+}
+
+.mypage-schedule-head .mypage-section-more{
+  padding-bottom:3px;
+}
+
+.mypage-schedule-months{
+  width:100%;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+
+.mypage-schedule-month{
+  min-width:0;
+  min-height:96px;
+  padding:20px 22px;
+  border:0;
+  border-right:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+  gap:9px;
+  background:#fff;
+  color:var(--ink);
+  text-align:left;
+  cursor:pointer;
+}
+
+.mypage-schedule-month:last-child{
+  border-right:0;
+}
+
+.mypage-schedule-month.is-active{
+  background:var(--warm);
+}
+
+.mypage-schedule-month small{
+  color:var(--muted2);
+  font-size:10px;
+  line-height:1;
+  font-weight:450;
+}
+
+.mypage-schedule-month strong{
+  font-size:18px;
+  line-height:1;
+  font-weight:620;
+}
+
+.mypage-schedule-list{
+  border-bottom:1px solid var(--line);
+}
+
+.mypage-schedule-item{
+  min-height:132px;
+  padding:24px 22px;
+  border-bottom:1px solid var(--line);
+  display:grid;
+  grid-template-columns:160px minmax(0,1fr);
+  gap:24px;
+}
+
+.mypage-schedule-item:last-child{
+  border-bottom:0;
+}
+
+.mypage-schedule-date{
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.45;
+  letter-spacing:.01em;
+}
+
+.mypage-schedule-content{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+
+.mypage-schedule-title{
+  margin:0 0 8px;
+  color:var(--ink);
+  font-size:15px;
+  line-height:1.5;
+  font-weight:620;
+  letter-spacing:-.025em;
+}
+
+.mypage-schedule-title:hover{
+  color:var(--terra);
+}
+
+.mypage-schedule-venue{
+  margin:0 0 10px;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.45;
+  text-decoration:underline;
+  text-decoration-color:rgba(119,115,109,.34);
+  text-underline-offset:3px;
+}
+
+.mypage-schedule-venue:hover{
+  color:var(--terra);
+}
+
+.mypage-schedule-status{
+  color:var(--muted2);
+  font-size:10px;
+  line-height:1;
+}
+
+.mypage-schedule-status.is-now{
+  color:var(--terra);
+}
+
+.mypage-schedule-status.is-upcoming{
+  color:var(--muted);
+}
+
+.mypage-schedule-status.is-ended{
+  color:var(--muted2);
+}
+
+.mypage-schedule-empty{
+  min-height:120px;
+  padding:28px 22px;
+  display:flex;
+  align-items:center;
+  color:var(--muted2);
+  font-size:11px;
+  line-height:1.6;
+}
+
+@media(max-width:720px){
+  .mypage-saved-schedule-section{
+    padding-top:38px;
+  }
+
+  .mypage-schedule-head{
+    margin-bottom:20px;
+  }
+
+  .mypage-schedule-head .mypage-section-title h2{
+    font-size:18px;
+  }
+
+  .mypage-schedule-month{
+    min-height:78px;
+    padding:14px 12px;
+    gap:7px;
+  }
+
+  .mypage-schedule-month small{
+    font-size:9px;
+  }
+
+  .mypage-schedule-month strong{
+    font-size:15px;
+  }
+
+  .mypage-schedule-item{
+    min-height:116px;
+    padding:20px 12px;
+    grid-template-columns:92px minmax(0,1fr);
+    gap:16px;
+  }
+
+  .mypage-schedule-date{
+    font-size:9px;
+  }
+
+  .mypage-schedule-title{
+    margin-bottom:7px;
+    font-size:13px;
+  }
+
+  .mypage-schedule-venue,
+  .mypage-schedule-status{
+    font-size:9px;
+  }
+}
+
+/* mypage-saved-schedule:end */

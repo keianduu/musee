@@ -67,107 +67,261 @@
     }
   };
 
-  function savedPreview(){
-    const items = [];
 
-    readArray("muuzee:saved-artists").forEach(name => {
-      const artist = artists.find(item => item.name === name);
-      if(artist){
-        items.push({
-          type:"Artist",
-          title:artist.name,
-          sub:[artist.category?.[0],artist.country].filter(Boolean).join(" · "),
-          image:artist.image || artist.img,
-          href:`./artist.html?name=${encodeURIComponent(artist.name)}`
-        });
+  /* saved-exhibition-schedule:start */
+  function parseDatePart(text,fallbackYear){
+    const parts = String(text || "")
+      .trim()
+      .split(/[.\-/]/)
+      .map(Number)
+      .filter(Number.isFinite);
+
+    if(parts.length === 3){
+      return {
+        year:parts[0],
+        month:parts[1],
+        day:parts[2]
+      };
+    }
+
+    if(parts.length === 2 && fallbackYear){
+      return {
+        year:fallbackYear,
+        month:parts[0],
+        day:parts[1]
+      };
+    }
+
+    return null;
+  }
+
+  function parseExhibitionRange(item){
+    const raw = String(item?.date || "").trim();
+    const parts = raw.split(/\s*[—–]\s*/);
+
+    if(parts.length !== 2) return null;
+
+    const startPart = parseDatePart(parts[0]);
+    if(!startPart) return null;
+
+    const endPart = parseDatePart(parts[1],startPart.year);
+    if(!endPart) return null;
+
+    return {
+      start:new Date(
+        startPart.year,
+        startPart.month - 1,
+        startPart.day,
+        0,0,0,0
+      ),
+      end:new Date(
+        endPart.year,
+        endPart.month - 1,
+        endPart.day,
+        23,59,59,999
+      )
+    };
+  }
+
+  function monthStart(date){
+    return new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      1
+    );
+  }
+
+  function addMonths(date,count){
+    return new Date(
+      date.getFullYear(),
+      date.getMonth() + count,
+      1
+    );
+  }
+
+  function monthEnd(date){
+    return new Date(
+      date.getFullYear(),
+      date.getMonth() + 1,
+      0,
+      23,59,59,999
+    );
+  }
+
+  function overlapsMonth(range,month){
+    return (
+      range
+      && range.start <= monthEnd(month)
+      && range.end >= monthStart(month)
+    );
+  }
+
+  function scheduleStatus(range){
+    const now = new Date();
+
+    if(now < range.start){
+      return {
+        label:"開催前",
+        className:"is-upcoming"
+      };
+    }
+
+    if(now > range.end){
+      return {
+        label:"終了",
+        className:"is-ended"
+      };
+    }
+
+    return {
+      label:"開催中",
+      className:"is-now"
+    };
+  }
+
+  function venueHref(venue){
+    const normalized = String(venue || "").trim();
+
+    const museum = museums.find(item =>
+      String(item.name || "").trim() === normalized
+    );
+
+    if(museum){
+      return `./museum.html?id=${encodeURIComponent(museum.id)}`;
+    }
+
+    return `./museums.html?keyword=${encodeURIComponent(normalized)}`;
+  }
+
+  function renderSavedExhibitionSchedule(){
+    const monthsEl = document.querySelector(
+      "[data-saved-schedule-months]"
+    );
+    const listEl = document.querySelector(
+      "[data-saved-schedule-list]"
+    );
+
+    if(!monthsEl || !listEl) return;
+
+    const savedIds = readArray("muuzee:saved-exhibitions");
+
+    const items = savedIds
+      .map(id =>
+        exhibitions.find(item =>
+          item.id === id || item.title === id
+        )
+      )
+      .filter(Boolean)
+      .map(item => ({
+        ...item,
+        range:parseExhibitionRange(item)
+      }))
+      .filter(item => item.range)
+      .sort((a,b) => a.range.start - b.range.start);
+
+    /*
+      Match the reference: previous month + current month + next 2 months.
+      On 2026-09-01 this becomes Aug / Sep / Oct / Nov.
+    */
+    const currentMonth = monthStart(new Date());
+    const months = [
+      addMonths(currentMonth,-1),
+      currentMonth,
+      addMonths(currentMonth,1),
+      addMonths(currentMonth,2)
+    ];
+
+    let activeIndex = 1;
+
+    const renderMonths = () => {
+      monthsEl.innerHTML = months.map((month,index) => `
+        <button
+          class="mypage-schedule-month${index === activeIndex ? " is-active" : ""}"
+          type="button"
+          data-schedule-month="${index}"
+          aria-pressed="${String(index === activeIndex)}"
+        >
+          <small>${month.getFullYear()}</small>
+          <strong>${month.getMonth() + 1}月</strong>
+        </button>
+      `).join("");
+    };
+
+    const renderList = () => {
+      const month = months[activeIndex];
+
+      const visible = items.filter(item =>
+        overlapsMonth(item.range,month)
+      );
+
+      if(!visible.length){
+        listEl.innerHTML = `
+          <div class="mypage-schedule-empty">
+            この月に開催される保存済み展示会はありません。
+          </div>
+        `;
+        return;
       }
+
+      listEl.innerHTML = visible.map(item => {
+        const status = scheduleStatus(item.range);
+
+        const exhibitionHref =
+          item.href
+          || `./exhibition.html?id=${encodeURIComponent(item.id)}`;
+
+        return `
+          <article class="mypage-schedule-item">
+            <div class="mypage-schedule-date">
+              ${esc(item.date || "")}
+            </div>
+
+            <div class="mypage-schedule-content">
+              <a
+                class="mypage-schedule-title"
+                href="${esc(exhibitionHref)}"
+              >
+                ${esc(item.title || "")}
+              </a>
+
+              <a
+                class="mypage-schedule-venue"
+                href="${esc(venueHref(item.venue))}"
+              >
+                ${esc(item.venue || "")}
+              </a>
+
+              <span
+                class="mypage-schedule-status ${esc(status.className)}"
+              >
+                ${esc(status.label)}
+              </span>
+            </div>
+          </article>
+        `;
+      }).join("");
+    };
+
+    monthsEl.addEventListener("click",event => {
+      const button = event.target.closest(
+        "[data-schedule-month]"
+      );
+
+      if(!button) return;
+
+      activeIndex =
+        Number(button.dataset.scheduleMonth) || 0;
+
+      renderMonths();
+      renderList();
     });
 
-    readArray("muuzee:saved-museums").forEach(id => {
-      const museum = museums.find(item => item.id === id);
-      if(museum){
-        items.push({
-          type:"美術館",
-          title:museum.name,
-          sub:[museum.prefecture || museum.country,museum.city].filter(Boolean).join(" · "),
-          image:museum.image,
-          href:`./museum.html?id=${encodeURIComponent(museum.id)}`
-        });
-      }
-    });
-
-    readArray("muuzee:saved-exhibitions").forEach(id => {
-      const exhibition = exhibitions.find(item => item.id === id || item.title === id);
-      if(exhibition){
-        items.push({
-          type:"展覧会",
-          title:exhibition.title,
-          sub:exhibition.venue,
-          image:exhibition.src,
-          href:exhibition.href || `./exhibition.html?id=${encodeURIComponent(exhibition.id)}`,
-          exhibition:true
-        });
-      }
-    });
-
-    return items.slice(0,8);
+    renderMonths();
+    renderList();
   }
 
-  function cardMarkup(item){
-    return `
-      <a class="mypage-preview-card${item.exhibition ? " is-exhibition" : ""}" href="${esc(item.href || "#")}">
-        <div class="mypage-preview-image">
-          ${item.image ? `<img src="${esc(item.image)}" alt="${esc(item.title)}" loading="lazy">` : ""}
-        </div>
-        <div class="mypage-preview-meta">${esc(item.type || "")}</div>
-        <strong>${esc(item.title)}</strong>
-        <p>${esc(item.sub || "")}</p>
-      </a>`;
-  }
-
-  function emptyMarkup(title,copy){
-    return `
-      <div class="mypage-empty-preview">
-        <strong>${esc(title)}</strong>
-        <span>${esc(copy)}</span>
-      </div>`;
-  }
-
-  const savedRail = document.querySelector("[data-preview-saved]");
-  if(savedRail){
-    const saved = savedPreview();
-    savedRail.innerHTML = saved.length
-      ? saved.map(cardMarkup).join("")
-      : emptyMarkup("まだ保存はありません","気になるArtist・作品・美術館・展覧会を保存すると、ここに並びます。");
-  }
-
-  const seenRail = document.querySelector("[data-preview-seen]");
-  if(seenRail){
-    const seen = readArray("muuzee:seen-items");
-    seenRail.innerHTML = seen.length
-      ? seen.slice(0,8).map((item,index) => cardMarkup({
-          type:"見た",
-          title:item.title || item.name || `体験 ${index+1}`,
-          sub:item.meta || "",
-          image:item.image || "",
-          href:item.href || "./seen.html"
-        })).join("")
-      : emptyMarkup("まだ「見た」はありません","実際に体験した展覧会や美術館を登録すると、ここに残ります。");
-  }
-
-  const favoriteRail = document.querySelector("[data-preview-favorites]");
-  if(favoriteRail){
-    const favorites = readArray("muuzee:favorite-items");
-    favoriteRail.innerHTML = favorites.length
-      ? favorites.slice(0,8).map((item,index) => cardMarkup({
-          type:"推し",
-          title:item.title || item.name || `Favorite ${index+1}`,
-          sub:item.meta || "",
-          image:item.image || "",
-          href:item.href || "./favorites.html"
-        })).join("")
-      : emptyMarkup("まだ「推し」はありません","特に好きなArtistや対象を登録すると、ここに集まります。");
-  }
+  renderSavedExhibitionSchedule();
+  /* saved-exhibition-schedule:end */
 
   const friendRail = document.querySelector("[data-preview-friends]");
   if(friendRail){
