@@ -689,3 +689,37 @@ body.is-hamburger-open{
 }
 
 /* hamburger-menu-groups:end */
+
+/* shared-section-cta:start */
+
+/* Shared title-right CTA — same visual as approved TOP CTA. */
+.muuzee-section-cta,
+.home-page .section-head .cta{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:11px 15px;
+  border-radius:999px;
+  background:var(--ink);
+  color:#fff !important;
+  font-size:12px !important;
+  line-height:1;
+  font-weight:600;
+  white-space:nowrap;
+}
+
+.muuzee-section-cta:hover,
+.home-page .section-head .cta:hover{
+  opacity:.86;
+}
+
+@media(max-width:720px){
+  .muuzee-section-cta,
+  .home-page .section-head .cta{
+    padding:9px 12px;
+    font-size:12px !important;
+  }
+}
+
+/* shared-section-cta:end */

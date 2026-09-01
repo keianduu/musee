@@ -291,11 +291,28 @@
                 ${esc(item.venue || "")}
               </a>
 
-              <span
-                class="mypage-schedule-status ${esc(status.className)}"
-              >
-                ${esc(status.label)}
-              </span>
+              <div class="mypage-schedule-row-actions">
+                <span
+                  class="mypage-schedule-status ${esc(status.className)}"
+                >
+                  ${esc(status.label)}
+                </span>
+
+                <button
+                  class="muuzee-personal-action muuzee-personal-action--compact"
+                  type="button"
+                  data-personal-action="seen"
+                  data-personal-type="exhibition"
+                  data-personal-id="${esc(item.id)}"
+                  aria-pressed="false"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <path d="m8 12 2.6 2.6L16.5 9"></path>
+                  </svg>
+                  <span data-personal-action-label>観た</span>
+                </button>
+              </div>
             </div>
           </article>
         `;

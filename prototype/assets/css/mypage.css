@@ -933,3 +933,14 @@
 }
 
 /* mypage-saved-schedule:end */
+
+
+/* schedule-personal-action:start */
+.mypage-schedule-row-actions{
+  width:100%;margin-top:auto;display:flex;
+  align-items:center;justify-content:space-between;gap:12px
+}
+@media(max-width:720px){
+  .mypage-schedule-row-actions{gap:8px}
+}
+/* schedule-personal-action:end */

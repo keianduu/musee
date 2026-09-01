@@ -1,0 +1,45 @@
+/* Muuzee Shared Personal Actions */
+.muuzee-detail-actions{
+  flex:0 0 auto;display:flex;align-items:center;gap:8px
+}
+.muuzee-personal-action{
+  min-width:82px;min-height:40px;padding:0 14px;
+  border:1px solid var(--line);border-radius:999px;
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  background:#fff;color:var(--ink);font:inherit;cursor:pointer;
+  white-space:nowrap
+}
+.muuzee-personal-action svg{
+  width:15px;height:15px;flex:0 0 15px;display:block;
+  fill:none;stroke:currentColor;stroke-width:1.65;
+  stroke-linecap:round;stroke-linejoin:round
+}
+.muuzee-personal-action span{
+  font-size:11px;line-height:1;font-weight:560
+}
+.muuzee-personal-action.is-active{
+  border-color:rgba(185,111,85,.30);background:#fff;color:var(--terra)
+}
+.muuzee-personal-action[data-personal-action="save"].is-active svg{
+  fill:currentColor
+}
+.muuzee-personal-action[data-personal-action="seen"].is-active svg circle{
+  fill:rgba(185,111,85,.10)
+}
+.muuzee-personal-action--compact{
+  min-width:64px;min-height:32px;padding:0 10px;gap:5px
+}
+.muuzee-personal-action--compact svg{
+  width:13px;height:13px;flex-basis:13px
+}
+.muuzee-personal-action--compact span{font-size:9px}
+@media(max-width:720px){
+  .muuzee-detail-actions{margin-top:18px;gap:7px}
+  .muuzee-personal-action{
+    min-width:72px;min-height:38px;padding-inline:12px
+  }
+  .muuzee-personal-action span{font-size:10px}
+  .muuzee-personal-action--compact{
+    min-width:60px;min-height:30px;padding-inline:9px
+  }
+}
