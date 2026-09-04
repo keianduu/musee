@@ -45,7 +45,9 @@ The browser never receives `SUPABASE_SERVICE_ROLE_KEY`. All database mutations, 
 
 The research prompt is generated locally from the exhibition and occurrence. It instructs the researcher to use official or open sources and to return evidence, not a legal conclusion. Muuzee does not call an OpenAI API.
 
-Upload requires source type and rights status. Choosing `approved` is an explicit human action. The private Storage object is referenced by `media_assets`; Admin uses signed URLs for previews.
+Upload requires an image, source type, and one of three rights classifications. Source URL, credit, and usage / judgment notes are optional metadata. The three classifications map to `rejected` (explicit redistribution prohibition), `needs_review` (no usable statement / unclear), and `approved` (explicit permission compatible with the intended use). Choosing `approved` is an explicit human action. The private Storage object is referenced by `media_assets`; Admin uses signed URLs for previews.
+
+Media asset previews use `object-fit: contain` so the complete image remains visible instead of being cropped to a landscape thumbnail.
 
 When the API includes an image URL, Admin may show it as an `API candidate`. This is a remote reference for research only; it is not downloaded, made Primary, or rights-approved automatically.
 
