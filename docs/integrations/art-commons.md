@@ -72,6 +72,10 @@ Art Commons-specific fields included:
 
 Dates are accepted only for explicit `YYYY/M/D`, `YYYY-MM-DD`, or `YYYY.MM.DD` values that form a valid calendar date. Anything ambiguous becomes null.
 
+The source record keeps the provider's original venue/title/date strings and raw payload. Its explicit `exhibition_id` links a normalized record after import. Canonical venue display data is obtained through `exhibition_occurrences.venue_id`; the source venue string is not copied as a second venue master.
+
+Re-import compares `(data_source_id, external_id)` and checksum. An unchanged linked source record is skipped, while a changed source record updates the existing Exhibition and Occurrence rather than creating duplicates.
+
 ## Date filtering
 
 The Art Commons theme endpoint ignored `r-tempo` in a live check. Muuzee therefore uses Japan Search full-result scroll with `f-db=exhib` to preserve the Art Commons database boundary and `r-tempo` to narrow by year. The scroll snapshot is consumed until the API omits `scrollId`; every returned record is then checked for exact start/end-date overlap locally. The default is today through one year later. Past and undated records require an explicit Admin opt-in.

@@ -1,10 +1,6 @@
-# Muuzee Production Architecture v0
+# Muuzee Production Architecture
 
-Status: Approved for the first production vertical slice on 2026-09-04.
-
-## Scope
-
-This architecture supports internal exhibition ingestion and editorial administration only. Public Muuzee pages, user authentication, consumer features, analytics, payments, PWA, and deployment are outside this slice.
+The first Admin vertical slice is Approved. The Master Data Architecture extension is Draft and is technically defined in `docs/master-data-architecture.md`.
 
 ## Runtime
 
@@ -13,47 +9,96 @@ Browser
   ↓
 Next.js App Router / Vercel (future deployment target)
   ↓
-Supabase PostgreSQL / Storage
+Supabase PostgreSQL / private Storage
 ```
 
-The Admin UI uses server-side Next.js code and route handlers. The Supabase service-role key is server-only and must never be exposed through a `NEXT_PUBLIC_*` variable or client bundle.
+The Admin UI uses server-side Next.js code and route handlers. The Supabase service-role key is server-only and must never be exposed through a `NEXT_PUBLIC_*` variable or client bundle. Until Admin authentication exists, `/admin` is local-only or must be protected separately in staging.
 
-Before Admin authentication exists, `/admin` is for local development or a separately protected staging environment only. It must not be published to the production internet.
-
-## Data flow
+## Data architecture
 
 ```text
-External API (Art Commons via Japan Search)
+External sources
   ↓
-Importer
+source_records (raw ID/payload/audit)
+  ↓ normalize and match once
+Muuzee UUID masters
+  ├─ Venue
+  ├─ Artist
+  ├─ Work
+  └─ Exhibition
   ↓
-Raw Source Record
-  ↓
-Muuzee Normalized DB
-  ↓
-Admin review / image rights review
-  ↓
-Public Service (Future)
+explicit FK relations / field provenance / human review
 ```
 
-Raw source JSON is retained in `source_records`. Normalized tables are used by Admin. An import always starts an exhibition in `draft`; importing data or seeing a source image never publishes it.
+Canonical names, addresses, coordinates, and artist information live on masters and are joined by UUID. External source strings remain audit evidence rather than duplicate display data.
 
-Admin full import uses Japan Search's scroll snapshot rather than ordinary offset pagination. This avoids the ordinary 2,000-result pagination ceiling and keeps one stable upstream result set per import. Muuzee scans the snapshot to its end, applies exact day-level overlap validation, and only then fetches and normalizes eligible detail records.
+## Separate update pipelines
+
+Master enrichment is low-frequency and quality-first:
+
+```text
+Venue / Artist / Work
+  → Source A
+  → missing fields from B/C
+  → AI or CSV candidates
+  → human review
+  → manual override wins
+```
+
+Exhibition sync is lightweight and frequent:
+
+```text
+Daily source sync
+  → stable external ID and checksum
+  → changed records only
+  → normalize
+  → match masters during import
+  → update explicit relations
+```
+
+These are separate jobs by design. No master API, AI/CSV workflow, scheduler, or remote deployment is included yet.
+
+## Current Art Commons flow
+
+```text
+Art Commons via Japan Search
+  → scroll snapshot and exact date-overlap filtering
+  → source_records
+  → exhibitions + exhibition_occurrences + venue_id
+  → Admin review and rights review
+  → future public service
+```
+
+Full import uses Japan Search’s scroll snapshot to avoid ordinary offset limits and retain one stable upstream result set. Re-import compares checksums and updates only changed linked records. Imported content and external image candidates remain Draft/unapproved.
+
+## Venue enrichment flow
+
+```text
+Existing Venue
+  → Wikidata ranked entity candidates
+  ├─ coordinate candidate
+  ├─ Wikimedia Commons P18 candidate
+  └─ Geolonia coordinate comparison/fallback
+  → Admin human review
+  → optional approved Storage asset
+```
+
+It reuses `data_sources`, `source_records`, `source_image_candidates`, `media_assets`, and `import_runs`; it does not create a parallel media architecture. Candidate relevance, reported license, Muuzee rights classification, and Primary selection remain separate decisions.
 
 ## Responsibility boundaries
 
-- `prototype/`: exploratory UX and visual reference. It is not runtime code and is not imported by Production.
+- `prototype/`: exploratory UX and visual reference; never imported by Production.
 - `src/app/`: production Next.js routes and Admin UI.
-- `src/lib/`: production integration, persistence, and validation logic.
-- `supabase/migrations/`: versioned PostgreSQL and Storage setup.
-- Notion: approved product intent and decisions.
+- `src/lib/`: integration, matching, persistence, and validation logic.
+- `supabase/migrations/`: versioned database and Storage Source of Truth.
+- `docs/master-data-architecture.md`: technical master-data Source of Truth.
+- Notion: concise product/design context and decision log.
 - Git: implementation history.
 
-## Deliberate v0 constraints
+## Deliberate current constraints
 
 - No ORM; Supabase client plus SQL migrations.
-- No remote Supabase project is created by this work.
-- No automatic image discovery or automatic rights decision.
-- API-provided image URLs may be retained as unapproved source candidates; they remain separate from Storage-backed publication assets.
-- No Admin auth in v0; production exposure is prohibited until auth and authorization are implemented.
-- One normalized occurrence is maintained for each imported Art Commons source record in this slice. The schema supports multiple occurrences for future tours.
+- No remote Supabase project or deployment in this scope.
+- No new master Admin screens or external master APIs.
+- No automatic entity, content, or rights approval.
+- No Admin auth yet; production exposure is prohibited.

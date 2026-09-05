@@ -1,48 +1,71 @@
-# Muuzee Data Model v0
+# Muuzee Data Model
 
-## Entities
+Status: Draft for the Master Data Architecture; the existing Admin v0 publication rules remain Approved.
+
+## Canonical entities
 
 | Table | Role |
 | --- | --- |
-| `venues` | Museum, gallery, or other venue master |
+| `venues` | Venue master and reviewed coordinate/enrichment state |
+| `artists` | Artist master, including partial date precision |
+| `works` | Work master, including text and range-based year precision |
 | `exhibitions` | Exhibition identity and publication state |
-| `exhibition_occurrences` | Where and when an exhibition takes place |
+| `exhibition_occurrences` | Exhibition × Venue with occurrence dates and local details |
+| `exhibition_artists` | Exhibition × Artist with source-name/match audit fields |
+| `work_artists` | Work × Artist, including collaborative roles |
+| `collection_holdings` | Venue × Work holdings and inventory evidence |
+
+## Classification, source, and media tables
+
+| Table | Role |
+| --- | --- |
+| `tags` | Typed genre, movement, era, theme, or other classification |
+| `artist_tags`, `venue_tags`, `work_tags`, `exhibition_tags` | Explicit FK-safe tag relations |
 | `data_sources` | External provider and terms metadata |
-| `source_records` | Latest retained raw source payload and sync identity |
-| `source_image_candidates` | API-provided image URLs and rights metadata awaiting human review |
-| `import_runs` | Import execution counts, errors, and timing |
-| `media_assets` | Human-reviewed exhibition images and rights metadata |
+| `source_records` | Unique external record ID, latest raw payload, and optional explicit master owner |
+| `venue_field_sources`, `artist_field_sources`, `work_field_sources`, `exhibition_field_sources` | Field-level provenance and review history |
+| `source_image_candidates` | External image references and raw rights metadata awaiting review |
+| `venue_external_match_candidates` | Ranked Wikidata candidates, confidence, threshold evidence, and human state |
+| `media_assets` | Storage-backed, human-reviewed images owned by exactly one master |
+| `import_runs` | Import/enrichment execution counts, errors, metrics, and timing |
 
-## Core relationships
-
-```text
-data_sources 1 ── * source_records * ── 0..1 exhibitions
-source_records 1 ── * source_image_candidates
-data_sources 1 ── * import_runs
-exhibitions 1 ── * exhibition_occurrences * ── 1 venues
-exhibitions 1 ── * media_assets
-```
-
-`source_records(data_source_id, external_id)` is unique. On re-import, the stored `entity_id` identifies the existing exhibition, so duplicate exhibitions are not created. Occurrences are updated through the existing exhibition relationship.
-
-## Publication state
+## Relationship diagram
 
 ```text
-draft → ready → published → archived
+venues ──< exhibition_occurrences >── exhibitions
+   │                                      │
+   │                                      └──< exhibition_artists >── artists
+   │                                                                      │
+   └──< collection_holdings >── works ──< work_artists >──────────────────┘
+
+each master ──< its explicit tag relation >── tags
+each master ──< its explicit field_sources
+each master ──< source_records >── data_sources
+each master ──< media_assets (exactly one owner per row)
 ```
 
-An imported exhibition starts as `draft`. `ready` requires title, venue, at least one start or end date, a primary image, and `approved` rights for that primary image. `published` requires the same server-side validation and an explicit Admin action.
+## Integrity rules
 
-Unpublish returns to `ready` if all requirements still pass; otherwise it returns to `draft`.
+- All canonical relationships use Muuzee UUID foreign keys.
+- `source_records(data_source_id, external_id)` is unique and has zero or one explicit master owner.
+- An unlinked source record is valid audit data when normalization failed; a source record can never point to multiple masters.
+- Tag relations and core relations have uniqueness constraints to prevent duplicate links.
+- Holdings are unique per Venue/Work, with inventory number included when present.
+- Each master field can have at most one provenance row marked `is_current`.
+- Every `media_assets` row has exactly one of `exhibition_id`, `venue_id`, `artist_id`, or `work_id`.
 
-## Media and rights
+## Import identity and audit
 
-Images live in the private `exhibition-images` Supabase Storage bucket, never in Git. `media_assets` can store provenance, credit, usage notes, validity, and the human-selected rights state. Source URL, credit, and usage notes are nullable and are not upload prerequisites.
+Art Commons re-import uses the source record’s `exhibition_id` plus checksum. A linked unchanged record is skipped; a changed record updates its existing Exhibition and Occurrence. Provider names and raw JSON remain in `source_records` for audit/rematching, while display data comes through master joins.
 
-The system never infers that an image is legally usable. Only an Admin user can explicitly set `rights_status = approved`.
+## Publication and media rights
 
-API image candidates remain external references and never count as `media_assets`. This keeps source discovery separate from Muuzee's human-approved, Storage-backed publication asset.
+Publication state is `draft → ready → published → archived`. Existing Exhibition Admin server-side checks still require a title, occurrence/venue, dates, and an approved Primary asset before publish.
 
-## Venue matching
+Images live in the private `exhibition-images` Supabase Storage bucket, never in Git. Source URL, credit, and usage notes remain optional. Reported license metadata is retained separately from Muuzee’s `approved`, `rejected`, or `needs_review` classification. Only an explicit Admin action can approve rights or promote a candidate to a Storage-backed asset.
 
-The importer first reuses the venue already connected to the source record's exhibition. For new records it only reuses a venue when normalized name and normalized address are an exact match. If matching is uncertain, a duplicate venue is safer than a forced merge.
+## Venue enrichment
+
+Venue enrichment retains ranked Wikidata candidates and a single actionable coordinate candidate, optional Geolonia comparison, P18 candidates, and search traces. The adopted Wikidata ID is the `matched` row in `venue_external_match_candidates`; it is not duplicated on `venues`. Raw Wikidata, Commons, and Geolonia payloads remain in `source_records`.
+
+See `docs/master-data-architecture.md` for ownership, enrichment, and update-frequency rules.

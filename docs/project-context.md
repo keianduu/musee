@@ -10,13 +10,17 @@ Local files are the source of truth for implementation.
 
 ### Project
 
-https://app.notion.com/p/art-3c4c2c71037680a98811fdc36a8aedef?source=copy_link
+https://app.notion.com/p/3c4c2c71037680a98811fdc36a8aedef
+
+### Design & Implementation Log
+
+https://app.notion.com/p/217e43cfe564448b9cc641d7887a043a
 
 ## Local Project
 
 Path:
 
-/Users/kei.ando/Documents/my-project/art
+/Users/kei.ando/Documents/my-project/muuzee
 
 ## Project Structure
 

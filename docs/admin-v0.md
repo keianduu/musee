@@ -21,6 +21,8 @@ Art Commons import
 - `/admin/imports`: run a controlled Art Commons import and review history.
 - `/admin/exhibitions`: search and filter normalized exhibitions.
 - `/admin/exhibitions/[id]`: edit metadata, inspect raw source, upload/delete an image, and change publication state.
+- `/admin/venues`: search/filter the venue master, compare entity/coordinate/image states, see the P18 found threshold, and run bounded Venue Enrichment batches.
+- `/admin/venues/[id]`: edit venue data; independently inspect entity, coordinate, image, and rights candidates; review search diagnostics; manage venue images; and see related exhibitions.
 
 ## Security boundary
 
@@ -47,6 +49,8 @@ The research prompt is generated locally from the exhibition and occurrence. It 
 
 Upload requires an image, source type, and one of three rights classifications. Source URL, credit, and usage / judgment notes are optional metadata. The three classifications map to `rejected` (explicit redistribution prohibition), `needs_review` (no usable statement / unclear), and `approved` (explicit permission compatible with the intended use). Choosing `approved` is an explicit human action. The private Storage object is referenced by `media_assets`; Admin uses signed URLs for previews.
 
+The schema now permits the same `media_assets` model for Exhibition, Venue, Artist, and Work, with exactly one explicit owner per row. Admin v0 still exposes only the existing Exhibition and Venue media workflows; Artist/Work Admin screens are future scope.
+
 Media asset previews use `object-fit: contain` so the complete image remains visible instead of being cropped to a landscape thumbnail.
 
 When the API includes an image URL, Admin may show it as an `API candidate`. This is a remote reference for research only; it is not downloaded, made Primary, or rights-approved automatically.
@@ -54,3 +58,7 @@ When the API includes an image URL, Admin may show it as an `API candidate`. Thi
 ## Publish validation
 
 The UI displays missing requirements, but the route handler repeats the validation on the server. A disabled button is never the security boundary.
+
+## Venue enrichment safety
+
+Only high-confidence Wikidata matches are automatic. Entity Match, Coordinate Candidate, Image Candidate, and Rights are independent. Any non-rejected search result may contribute P625/P18 reference candidates without confirming identity, including below `0.60`. Coordinate candidates require explicit adoption; image discovery records the first configured threshold with P18 and labels results below `0.85` as relaxed. Candidate relevance and rights are separate controls. Rights use only 明確に不可, 記載なし・不明, or 明確に利用可能, and every new candidate starts unknown. Existing manual/approved coordinates and approved media are protected. Candidate acceptance and rights approval remain separate from Storage upload and Primary selection.

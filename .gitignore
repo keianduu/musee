@@ -1,7 +1,19 @@
 /assets/
 
-/assets/
-docs/
-
 .DS_Store
 **/.DS_Store
+
+# Production application
+node_modules/
+.next/
+out/
+coverage/
+*.tsbuildinfo
+
+# Local environment and Supabase runtime
+.env
+.env.local
+.env.*.local
+!.env.example
+supabase/.branches/
+supabase/.temp/

@@ -8,6 +8,185 @@
 <title>Muuzee — Global Design Guide</title>
 
 <link href="./assets/css/muuzee-global.css?v=20260902-02" rel="stylesheet"/><link href="./assets/css/design-guide.css?v=20260828-06" rel="stylesheet"/><link rel="stylesheet" href="./assets/css/muuzee-save-control.css?v=20260828-24">
+<style id="muuzee-current-prototype-reference-style">
+
+.dg-current-reference{
+  margin-top:72px;
+  padding-top:36px;
+  border-top:1px solid var(--line,#e8e4dd);
+}
+.dg-current-kicker{
+  margin-bottom:8px;
+  color:var(--terra,#b96f55);
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.dg-current-reference h2{
+  margin:0;
+  font-size:28px;
+  line-height:1.15;
+}
+.dg-current-lead{
+  max-width:760px;
+  margin:12px 0 0;
+  color:var(--muted,#77736d);
+  font-size:14px;
+  line-height:1.7;
+}
+.dg-current-grid{
+  margin-top:24px;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+}
+.dg-current-grid article{
+  padding:18px;
+  border:1px solid var(--line,#e8e4dd);
+  border-radius:16px;
+  background:var(--warm,#f7f5f1);
+}
+.dg-current-grid small{
+  display:block;
+  color:var(--terra,#b96f55);
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.08em;
+}
+.dg-current-grid strong{
+  display:block;
+  margin-top:7px;
+  font-size:14px;
+}
+.dg-current-grid p{
+  margin:7px 0 0;
+  color:var(--muted,#77736d);
+  font-size:12px;
+  line-height:1.6;
+}
+.dg-current-table-wrap{
+  margin-top:24px;
+  overflow-x:auto;
+}
+.dg-current-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+}
+.dg-current-table th,
+.dg-current-table td{
+  padding:12px 10px;
+  border-bottom:1px solid var(--line,#e8e4dd);
+  text-align:left;
+  vertical-align:top;
+}
+.dg-current-table th{
+  color:var(--ink,#262522);
+  font-weight:700;
+}
+.dg-current-table td{
+  color:var(--muted,#77736d);
+}
+.dg-current-list{
+  margin-top:18px;
+  padding:16px 0 0;
+  border-top:1px solid var(--line,#e8e4dd);
+  font-size:12px;
+  line-height:1.7;
+}
+.dg-current-list strong{
+  display:block;
+  margin-bottom:5px;
+  color:var(--ink,#262522);
+  font-size:12px;
+}
+.dg-current-list div{
+  color:var(--muted,#77736d);
+}
+@media(max-width:720px){
+  .dg-current-reference h2{
+    font-size:22px;
+  }
+  .dg-current-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+</style>
+<style id="muuzee-synced-global-rules-card-style">
+.dg-synced-rules-card{
+  margin-top:28px;
+  overflow:hidden;
+  border:1px solid var(--line,#e8e4dd);
+  border-radius:24px;
+  background:#fff;
+}
+
+.dg-synced-rules-card > .global-rule{
+  margin:0 !important;
+  padding:28px 30px !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:#fff !important;
+  box-shadow:none !important;
+}
+
+.dg-synced-rules-card > .global-rule + .global-rule{
+  border-top:1px solid var(--line,#e8e4dd) !important;
+}
+
+.dg-synced-rules-card > .global-rule strong{
+  display:block;
+  margin:0 0 8px;
+  color:var(--ink,#262522);
+}
+
+.dg-synced-rules-card > .global-rule p{
+  margin:0;
+}
+
+.dg-synced-rules-card > .dg-current-reference{
+  margin:0 !important;
+  padding:30px !important;
+  border-top:1px solid var(--line,#e8e4dd) !important;
+  background:#fff;
+}
+
+@media(max-width:720px){
+  .dg-synced-rules-card{
+    margin-top:22px;
+    border-radius:20px;
+  }
+
+  .dg-synced-rules-card > .global-rule{
+    padding:22px 20px !important;
+  }
+
+  .dg-synced-rules-card > .dg-current-reference{
+    padding:24px 20px !important;
+  }
+}
+</style>
+<style id="muuzee-design-guide-side-alignment-style">
+.dg-side-margin-shell{
+  padding:0 !important;
+  background:transparent !important;
+  border:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  overflow:visible !important;
+}
+
+.dg-side-margin-shell > .global-rule,
+.dg-side-margin-shell > .dg-current-reference{
+  width:100% !important;
+  max-width:none !important;
+  margin-left:0 !important;
+  margin-right:0 !important;
+  box-sizing:border-box;
+}
+</style>
 </head>
 <body class="design-guide-page">
 <header class="guide-header">
@@ -216,22 +395,28 @@
 <div class="demo-footer">
 <nav aria-label="Bottom navigation example" class="demo-footer-nav">
 <span class="demo-nav-item active">
-<svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9H7v-6h10v6"></path></svg><span>ホーム</span>
+<svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9H7v-6h10v6"></path></svg>
+<span>ホーム</span>
 </span>
 <span class="demo-nav-item">
-<svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1.5"></rect><circle cx="9" cy="9" r="1.5"></circle><path d="m6.5 17 4-4 3 3 2-2 2 3"></path></svg><span>展示会</span>
+<svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1.5"></rect><circle cx="9" cy="9" r="1.5"></circle><path d="m6.5 17 4-4 3 3 2-2 2 3"></path></svg>
+<span>展示会</span>
 </span>
 <span class="demo-nav-item">
-<svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5"></rect><circle cx="12" cy="9" r="2.4"></circle><path d="M8.5 17c.5-2.3 1.8-3.5 3.5-3.5s3 1.2 3.5 3.5"></path></svg><span>アーティスト</span>
+<svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5"></rect><circle cx="12" cy="9" r="2.4"></circle><path d="M8.5 17c.5-2.3 1.8-3.5 3.5-3.5s3 1.2 3.5 3.5"></path></svg>
+<span>アーティスト</span>
 </span>
 <span class="demo-nav-item">
-<svg viewBox="0 0 24 24"><path d="M3 9h18M5 9v10M9 9v10M15 9v10M19 9v10M3 19h18M4 8l8-5 8 5"></path></svg><span>美術館</span>
+<svg viewBox="0 0 24 24"><path d="M3 9h18M5 9v10M9 9v10M15 9v10M19 9v10M3 19h18M4 8l8-5 8 5"></path></svg>
+<span>美術館</span>
 </span>
 <span class="demo-nav-item">
-<svg viewBox="0 0 24 24"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z"></path><path d="M9 3v15M15 6v15"></path></svg><span>マップ</span>
+<svg viewBox="0 0 24 24"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z"></path><path d="M9 3v15M15 6v15"></path></svg>
+<span>マップ</span>
 </span>
 <span class="demo-nav-item">
-<svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4Z"></path></svg><span>保存</span>
+<svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4Z"></path></svg>
+<span>保存</span>
 </span>
 </nav>
 </div>
@@ -319,7 +504,14 @@
 <div class="global-rule"><strong>6. Quiet motion</strong><p>Motionは初期Hero・Navigation状態変化など、意味がある場所だけに限定。</p></div>
 <div class="global-rule"><strong>7. Natural ratios</strong><p>展示・作品画像は自然比率を維持。Coverは意図的なBrand Photoなどに限定。</p></div>
 <div class="global-rule"><strong>8. Surface hierarchy</strong><p>White → Warm → Greigeの面差で階層を作り、Shadowは必要最低限。</p></div>
-<div class="global-rule"><strong>9. Shared save control</strong><p>一覧・Preview・関連コンテンツの保存可能な各項目には共通Bookmark Controlを重ねる。未保存はSolid White Surface / Ink、保存済みはSolid White Surface / Terracottaの塗りBookmarkで状態を明示する。画像境界に重なる場合もSurfaceは透過させない。保存ON時は短いSpring + Ring feedbackを使い、カード本体の遷移と保存操作を分離する。</p></div>
+<!-- synced-global-rules-card:start -->
+<section class="dg-synced-rules-card" aria-label="Current shared design rules">
+<!-- shared-save-control-rule:start -->
+<div class="global-rule">
+  <strong>Shared Save Control</strong>
+  <p>一覧 / Preview / 関連コンテンツのSaveは <code>muuzee-save-control.css / js</code> を共通利用する。Card Wrapper直下にDetail Link <code>&lt;a&gt;</code> とSave <code>&lt;button&gt;</code> をSiblingで配置し、Save ControlをLinkの内側へ入れない。未保存はWhite Surface / Ink、保存済みはWhite Surface / Terracotta Filled Bookmark。Save ON時は短いSpring + Ring feedbackを使い、<code>prefers-reduced-motion</code> を尊重する。</p>
+</div>
+<!-- shared-save-control-rule:end -->
 </div>
 <div class="code-block"><pre>:root {
   --ink:#262522;
@@ -342,103 +534,218 @@ Mobile: 18px side
 Breakpoints: 980px / 720px</pre></div>
 </section>
 <p class="footer-note">
-    This document is the global visual reference for Muuzee prototype pages.
-    Page-specific UX can be added, but changes to these global rules should be treated as an explicit design-system decision.
-  </p>
+  This document is the current global visual reference for Muuzee prototype pages.
+  Page-specific exploration may differ, but a Global Rule change must be reflected here deliberately.
+</p>
 </div>
 <!-- semantic-save-rule:start -->
+<!-- dg-side-margin-shell-group:start -->
+<div class="shell">
+<div class="section dg-side-margin-shell">
 <div class="global-rule">
   <strong>Shared Save Control structure</strong>
   <p>保存可能なCardは、Card Wrapper直下にDetail Link &lt;a&gt; とSave &lt;button&gt;をSiblingとして配置する。Save Controlを&lt;a&gt;の内側には置かない。未保存はSolid White / Ink、保存済みはSolid White / Terracottaの塗りBookmarkを使用する。</p>
 </div>
+</div>
 <!-- semantic-save-rule:end -->
 <!-- shared-map-ui-rule:start -->
+<div class="section dg-side-margin-shell">
 <div class="global-rule">
   <strong>Shared Map UI</strong>
-  <p>Pin、Tooltip、Tooltip中央移動、Tooltip内Saveは muuzee-map-ui.css / muuzee-map-ui.js を共通利用する。TOPとMap Discoveryで個別実装しない。TOP地図はExhibition Catalogの座標付き展示会を全件表示する。</p>
+  <p>Pin / Tooltip / Tooltip内Save / Tooltip中央移動は <code>muuzee-map-ui.css / muuzee-map-ui.js</code> を共通利用する。TOPとMap Discoveryで個別実装しない。TOP Mapは座標を持つExhibitionを表示し、MapページはExhibition / Museumの表示Modeを切り替えられる。</p>
+</div>
 </div>
 <!-- shared-map-ui-rule:end -->
 <!-- hamburger-navigation-rule:start -->
+<div class="section dg-side-margin-shell">
 <div class="global-rule">
   <strong>Shared Hamburger Navigation</strong>
-  <p>Global Headerはロゴ / お知らせ / MyPage Avatar / Hamburgerを共通利用する。HamburgerはNoticeと同系統の円形透過Surfaceとし、右端から左へDrawerを表示する。Drawer表示中もHeaderはDrawer・Scrimより上位Layerに固定し、全Header Actionを常時視認可能にする。</p>
+  <p>Global HeaderはLogo / MyPage Avatar / Hamburgerを共通利用する。NoticeはHeaderに置かず、Hamburger Drawer上部の独立CTAとして扱う。Hamburgerは円形の静かなHeader Actionとし、Drawerは右から左へ開く。Global実装は <code>muuzee-global.css / muuzee-global.js</code> を利用し、ページごとに複製しない。</p>
+</div>
 </div>
 <!-- hamburger-navigation-rule:end -->
 <!-- hamburger-header-layer-rule:start -->
+<div class="section dg-side-margin-shell">
 <div class="global-rule">
   <strong>Hamburger / Header Layering</strong>
-  <p>Hamburger DrawerとScrimはGlobal Header領域を覆わず、Header直下から開始する。Drawer表示中もロゴ / お知らせ / MyPage Avatar / Hamburger / Header下線は常時表示し、Headerを最前面Layerとして扱う。</p>
+  <p>Drawer / ScrimはGlobal Headerを覆わずHeader直下から開始する。Desktop Headerは76px、Mobile Headerは62pxを基準にし、Menu表示中もLogo / MyPage Avatar / Hamburger / Header下線を常時視認可能にする。HeaderをDrawer / Scrimより上位Layerとして扱う。</p>
+</div>
 </div>
 <!-- hamburger-header-layer-rule:end -->
 <!-- hamburger-menu-group-rule:start -->
+<div class="section dg-side-margin-shell">
 <div class="global-rule">
   <strong>Hamburger Navigation Groups</strong>
-  <p>NoticeはGlobal Headerから外し、Hamburger Drawer上部の独立CTAとして表示する。Notice CTAはWarm Surfaceと角丸を使用し、Border / Box Shadowは持たない。ログイン後のPersonal Navigation（MyPage / 保存 / ArtWall）は通常Navと同じWhite Surface / Dividerを使い、左側の短い太いTerracotta Markerのみで区別する。</p>
+  <p>Notice CTAはDrawer上部に置き、Warm Surface + Radiusを使用する。Border / Box Shadowは持たない。Personal Navigation（MyPage / 保存 / ArtWall）は通常Navと同じWhite Surface / Dividerを使い、左側の短い太いTerracotta Markerのみで区別する。</p>
+</div>
 </div>
 <!-- hamburger-menu-group-rule:end -->
 <!-- personal-actions-and-section-cta:start -->
+<div class="section dg-side-margin-shell">
 <div class="global-rule">
   <strong>Personal Actions / Section CTA</strong>
-  <p>展覧会・美術館などのDetailではSave / Seenを共通Personal Actionとして扱い、muuzee-personal-actions.css / jsを利用する。Seenはmuuzee:seen-itemsへ記録する。Section Title右側の「すべて見る →」「詳細検索 →」「保存を見る →」「一覧を見る →」等はmuuzee-section-ctaを共通利用し、TOP CTAと同じInk Pill / White Text / 12pxで統一する。</p>
+  <p>DetailのSave / Seenは <code>muuzee-personal-actions.css / js</code> を共通利用する。Section Title右側の「すべて見る →」「詳細検索 →」「保存を見る →」などは <code>.muuzee-section-cta</code> を共通利用し、Ink Pill / White Text / Secondary 12pxで統一する。</p>
+</div>
 </div>
 <!-- personal-actions-and-section-cta:end -->
 <!-- typography-implementation-guard:start -->
+<div class="section dg-side-margin-shell">
 <div class="global-rule">
   <strong>Typography implementation guard</strong>
-  <p>新規・変更UIの本文系font-sizeはPrimary 14px / Secondary 12px / Tertiary 10pxを使用する。見出しはGuide定義の22px / 24px / 28px、Hero Displayは明示されたpage-specific値のみを使用する。実装時はscripts/audit_design_guide_fonts.pyでprototype全体を監査し、新しいGuide外font-sizeを追加しない。</p>
+  <p>本文系はPrimary 14px / Secondary 12px / Tertiary 10pxを基本とする。Page Title 24px、Section TitleはDesktop 28px / Mobile 22px。Hero Display 54pxは明示されたpage-specific用途のみ。Layout都合で9px / 11px / 13px / 15px / 17px / 18px等を追加しない。新しいTypography Tokenが必要な場合はGlobal Design Ruleとして先にGuideを更新する。</p>
+</div>
 </div>
 <!-- typography-implementation-guard:end -->
+<!-- global-footer-navigation-rule:start -->
+<div class="section dg-side-margin-shell">
+<div class="global-rule">
+  <strong>Global Footer Navigation</strong>
+  <p>6項目を共通利用：ホーム / 展示会 / アーティスト / 美術館 / マップ / 保存。各画面で同一Order / Icon languageを維持し、現在地のみActive Stateを表示する。MobileではBottom Navigationとして固定し、ページ固有の独自Footer Navigationを作らない。</p>
+</div>
+</div>
+<!-- global-footer-navigation-rule:end -->
+<!-- interaction-semantics-rule:start -->
+<div class="section dg-side-margin-shell">
+<div class="global-rule">
+  <strong>Interactive semantics</strong>
+  <p>Card NavigationとSave / Seen等のActionは独立したInteractive Elementとして扱う。<code>&lt;a&gt;</code> の中に <code>&lt;button&gt;</code> を入れない。Focus Visibleを保持し、Keyboard / Touchで周辺Card遷移を誤発火させない。</p>
+</div>
+</div>
+<!-- interaction-semantics-rule:end -->
+<!-- current-prototype-reference:start -->
+<div class="section dg-side-margin-shell">
+<section class="dg-current-reference" aria-labelledby="current-prototype-title">
+  <div class="dg-current-kicker">Current Prototype Reference · 2026-09-04</div>
+  <h2 id="current-prototype-title">現在のShared UI / Global Rule</h2>
+  <p class="dg-current-lead">このSectionは現在のPrototype実装を参照するためのSnapshot。ページ固有の探索UIは含めず、複数画面で再利用されているGlobal / Shared Componentのみを対象にする。</p>
+
+  <div class="dg-current-grid">
+    <article>
+      <small>TYPE</small>
+      <strong>14 / 12 / 10</strong>
+      <p>Primary / Secondary / Tertiary。Layout都合の中間サイズを追加しない。</p>
+    </article>
+    <article>
+      <small>SECTION</small>
+      <strong>28 / 22</strong>
+      <p>Section TitleはDesktop / Mobileで共通Tokenを利用する。</p>
+    </article>
+    <article>
+      <small>ACTION</small>
+      <strong>Quiet + explicit</strong>
+      <p>NavigationとSave / Seenを分離し、状態変化はTerracottaで静かに示す。</p>
+    </article>
+  </div>
+
+  <div class="dg-current-table-wrap">
+    <table class="dg-current-table">
+      <thead>
+        <tr><th>Shared area</th><th>Implementation</th><th>Current consumers</th></tr>
+      </thead>
+      <tbody>
+        <tr><th>Global UI</th><td><code>muuzee-global.css / muuzee-global.js</code></td><td>artist.html / artists.html / artwall-edit.html / contact.html / disclaimer.html / +16</td></tr><tr><th>Save Control</th><td><code>muuzee-save-control.css / muuzee-save-control.js</code></td><td>artist.html / artists.html / exhibition.html / exhibitions.html / favorites.html / +5</td></tr><tr><th>Personal Save / Seen</th><td><code>muuzee-personal-actions.css / muuzee-personal-actions.js</code></td><td>exhibition.html / museum.html / my-art.html</td></tr><tr><th>Shared Map UI</th><td><code>muuzee-map-ui.css / muuzee-map-ui.js</code></td><td>index.html / map.html</td></tr><tr><th>Section CTA</th><td><code>.muuzee-section-cta</code></td><td>index.html / my-art.html</td></tr><tr><th>Personal Collection Pills</th><td><code>personal-collection.css</code></td><td>favorites.html / saved.html / seen.html</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="dg-current-list"><strong>Hamburger destinations</strong><div>ホーム / 展示会を探す / アーティストを探す / 美術館を探す / 地図から探す / マイページ / 保存 / ArtWall / 免責事項 / プライバシーポリシー / お問い合わせ</div></div>
+  <div class="dg-current-list"><strong>Prototype shared state keys</strong><div><code>muuzee:favorite-items</code> / <code>muuzee:personal-change</code> / <code>muuzee:prototype-personal-samples:v4</code> / <code>muuzee:saved-artists</code> / <code>muuzee:saved-exhibitions</code> / <code>muuzee:saved-museums</code> / <code>muuzee:saved-works:</code> / <code>muuzee:seen-items</code></div></div>
+
+  <div class="dg-current-list">
+    <strong>Prototype boundary</strong>
+    <div>MyPage Friend / Group card composition、個別ページのSchedule layout、Temporary imagery等はPage-specific explorationとして扱い、このGlobal Guideへ自動昇格させない。</div>
+  </div>
+</section>
+</div>
+</div>
+<!-- dg-side-margin-shell-group:end -->
+<!-- current-prototype-reference:end -->
+</section>
+<!-- synced-global-rules-card:end -->
+
 </main>
 <script id="muuzee-design-tokens" type="application/json">
 {
-  "name":"Muuzee Global Design Guide",
-  "version":"1",
-  "grid":4,
-  "breakpoints":{"mobile":720,"tablet":980},
-  "container":{"max":1240,"desktopSide":32,"tabletSide":20,"mobileSide":18},
-  "colors":{
-    "ink":"#262522",
-    "muted":"#77736d",
-    "line":"#e8e4dd",
-    "warm":"#f7f5f1",
-    "greige":"#eeeae3",
-    "terra":"#b96f55",
-    "white":"#ffffff"
+  "name": "Muuzee Global Design Guide",
+  "version": "2",
+  "grid": 4,
+  "breakpoints": {
+    "mobile": 720,
+    "tablet": 980
   },
-  "typography":{
-    "fontStack":"Helvetica Neue, Helvetica, Arial, Hiragino Sans, Yu Gothic, sans-serif",
-    "primary":14,
-    "secondary":12,
-    "tertiary":10,
-    "pageTitle":24,
-    "sectionDesktop":28,
-    "sectionMobile":22
+  "container": {
+    "max": 1240,
+    "desktopSide": 32,
+    "tabletSide": 20,
+    "mobileSide": 18
   },
-  "images":{
-    "artworkNaturalRatio":true,
-    "exhibitionHeroMaxHeight":"70svh",
-    "exhibitionHeroFit":"contain",
-    "exhibitionHeroBackground":"#ffffff",
-    "exhibitionHeroShadow":false,
-    "forbidScrollLinkedResize":true
+  "colors": {
+    "ink": "#262522",
+    "muted": "#77736d",
+    "line": "#e8e4dd",
+    "warm": "#f7f5f1",
+    "greige": "#eeeae3",
+    "terra": "#b96f55",
+    "white": "#ffffff"
   },
-  "motion":{
-    "brandHeroZoom":"1.08 to 1 over 10s",
-    "headerTransition":"260ms",
-    "respectReducedMotion":true
+  "typography": {
+    "fontStack": "Helvetica Neue, Helvetica, Arial, Hiragino Sans, Yu Gothic, sans-serif",
+    "primary": 14,
+    "secondary": 12,
+    "tertiary": 10,
+    "pageTitle": 24,
+    "sectionDesktop": 28,
+    "sectionMobile": 22,
+    "heroDisplayPageSpecific": 54
   },
-  "navigation":{
-    "items":["ホーム","展示会","アーティスト","美術館","マップ","保存"],
-    "headerReveal":true,
-    "mobileBottomFixed":true
+  "images": {
+    "artworkNaturalRatio": true,
+    "exhibitionHeroMaxHeight": "70svh",
+    "exhibitionHeroFit": "contain",
+    "exhibitionHeroBackground": "#ffffff",
+    "exhibitionHeroShadow": false,
+    "forbidScrollLinkedResize": true
   },
-  "masonry":{
-    "columns":4,
-    "gapDesktop":8,
-    "gapMobile":4,
-    "imageRadius":0,
-    "naturalRatio":true,
-    "shortestColumnPlacement":true
+  "motion": {
+    "brandHeroZoom": "1.08 to 1 over 10s",
+    "headerTransition": "260ms",
+    "respectReducedMotion": true
+  },
+  "navigation": {
+    "items": [
+      "ホーム",
+      "展示会",
+      "アーティスト",
+      "美術館",
+      "マップ",
+      "保存"
+    ],
+    "headerReveal": true,
+    "mobileBottomFixed": true,
+    "destinations": {
+      "ホーム": "./index.html",
+      "展示会": "./exhibitions.html",
+      "アーティスト": "./artists.html",
+      "美術館": "./museums.html",
+      "マップ": "./map.html",
+      "保存": "./saved.html"
+    }
+  },
+  "masonry": {
+    "columns": 4,
+    "gapDesktop": 8,
+    "gapMobile": 4,
+    "imageRadius": 0,
+    "naturalRatio": true,
+    "shortestColumnPlacement": true
+  },
+  "lastUpdated": "2026-09-04",
+  "sharedComponents": {
+    "sectionCTA": ".muuzee-section-cta",
+    "saveControl": "muuzee-save-control.css / muuzee-save-control.js",
+    "personalActions": "muuzee-personal-actions.css / muuzee-personal-actions.js",
+    "mapUI": "muuzee-map-ui.css / muuzee-map-ui.js",
+    "globalNavigation": "muuzee-global.css / muuzee-global.js"
   }
 }
 </script>

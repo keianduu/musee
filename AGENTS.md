@@ -1,4 +1,4 @@
-# Art / Muuzee Project Instructions
+# Muuzee Project Instructions
 
 ## Project Context
 
@@ -8,8 +8,71 @@ Before starting project-related work, read:
 
 Use the Notion Project URL defined there to access the project specifications through the Notion MCP when the task requires approved product specifications, decisions, or project context.
 
-The local project directory may remain named `art` during the exploration phase.
-The intended product / repository name is `muuzee`.
+The local project directory is `muuzee`.
+The product name is `Muuzee`, and the repository name is `muuzee`.
+
+---
+
+## Required Inspection Order
+
+After reading this file and `docs/project-context.md`, inspect the **current implementation** in this order before making project changes:
+
+1. `prototype/design-guide.html`
+2. `prototype/assets/css/muuzee-global.css`
+3. `prototype/assets/js/muuzee-global.js`
+4. Relevant shared `prototype/assets/css/muuzee-*.css` / `prototype/assets/js/muuzee-*.js` modules already used by the feature
+5. The relevant existing page and its page-specific CSS / JavaScript
+6. The relevant Muuzee specification, evidence, and Decisions in Notion **when the task depends on approved intent, or when a meaningful prototype change needs to be logged**
+
+For Mode B and Mode C, the relevant Notion specification and Decisions are mandatory before implementation.
+
+For Mode A, do not make Notion lookup a blocker for a tiny copy edit, minor CSS tuning, or an obvious bug fix that does not depend on an approved specification and does not need a Design & Implementation Log entry.
+
+Do not skip directly to a page-specific file when an existing global rule or shared implementation may already cover the requested behavior.
+
+Do not assume selectors, function names, DOM structure, or shared-module behavior from a previous conversation or an older commit. Inspect the current files first.
+
+## Implementation Ownership
+
+- HTML owns page structure, semantic content, and the composition of shared and page-specific modules.
+- `prototype/assets/css/muuzee-global.css` owns rules shared by every page.
+- `prototype/assets/js/muuzee-global.js` owns behavior shared by every page.
+- Page-specific CSS and JavaScript own only behavior and presentation unique to that page.
+- Reusable components and behaviors belong in shared `muuzee-*.css` / `muuzee-*.js` modules rather than copied implementations in individual pages.
+- Do not fork or duplicate a common component merely to customize one page. Extend the shared component deliberately or keep the difference page-specific at the smallest valid boundary.
+- Global Header, Footer, Hamburger Navigation, shared Save controls, shared Save / Seen actions, shared Map UI, and shared title-right CTAs must not be reimplemented independently per page when an existing shared implementation covers the behavior.
+- Avoid title-specific, item-specific, or data-specific visual hacks. Prefer reusable classes, data attributes, IDs, image-ratio logic, and shared renderers.
+- Do not nest an interactive control such as a `<button>` inside a clickable `<a>`. Use sibling controls or a semantic wrapper so navigation and actions remain independently clickable.
+- When changing a Global Design Rule, update `prototype/design-guide.html` in the same change so the documented rule and shared implementation remain aligned.
+
+## Design Guide Compliance
+
+`prototype/design-guide.html` is the implementation reference for Prototype Global Design Rules.
+
+Before writing or changing visual CSS:
+
+1. Check the applicable typography, color, spacing, radius, icon, motion, and component rules in `prototype/design-guide.html`.
+2. Reuse existing tokens, CSS custom properties, and shared components before introducing a new literal value.
+3. Treat Primary `14px`, Secondary `12px`, and Tertiary `10px` as the default body-scale typography. Use heading sizes only as defined by the current Design Guide.
+4. Do not introduce ad-hoc typography such as `9px`, `11px`, `13px`, `15px`, `17px`, or `18px` merely to make a layout fit. If a new size is genuinely required, treat that as a design-rule decision and update the Design Guide in the same change after approval.
+5. A page-specific override must not silently break the shared component's alignment, spacing, typography, or state styling.
+6. If `scripts/audit_design_guide_fonts.py` exists, run `python3 scripts/audit_design_guide_fonts.py --check-new` before completion. If it does not exist, manually inspect every changed `font-size` declaration against the Design Guide.
+
+The user may explicitly request a page-specific exception. Keep that exception as narrow as possible and do not generalize it into a Global Rule unless explicitly approved.
+
+## Current Shared UI Conventions
+
+The exact implementation must always be verified in the current files, but the following shared patterns should be reused when present:
+
+- Section-title right-side CTAs such as `すべて見る →`, `詳細検索 →`, `保存を見る →`, and `一覧を見る →` use the same shared CTA visual rather than page-specific variants. The current shared class is `.muuzee-section-cta`.
+- Card Save controls use the shared Save-control implementation and saved-state visual. Do not add a second page-specific Save behavior to the same item.
+- Save / Seen actions use the shared personal-action implementation and shared state model rather than separate page-local storage semantics.
+- Home Map and Map page should reuse the shared Map pin / popup / tooltip behavior rather than diverging implementations.
+- Header / Hamburger behavior belongs to Global CSS / JS.
+- MyPage sections may have page-specific composition, but reusable controls inside them should still use the corresponding shared component.
+
+When a shared class or module named above no longer exists in the current repository, follow the current implementation instead of recreating an obsolete one.
+
 
 ---
 
@@ -21,7 +84,9 @@ Use three distinct layers:
 2. **`prototype/` = exploratory UI/UX workspace**
 3. **`src/` = production implementation**
 
-Do not force exploratory prototype changes into Notion.
+Do not promote exploratory prototype changes into approved Notion specifications.
+
+Meaningful prototype changes that affect future design or implementation decisions must still be recorded in the Muuzee Design & Implementation Log as `Draft`.
 
 Do not treat prototype implementation details as approved specifications unless the user explicitly approves them.
 
@@ -53,6 +118,8 @@ Use local files for:
 - Assets
 - Tests
 - Development configuration
+
+Within the prototype, `prototype/design-guide.html` is the source of truth for the **current prototype Global Design Rules**. It may still be exploratory and does not by itself promote a rule into an approved product specification.
 
 ### Prototype status
 
@@ -90,14 +157,16 @@ Rules:
 
 1. Work primarily inside `prototype/`.
 2. Read `docs/project-context.md`.
-3. Inspect the current prototype before changing it.
-4. Read existing Notion brand / UX decisions only when they materially constrain the requested change.
-5. Do **not** update Notion for normal exploratory changes.
+3. Follow the Required Inspection Order and inspect the actual current implementation before changing it.
+4. Preserve existing Global Rules and shared components unless the user is intentionally exploring a change to them.
+5. Record meaningful UX, component, global-rule, data, navigation, state, integration, architecture, or feature-specification changes in the Muuzee Design & Implementation Log as `Draft`.
 6. Do **not** create Requirement IDs for exploratory UI.
 7. Make the smallest reasonable prototype change.
-8. Validate desktop and mobile behavior.
-9. Summarize what changed.
-10. Commit meaningful checkpoints to Git when requested or when the user asks to publish the latest prototype.
+8. Validate desktop and mobile behavior; use real-device validation when the change involves fixed headers, drawers, overlays, safe areas, horizontal scrolling, touch interaction, or viewport-dependent behavior.
+9. Run applicable Design Guide / syntax / shared-component checks before completion.
+10. Summarize what changed.
+11. Do not log simple copy edits, minor CSS tuning, or obvious bug fixes that do not affect future design decisions.
+12. Commit meaningful checkpoints to Git when requested or when the user asks to publish the latest prototype.
 
 Prototype exploration should remain fast.
 
@@ -115,13 +184,13 @@ Examples:
 
 Rules:
 
-1. Read the relevant Notion specification and Decisions.
+1. Follow the Required Inspection Order in this file.
 2. Confirm what is being promoted from prototype to approved intent.
 3. Update the relevant Notion page.
 4. Add or update a `Decisions` entry when the decision is meaningful.
 5. Update `docs/` only when Codex needs durable implementation context that should not live only in Notion.
 6. Keep the prototype aligned with the approved direction.
-7. Commit the related local changes to Git.
+7. Commit the related local changes to Git when requested.
 
 ### Mode C — Production Implementation
 
@@ -130,8 +199,8 @@ Use this mode only after the user explicitly asks to implement the real service 
 Rules:
 
 1. Read `docs/project-context.md`.
-2. Read the relevant Notion specifications and Decisions.
-3. Inspect the approved prototype.
+2. Follow the Required Inspection Order in this file, including the relevant Notion specifications and Decisions.
+3. Confirm which prototype direction is approved for production use.
 4. Implement production code under `src/`.
 5. Treat `prototype/` as a visual and UX reference, not as production architecture.
 6. Do not directly evolve prototype HTML into production architecture unless explicitly instructed.
@@ -144,7 +213,7 @@ Rules:
 ## Recommended Local Structure
 
 ```text
-art/                         # rename to muuzee later
+muuzee/
 ├── AGENTS.md
 ├── README.md
 │
@@ -156,20 +225,27 @@ art/                         # rename to muuzee later
 ├── prototype/
 │   ├── index.html           # HOME / default prototype entry
 │   ├── exhibition.html
+│   ├── exhibitions.html
 │   ├── museum.html
+│   ├── museums.html
 │   ├── artist.html
+│   ├── artists.html
 │   ├── map.html
 │   ├── saved.html
-│   └── my-art.html
+│   ├── seen.html
+│   ├── favorites.html
+│   ├── my-art.html
+│   ├── design-guide.html
+│   └── assets/
+│       ├── css/
+│       ├── js/
+│       └── images/
 │
-├── src/
-│   └── ...                  # production implementation; can remain empty for now
+├── scripts/
+│   └── ...                  # repository checks / maintenance scripts when needed
 │
-└── assets/
-    ├── brand/
-    ├── artists/
-    ├── exhibitions/
-    └── icons/
+└── src/
+    └── ...                  # production implementation; can remain empty for now
 ```
 
 Keep the structure simple until complexity is actually needed.
@@ -198,19 +274,50 @@ Use Git history for versioning instead.
 
 ### Assets
 
-Use `assets/` for reusable project assets.
+Prototype reusable assets belong under `prototype/assets/`.
 
-Prefer:
+Prefer the existing responsibility split:
 
 ```text
-assets/brand/
-assets/artists/
-assets/exhibitions/
+prototype/assets/css/
+prototype/assets/js/
+prototype/assets/images/
 ```
 
-Prototype pages should reference those assets rather than duplicating them when practical.
+Shared CSS / JS should stay in the shared modules under those directories. Page-specific CSS / JS should contain only page-specific implementation.
+
+Reusable images should be stored under `prototype/assets/images/` rather than duplicated across pages when practical.
+
+Temporary external image URLs may be used while exploring, but reusable prototype assets should be localized when practical so GitHub Pages and device validation do not depend unnecessarily on third-party availability.
 
 Temporary one-off assets may remain local to a prototype only while actively exploring.
+
+## Safe Editing and Validation
+
+Before changing code, inspect the current file structure and the exact target selectors / functions. Do not write a transformation based only on an earlier conversation, old screenshot, or assumed function name.
+
+For scripted or automated edits:
+
+1. Pull or inspect the current target revision first.
+2. Perform pre-flight checks for every required anchor before writing when practical.
+3. Prefer semantic or structural anchors over brittle full-block string matches.
+4. Validate the transformed result before commit.
+5. If a script can partially modify files before failing, restore only the files touched by that failed attempt before retrying.
+6. Do not silently overwrite unrelated local changes.
+
+Validation requirements:
+
+- Run JavaScript syntax validation such as `node --check` for changed JavaScript when Node is available.
+- Run relevant repository checks, including the Design Guide font audit when present.
+- When a shared component changes, verify the main pages that consume it, not only the page where the bug was reported.
+- Validate desktop and mobile layouts.
+- Check for unintended page-wide horizontal scrolling. Intentional rails / tabs may scroll horizontally; the page itself should not.
+- For fixed / sticky UI, drawers, overlays, maps, popups, and headers, verify stacking order and mobile safe-area behavior.
+- For touch actions, confirm that Save / Seen / menu controls do not trigger the surrounding card navigation.
+- When a CSS or JavaScript asset changes, update the existing `?v=` cache-busting query used by affected prototype pages so GitHub Pages and real-device checks load the new asset.
+
+A successful build or syntax check does not replace visual validation.
+
 
 ---
 
@@ -218,13 +325,13 @@ Temporary one-off assets may remain local to a prototype only while actively exp
 
 Git should be used from the prototype phase onward.
 
-Intended repository:
-
 Repository:
 
 `https://github.com/keianduu/muuzee`
 
-The local directory may remain named `art`; the local folder name does not need to match the GitHub repository name.
+Local working directory:
+
+`/Users/kei.ando/Documents/my-project/muuzee`
 
 ### Simple workflow
 
@@ -235,9 +342,13 @@ Typical flow:
 ```text
 UI discussion / exploration
         ↓
+Required Inspection Order
+        ↓
 prototype/ update
         ↓
-browser validation
+Design Guide / syntax / shared-component checks
+        ↓
+desktop + mobile browser validation
         ↓
 git diff
         ↓
@@ -245,7 +356,7 @@ commit
         ↓
 push
         ↓
-GitHub Pages preview
+GitHub Pages / real-device preview
 ```
 
 Prefer small meaningful commits.
@@ -297,8 +408,10 @@ Decision entry if meaningful
 Git commit
 ```
 
-Examples of items worth promoting to Notion:
+Examples of items worth recording in the Design & Implementation Log, and promoting to the formal specification when approved:
 
+- Global Design Rules or Design Guide token changes
+- shared component behavior such as global section CTAs, Save / Seen actions, Header / Hamburger, or Map UI
 - Home information architecture
 - navigation model
 - brand copy
@@ -335,6 +448,8 @@ The project uses the following top-level Notion structure:
 8. `07 Release Notes`
 9. `Tasks`
 10. `Decisions`
+
+`Muuzee Design & Implementation Log` is maintained under `07 Release Notes` so implementation history remains available without adding another top-level project section.
 
 Business, Growth, and Roadmap information belongs in `01 Product Strategy` rather than separate top-level pages.
 
@@ -392,32 +507,24 @@ Prototype existence alone is not sufficient reason to create a Requirement.
 
 ## Before Work
 
-### For Prototype Discovery
-
-Before changing a prototype:
+For prototype, approved specification, and production work:
 
 1. Read `docs/project-context.md`.
-2. Inspect the current `prototype/` implementation.
-3. Identify relevant existing design / UX constraints.
-4. Read Notion only when approved specifications or Decisions materially affect the requested change.
-5. Make the requested exploratory change.
-6. Validate responsive behavior.
+2. Read `prototype/design-guide.html`.
+3. Read `prototype/assets/css/muuzee-global.css`.
+4. Read `prototype/assets/js/muuzee-global.js`.
+5. Inspect the relevant shared `muuzee-*.css` / `muuzee-*.js` modules.
+6. Inspect the relevant existing page and its page-specific CSS / JavaScript.
+7. Determine whether the task is Prototype Discovery, an Approved Specification Change, or Production Implementation.
+8. Read the relevant Notion specification, evidence, and Decisions when approved intent is needed. This is mandatory for Mode B and Mode C.
+9. For Mode A, consult Notion when an approved specification may constrain the change or when a meaningful prototype change will be recorded in the Design & Implementation Log.
+10. Compare approved intent with the current implementation and report meaningful conflicts before making an ambiguous product decision.
+11. Identify the validation required for the change before editing: typography audit, JavaScript syntax, shared-component regression, desktop/mobile, or real-device behavior.
 
-Do not require a Notion update before every prototype iteration.
+The depth of review should be proportional to the change, but the ownership boundaries and local inspection order above remain the default.
 
-### For Approved Specification or Production Work
+A tiny copy edit, minor spacing adjustment, or obvious local bug fix should not require an unnecessary Notion research pass when it does not depend on approved intent. Do not make assumptions when an approved specification does exist.
 
-Before changing approved specification or production implementation:
-
-1. Read `docs/project-context.md`.
-2. Access the linked Notion Project.
-3. Classify the task using the Notion Information Architecture.
-4. Read the relevant Notion specification, evidence, and Decisions.
-5. Inspect the current local implementation.
-6. Compare specification with implementation.
-7. Identify and report meaningful differences before making ambiguous changes.
-
-Do not make assumptions when an approved specification exists in Notion.
 
 ---
 
@@ -435,20 +542,44 @@ If the Notion specification and current implementation conflict:
 
 ## Notion Changes
 
-Do not modify Notion unless:
+Never change Notion outside the scope authorized by the user. Preserve the Project relations and filtered linked views for `Tasks` and `Decisions`.
 
-- the user explicitly asks to change the specification, or
-- the user explicitly approves a meaningful product / UX / brand / technical direction, or
-- the task clearly includes an approved specification change.
+### Muuzee Design & Implementation Log
 
-When a meaningful decision is approved:
+Use the `Muuzee Design & Implementation Log` database under `07 Release Notes` when a code or project-structure change affects any of the following:
 
-- update the relevant Notion specification if necessary
-- add or update the corresponding `Decisions` entry when appropriate
+- UX / UI structure
+- component design
+- Global Design Rules
+- data structure
+- URL / SEO design
+- navigation
+- state management
+- APIs or external service integrations
+- Save, Visit, ArtWall, or other feature specifications
+- architecture or directory structure
+- a technical decision that will influence future implementation
 
-Preserve the Project relations and filtered linked views for `Tasks` and `Decisions`.
+Each entry must include:
 
-Do not write every prototype iteration to Notion.
+- Date
+- Area / Feature
+- What changed
+- Why
+- Main files
+- Design / implementation decision
+- Impact
+- Status
+
+Use these statuses:
+
+- `Draft`: exploratory or provisional, including changes still being tested in `prototype/`
+- `Approved`: use only when the user explicitly says the direction is adopted, such as “採用”, “これで行く”, or “仕様にする”
+- `Deprecated`: retained for history but no longer current
+
+Do not create a log entry for simple wording changes, tiny CSS adjustments, or obvious bug fixes that do not affect future design decisions.
+
+The Design & Implementation Log records implementation-relevant history; it does not automatically make a change an approved Requirement or Decision. For an important approved specification, also update the appropriate formal Notion page and add or update a `Decisions` entry when appropriate.
 
 ---
 
@@ -456,51 +587,59 @@ Do not write every prototype iteration to Notion.
 
 ### Prototype
 
-1. Inspect current prototype.
-2. Make the smallest reasonable change.
-3. Preserve existing visual conventions unless intentionally exploring a new direction.
-4. Validate desktop and mobile.
-5. Summarize changed files.
-6. Commit meaningful checkpoints when requested.
+1. Follow the Required Inspection Order.
+2. Confirm whether an existing shared component or Global Rule already covers the request.
+3. Make the smallest reasonable change.
+4. Preserve existing visual conventions unless intentionally exploring a new direction.
+5. Validate Design Guide compliance for changed UI, including typography.
+6. Validate JavaScript / markup behavior where relevant.
+7. Validate desktop and mobile; use real-device validation for viewport, fixed-layer, overlay, map, or touch-sensitive changes.
+8. If shared CSS / JS changed, update the affected asset cache-busting version and check representative consuming pages.
+9. Summarize changed files and any remaining prototype-only assumptions.
+10. Commit meaningful checkpoints only when requested.
 
 ### Production
 
-1. Read the relevant Notion specification.
-2. Inspect approved prototype and production files.
+1. Follow the Required Inspection Order.
+2. Inspect the production files after identifying the approved prototype behavior and relevant Notion specification.
 3. Make the smallest reasonable production change.
-4. Preserve existing conventions.
-5. Validate the result.
+4. Preserve existing conventions and shared-component ownership.
+5. Validate the result against the approved specification and design rules.
 6. Add or update tests where appropriate.
 7. Summarize changed files.
 8. Report remaining differences from the approved specification.
 
+### Required completion report
+
+After code and any required Notion updates, report:
+
+1. Changed files
+2. Main changes
+3. Design Guide / shared-component validation performed
+4. What was recorded in Notion
+5. Draft / Approved status
+6. Points to verify, including desktop / mobile / real-device items when relevant
+7. Terminal commands needed to reflect the change in Git
+
+Do not commit or push unless the user explicitly requests it. Stage only files that belong to the current task.
+
+
 ---
 
-## Renaming `art` to `muuzee`
+## Directory and Repository Identity
 
-Do not rename the local directory only for naming consistency while integrations are still being established.
+- Local directory: `/Users/kei.ando/Documents/my-project/muuzee`
+- GitHub repository: `https://github.com/keianduu/muuzee`
+- Primary branch: `main`
 
-Rename when the project identity and repository workflow are stable.
-
-When renaming:
-
-1. Rename local `art/` -> `muuzee/`.
-2. Confirm Codex workspace path.
-3. Confirm Notion project references in `docs/project-context.md`.
-4. Confirm Git remote points to `https://github.com/keianduu/muuzee`.
-5. Update this file's Project Boundaries section.
-6. Validate local scripts and absolute paths.
-
-Git history is not affected by changing the local folder name.
+Do not introduce absolute references to the retired pre-rename project path. Prefer repository-relative paths in project files whenever possible.
 
 ---
 
 ## Project Boundaries
 
-This AGENTS.md currently applies only to the `art` project, which is the working directory for Muuzee.
+This AGENTS.md applies only to the `muuzee` project.
 
 Do not use specifications, research, Tasks, or Decisions from other projects under `my-project`.
 
 Do not modify files outside this project unless the user explicitly requests it.
-
-When the local project directory is renamed from `art` to `muuzee`, update this section accordingly.

@@ -58,7 +58,7 @@ export function hasMinimumImportFields(item: ArtCommonsItem) {
 
 type ExistingSourceRecord = {
   id: string;
-  entity_id: string | null;
+  exhibition_id: string | null;
   checksum: string | null;
 };
 
@@ -67,7 +67,7 @@ export function checksumPayload(payload: unknown) {
 }
 
 export function shouldSkipExistingRecord(existing: ExistingSourceRecord | null, checksum: string) {
-  return Boolean(existing?.entity_id && existing.checksum === checksum);
+  return Boolean(existing?.exhibition_id && existing.checksum === checksum);
 }
 
 function rawSourceUpdatedAt(raw: Awaited<ReturnType<typeof getArtCommonsItem>>) {
@@ -165,7 +165,7 @@ async function saveNormalizedItem(
   raw: Awaited<ReturnType<typeof getArtCommonsItem>>,
 ) {
   const item = mapArtCommonsItem(raw);
-  let exhibitionId = sourceRecord.entity_id;
+  let exhibitionId = sourceRecord.exhibition_id;
   let created = false;
 
   if (exhibitionId) {
@@ -223,7 +223,7 @@ async function saveNormalizedItem(
 
   const { error: linkError } = await db
     .from("source_records")
-    .update({ entity_id: exhibitionId, source_url: item.sourceUrl })
+    .update({ exhibition_id: exhibitionId, source_url: item.sourceUrl })
     .eq("id", sourceRecord.id);
   if (linkError) throw linkError;
   return { created };
@@ -298,7 +298,7 @@ export async function importArtCommons(
         const checksum = checksumPayload(raw);
         const { data: existingData, error: existingError } = await db
           .from("source_records")
-          .select("id, entity_id, checksum")
+          .select("id, exhibition_id, checksum")
           .eq("data_source_id", dataSourceId)
           .eq("external_id", raw.id)
           .maybeSingle();
@@ -308,7 +308,6 @@ export async function importArtCommons(
         const rawValues = {
           data_source_id: dataSourceId,
           external_id: raw.id,
-          entity_type: "exhibition",
           source_url: (raw["exhib-URL-u"] as string | undefined) || raw.common?.linkUrl || null,
           raw_payload: raw,
           checksum,
@@ -320,7 +319,7 @@ export async function importArtCommons(
         const { data: stored, error: storeError } = await db
           .from("source_records")
           .upsert(rawValues, { onConflict: "data_source_id,external_id" })
-          .select("id, entity_id, checksum")
+          .select("id, exhibition_id, checksum")
           .single();
         if (storeError || !stored) throw storeError || new Error("Raw source record could not be stored");
 
@@ -332,7 +331,7 @@ export async function importArtCommons(
         }
         const linkedRecord: ExistingSourceRecord = {
           id: stored.id as string,
-          entity_id: existing?.entity_id || (stored.entity_id as string | null),
+          exhibition_id: existing?.exhibition_id || (stored.exhibition_id as string | null),
           checksum,
         };
         const saved = await saveNormalizedItem(db, linkedRecord, raw);
